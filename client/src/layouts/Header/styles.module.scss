@@ -1,0 +1,22 @@
+.root {
+  background: var(--white-1);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  & .logo {
+    cursor: pointer;
+    img {
+      width: 126px;
+      object-fit: cover;
+    }
+  }
+
+  & .button {
+    width: 150px;
+    background: var(--dark-blue) !important;
+  }
+
+  & .textField {
+    width: 100%;
+    border-radius: 20px !important;
+  }
+}

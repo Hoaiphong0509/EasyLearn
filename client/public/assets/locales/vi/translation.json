@@ -1,0 +1,21 @@
+{
+    "app_title": "Easy Learn",
+    "language": "Ngôn ngữ",
+    "welcome_message": "Welcome",
+    "auth": {
+        "learnToKnow": "học để hiểu biết",
+        "password": "Mật khẩu",
+        "confirmPassword": "Xác nhận mật khẩu",
+        "email": "Email",
+        "login": "Đăng nhập",
+        "backToHome": "Về trang chủ",
+        "register": "Đăng ký"
+    },
+    "header": {
+        "search": "Tìm kiếm",
+        "profile": "Hồ sơ",
+        "myCourses": "Khóa học của tôi",
+        "login": "Đăng nhập",
+        "logout": "Đăng xuất"
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "ES5",
+    "allowJs": true,
+    "paths": {
+      "components/*": ["components/*"],
+      "assets/*": ["assets/*"],
+      "layouts/*": ["layouts/*"]
+    }
+  }
+}

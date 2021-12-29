@@ -1,0 +1,21 @@
+{
+    "app_title": "Easy Learn",
+    "language": "Language",
+    "welcome_message": "Welcome",
+    "auth": {
+        "learnToKnow": "learn to know",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "email": "Email",
+        "login": "Login",
+        "backToHome": "Back to home",
+        "register": "Register"
+    },
+    "header": {
+        "search": "Search",
+        "profile": "Profile",
+        "myCourses": "My Courses",
+        "login": "Login",
+        "logout": "Logout"
+    }
+}
