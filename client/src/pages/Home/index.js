@@ -1,7 +1,8 @@
-import Header from 'layouts/Header';
+import Header from 'components/Header';
+import Layout from 'Layouts/'
 
 const Home = () => {
-  return <Header />;
+  return <Layout></Layout>;
 };
 
 export default Home;

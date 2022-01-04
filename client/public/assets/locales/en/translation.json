@@ -5,11 +5,23 @@
     "auth": {
         "learnToKnow": "learn to know",
         "password": "Password",
+        "name": "Name",
         "confirmPassword": "Confirm Password",
         "email": "Email",
         "login": "Login",
         "backToHome": "Back to home",
-        "register": "Register"
+        "register": "Register",
+        "notEmty": "Is Required",
+        "invalidInfor": "Invalid Email or Password",
+        "msgErrName": "Name is required",
+        "msgInvalidName": "Please enter a name at least 6 character and contain At least one uppercase, one lower case.",
+        "invalidName": "Invalid name",
+        "msgErrEmail": "Email has already exist",
+        "msgErrInvalidEmail": "Please include a valid email",
+        "msgErrExistEmail": "Email is not exist",
+        "msgErrPassword": "Please enter a password at least 8 character and contain At least one uppercase, one lower case, one digit.",
+        "invalidPassword": "Invalid Password",
+        "invalidConfirmPassword": "Confirm Password does not match"
     },
     "header": {
         "search": "Search",

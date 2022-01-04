@@ -5,11 +5,23 @@
     "auth": {
         "learnToKnow": "học để hiểu biết",
         "password": "Mật khẩu",
+        "name": "Tên hiển thị",
         "confirmPassword": "Xác nhận mật khẩu",
         "email": "Email",
         "login": "Đăng nhập",
         "backToHome": "Về trang chủ",
-        "register": "Đăng ký"
+        "register": "Đăng ký",
+        "notEmty": "Không được trống",
+        "invalidInfor": "Email hoặc mật khẩu không đúng",
+        "msgErrName": "Vui lòng nhập tên hiển thị ",
+        "msgInvalidName": "Tên hiển thị phải gồm ít nhất 1 ký tự hoa, 1 ký tự thường.",
+        "invalidName": "Tên không hợp lệ",
+        "msgErrEmail": "Email đã tồn tại",
+        "msgErrInvalidEmail": "Email không hợp lệ",
+        "msgErrExistEmail": "Email không tồn tại",
+        "msgErrPassword": "Mật khẩu phải gồm ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số",
+        "invalidPassword": "Mật khẩu không hợp lệ",
+        "invalidConfirmPassword": "Mật khẩu xác nhận không khớp"
     },
     "header": {
         "search": "Tìm kiếm",

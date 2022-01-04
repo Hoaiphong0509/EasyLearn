@@ -6,7 +6,8 @@
     "paths": {
       "components/*": ["components/*"],
       "assets/*": ["assets/*"],
-      "layouts/*": ["layouts/*"]
+      "Layouts/*": ["Layouts/*"],
+      "services/*": ["services/*"]
     }
   }
 }
