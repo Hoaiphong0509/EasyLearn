@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
@@ -15,11 +15,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import useStyles from './useStyles'
 import { SignalCellularNullOutlined } from '@mui/icons-material'
+import { useHistory } from 'react-router-dom'
 
 import { logout } from 'services/redux/actions/auth'
 
 const AvatarBox = ({ logout, user }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const history = useHistory()
   const open = Boolean(anchorEl)
 
   const c = useStyles()
@@ -32,18 +34,23 @@ const AvatarBox = ({ logout, user }) => {
     setAnchorEl(null)
   }
 
+  const handleProfile = () => {
+    const path = '/edit-profile'
+    history.push(path)
+  }
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            {user.avatar ? (
+            {user && (user.avatar ? (
               <Avatar src={user.avatar} sx={{ width: 32, height: 32 }}></Avatar>
             ) : (
               <Avatar sx={{ width: 32, height: 32 }}>
                 {user.name.slice(0, 1).toUpperCase()}
               </Avatar>
-            )}
+            ))}
           </IconButton>
         </Tooltip>
       </Box>
@@ -59,7 +66,7 @@ const AvatarBox = ({ logout, user }) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>{t('header.profile')}</MenuItem>
+        <MenuItem onClick={handleProfile}>{t('header.profile')}</MenuItem>
         <MenuItem>{t('header.myCourses')}</MenuItem>
         <Divider />
         <MenuItem onClick={logout}>

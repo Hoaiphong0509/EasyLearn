@@ -1,6 +1,7 @@
 import api from 'utils/api'
 import { AUTHS, TOAST_TYPE } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
+import setAuthToken from 'utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -74,9 +75,9 @@ export const login = (formData, t) => async (dispatch) => {
       type: AUTHS.LOGIN_SUCCESS,
       payload: res.data
     })
-
     dispatch(loadUser())
   } catch (err) {
+    console.log({ err })
     const errors = err.response.data.errors
 
     if (errors) {
@@ -88,6 +89,34 @@ export const login = (formData, t) => async (dispatch) => {
 
     dispatch({
       type: AUTHS.LOGIN_FAIL
+    })
+  }
+}
+
+export const registerCreator = (formData, t) => async (dispatch) => {
+  try {
+    const res = await api.post('/users/register_creator', formData)
+    dispatch({
+      type: AUTHS.REGISTER_CREATOR_SUCCESS,
+      payload: res.data
+    })
+    showToast({
+      message: t('editProfile.creator.registerSuccess'),
+      type: TOAST_TYPE.SUCCESS
+    })
+    dispatch(loadUser())
+  } catch (error) {
+    const errors = error.response.data.errors
+
+    if (errors) {
+      showToast({
+        message: 'something wrong!',
+        type: TOAST_TYPE.ERROR
+      })
+    }
+
+    dispatch({
+      type: AUTHS.REGISTER_FAIL
     })
   }
 }

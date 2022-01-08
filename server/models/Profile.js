@@ -6,8 +6,9 @@ const ProfileSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
-    location: {
+    name: {
       type: String,
+      required: true
     },
     phone: {
       type: String,

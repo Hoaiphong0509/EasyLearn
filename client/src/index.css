@@ -8,12 +8,14 @@ body {
 }
 
 :root {
+  --black-0: #2f3136;
+  --black-1: #36393f;
   --dark-blue: #243859;
   --normal-blue: #487a9d;
   --smooth-blue: #a7d8dc;
   --white-0: #ffffff;
   --white-1: #f2f9ef;
-  --white-2: #f2f9ef;
+  --white-2: #f4eff9;
   --red: #e63c49;
 }
 

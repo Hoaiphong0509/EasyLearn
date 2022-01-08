@@ -55,35 +55,37 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
   }
 
   const authLinks = (
-    <Fragment>
+    <>
       <IconButton aria-label="cart">
         <Badge className={c.badge} badgeContent={4}>
           <Notifications sx={{ fontSize: '36px' }} />
         </Badge>
       </IconButton>
-      <AvatarBox user={user}/>
-    </Fragment>
+      <AvatarBox user={user} />
+    </>
   )
 
   const guestLinks = (
-    <Button variant="contained" className={s.button}>
-      <Link to="/login">{t('header.login')}</Link>
-    </Button>
+    <>
+      <Button variant="contained" className={s.button}>
+        <Link to="/login">{t('header.login')}</Link>
+      </Button>
+    </>
   )
 
   return (
     <Grid
       className={classnames(s.root, c.root)}
       container
-      spacing={4}
+      spacing={5}
       direction="row"
       justifyContent="space-between"
       alignItems="center"
     >
       <Grid item xs={2} className={s.logo}>
-        <img className={s.image} src="/logo.png" alt="logo" />
+        <img src="/logo.png" alt="logo" />
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={8} sx={{ textAlign: 'center' }}>
         <TextField placeholder={t('header.search')} className={s.textField} />
       </Grid>
       <Grid item xs={2}>

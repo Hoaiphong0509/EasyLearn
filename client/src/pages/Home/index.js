@@ -1,8 +1,7 @@
-import Header from 'components/Header';
-import Layout from 'Layouts/'
+import Banner from 'components/Banner'
 
 const Home = () => {
-  return <Layout></Layout>;
-};
+  return <Banner />
+}
 
-export default Home;
+export default Home

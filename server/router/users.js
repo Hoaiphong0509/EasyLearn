@@ -18,6 +18,7 @@ const signJWT = require('../helper/signJWT')
 
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const Blog = require('../models/Blog')
 
 // @route  POST api/users/register_student
 // @desc   Register student
@@ -114,7 +115,7 @@ router.post(
     try {
       await User.findOneAndUpdate(
         { user: req.user.id },
-        { $push: { role: role.Creator } }
+        { $push: { roles: role.Creator } }
       )
 
       await Profile.findOneAndUpdate(
@@ -134,9 +135,9 @@ router.post(
   }
 )
 
-// @route  POST api/users
-// @desc   Register moderator
-// @access Public
+// @route  POST api/users/change_avatar
+// @desc   Change_avatar
+// @access Private
 router.post(
   '/change_avatar',
   authorize(),
@@ -144,7 +145,13 @@ router.post(
   async (req, res) => {
     const { buffer } = req.file
     try {
-      const { secure_url } = await bufferUpload(buffer, CLOUDINARY_PATH_AVATAR)
+      const { secure_url } = await bufferUpload(
+        buffer,
+        CLOUDINARY_PATH_AVATAR,
+        'avatar',
+        800,
+        800
+      )
 
       await User.findOneAndUpdate(
         { user: req.user.id },
@@ -160,8 +167,19 @@ router.post(
     }
   }
 )
-// @route  POST api/users
-// @desc   Register admin
-// @access Public
+
+// @route  GET api/user/myblogs
+// @desc   Get all blogs make by me
+// @access Private
+router.get('/myblogs', authorize(), async (req, res) => {
+  try {
+    const blogs = await Blog.find({ user: req.user.id })
+
+    res.send(blogs)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 module.exports = router

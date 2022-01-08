@@ -46,6 +46,7 @@ app.use('/api/course', require('./router/course'))
 app.use('/api/creator', require('./router/creator'))
 app.use('/api/profile', require('./router/profile'))
 app.use('/api/users', require('./router/users'))
+app.use('/api/moderator', require('./router/moderator'))
 
 // SET STORAGE
 

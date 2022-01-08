@@ -187,6 +187,7 @@ const Register = ({ register, isAuthenticated }) => {
           />
           <Button
             disabled={
+              !isRequired(formData.email) ||
               !(
                 isValidName &&
                 isValidEmail &&

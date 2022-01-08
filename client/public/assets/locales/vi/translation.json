@@ -29,5 +29,26 @@
         "myCourses": "Khóa học của tôi",
         "login": "Đăng nhập",
         "logout": "Đăng xuất"
+    },
+    "editProfile": {
+        "general": "Chung",
+        "account": "Tài khoản",
+        "creator": {
+            "title": "Cộng tác viên",
+            "decs": "Trở thành cộng tác viên cùng EasyLearn và chia sẻ kiến thức của bạn đến với mọi người",
+            "benefits": "Bạn sẽ được?",
+            "ben1": "Trở thành người đồng hành cùng Easy Learn",
+            "ben2": "Hưởng role Creator trong server Discord",
+            "ben3": "Được chia sẻ, được học hỏi thêm kiến thức",
+            "ben4": "Kiểm tiền bằng nội dung do chính bạn đăng tải",
+            "skills": "Kỹ năng",
+            "phone": "Số điện thoại",
+            "location": "Địa điểm",
+            "bio": "Tiểu sử",
+            "invalidPhone": "Số điện thoại không hợp lệ",
+            "getInTouch": " Đăng ký Cộng Tác Viên",
+            "registerSuccess": "Đăng ký thành công 💝"
+        },
+        "avatar": "Avatar"
     }
 }

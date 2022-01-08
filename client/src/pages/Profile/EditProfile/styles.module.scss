@@ -1,0 +1,19 @@
+.root {
+  background: var(--white-1);
+  width: 70%;
+  margin-top: 20px;
+  height: auto;
+
+  & .tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid var(--black-1);
+  }
+
+  & .tabPanel {
+    border-top: 2px solid var(--black-1);
+    border-right: 2px solid var(--black-1);
+    border-bottom: 2px solid var(--black-1);
+  }
+}

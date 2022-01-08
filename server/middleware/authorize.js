@@ -15,7 +15,7 @@ const authorize = (roles = []) => {
         } else {
           req.user = decoded.user
           const user = await User.findById(req.user.id).select('-password')
-          if (roles.length && !user.role.includes(roles)) {
+          if (roles.length && !user.roles.includes(roles)) {
             return res.status(401).json({ message: 'Unauthorized' })
           }
 

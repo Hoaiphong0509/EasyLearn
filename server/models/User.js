@@ -22,11 +22,32 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    role: {
+    roles: {
       type: [String],
       default: ['student'],
       enum: ['student', 'creator', 'moderator', 'admin'],
     },
+    blogs: [
+      {
+        blog: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
+    courses: [
+      {
+        course: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
+    learnings: [
+      {
+        learning: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

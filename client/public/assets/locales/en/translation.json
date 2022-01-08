@@ -29,5 +29,26 @@
         "myCourses": "My Courses",
         "login": "Login",
         "logout": "Logout"
+    },
+    "editProfile": {
+        "general": "General",
+        "account": "Account",
+        "creator": {
+            "title": "EasyLearn Creator",
+            "decs": "Become a collaborator with EasyLearn and share your knowledge with everyone",
+            "benefits": "What will you gain?",
+            "ben1": "Become a partner with Easy Learn",
+            "ben2": "Gain \"Creator\" role in server Discord",
+            "ben3": "Share, learn more knowledge",
+            "ben4": "Make money with your own content",
+            "skills": "Skills",
+            "phone": "Phone number",
+            "location": "Location",
+            "bio": "Bio",
+            "invalidPhone": "Invalid phone number",
+            "getInTouch": " Get In Touch",
+            "registerSuccess": "Register success 💝"
+        },
+        "avatar": "Avatar"
     }
 }

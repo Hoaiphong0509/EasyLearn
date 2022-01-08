@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import TextField from '@mui/material/TextField'
 import s from './styles.module.scss'
@@ -111,7 +111,9 @@ const Login = ({ login, isAuthenticated }) => {
             type="password"
           />
           <Button
-            disabled={!(isValidEmail && isValidPassword)}
+            disabled={
+              !isRequired(formData.email) || !(isValidEmail && isValidPassword)
+            }
             type="submit"
             className={s.btnLogin}
             variant="contained"

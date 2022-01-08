@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  background-color: var(--black-0);
+  background-image: linear-gradient(
+    62deg,
+    var(--dark-blue) 0%,
+    var(--black-0) 100%
+  );
+  border-radius: 15px;
+  padding: 15px 30px;
+
+  & .content {
+    flex-grow: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  & .image {
+    & img {
+      width: 250px;
+    }
+  }
+}

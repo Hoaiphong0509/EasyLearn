@@ -4,13 +4,13 @@ import thunk from 'redux-thunk'
 import setAuthToken from 'utils/setAuthToken'
 import rootReducer from '../redux/reducers'
 
-const initialsState = {}
+const initialState = {}
 
 const middleware = [thunk]
 
 const store = createStore(
   rootReducer,
-  initialsState,
+  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
 
