@@ -46,6 +46,21 @@ const UserSchema = new mongoose.Schema(
         learning: {
           type: mongoose.Schema.Types.ObjectId,
         },
+        title: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        creator: {
+          type: String,
+        },
+        avatar: {
+          type: String,
+        },
+        img: {
+          type: String,
+        },
       },
     ],
   },

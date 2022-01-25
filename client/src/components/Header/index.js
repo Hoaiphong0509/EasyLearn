@@ -22,12 +22,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Notifications } from '@mui/icons-material'
 import AvatarBox from './AvatarBox'
+import SearchBox from './SearchBox'
 
 const languages = [
   {
     code: 'en',
     name: 'English',
-    country_code: 'gb'
+    country_code: 'usa'
   },
   {
     code: 'vi',
@@ -38,7 +39,8 @@ const languages = [
 
 const Header = ({ auth: { isAuthenticated, user } }) => {
   const c = useStyles()
-  const currentLanguageCode = cookies.get('i18next') || 'vi'
+  const currentLanguageCode =
+    (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode)
   const { t } = useTranslation()
 
@@ -83,10 +85,12 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
       alignItems="center"
     >
       <Grid item xs={2} className={s.logo}>
-        <img src="/logo.png" alt="logo" />
+        <Link to="/">
+          <img src="/logo.png" alt="logo" />
+        </Link>
       </Grid>
       <Grid item xs={8} sx={{ textAlign: 'center' }}>
-        <TextField placeholder={t('header.search')} className={s.textField} />
+        <SearchBox />
       </Grid>
       <Grid item xs={2}>
         <Stack direction="row" spacing={2}>
@@ -94,7 +98,17 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
             <Tooltip title={currentLanguage.name} placement="top">
               <FormControlLabel
                 label=""
-                control={<LanguageSwitch sx={{ m: 1 }} defaultChecked />}
+                control={
+                  <LanguageSwitch
+                    sx={{ m: 1 }}
+                    // defaultChecked={currentLanguageCode === 'vi'}
+                    value={
+                      currentLanguageCode &&
+                      (currentLanguageCode === 'vi' ? true : false)
+                    }
+                    checked={currentLanguageCode === 'vi'}
+                  />
+                }
                 onChange={switchLanguageHandle}
               />
             </Tooltip>

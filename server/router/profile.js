@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator')
 const { error } = require('consola')
 const authorize = require('../middleware/authorize')
 const checkObjectId = require('../middleware/checkObjectId')
-
+const normalize = require('normalize-url')
 const Profile = require('../models/Profile')
 
 // @route    GET api/profile/me
@@ -14,8 +14,7 @@ router.get('/me', authorize(), async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.user.id,
-    }).populate('user', ['name', 'avatar'])
-
+    })
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for this user' })
     }
@@ -45,7 +44,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { skills, phone, ...rest } = req.body
+    const {
+      skills,
+      phone,
+      youtube,
+      twitter,
+      instagram,
+      linkedin,
+      facebook,
+      ...rest
+    } = req.body
 
     const profileFields = {
       user: req.user.id,
@@ -55,6 +63,15 @@ router.post(
         : skills.split(',').map((skill) => ' ' + skill.trim()),
       ...rest,
     }
+
+    const socialFields = { youtube, twitter, instagram, linkedin, facebook }
+
+    // normalize social fields to ensure valid url
+    for (const [key, value] of Object.entries(socialFields)) {
+      if (value && value.length > 0)
+        socialFields[key] = normalize(value, { forceHttps: true })
+    }
+    profileFields.social = socialFields
 
     try {
       let profile = await Profile.findOneAndUpdate(
@@ -105,9 +122,11 @@ router.put(
   authorize(),
   check('title', 'Title is required').notEmpty(),
   check('company', 'Company is required').notEmpty(),
-  check('from', 'From date is required and needs to be from the past')
-    .notEmpty()
-    .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
+  check(
+    'from',
+    'From date is required and needs to be from the past'
+  ).notEmpty(),
+  // .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -157,12 +176,15 @@ router.put(
   check('school', 'School is required').notEmpty(),
   check('degree', 'Degree is required').notEmpty(),
   check('fieldofstudy', 'Field of study is required').notEmpty(),
-  check('from', 'From date is required and needs to be from the past')
-    .notEmpty()
-    .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
+  check(
+    'from',
+    'From date is required and needs to be from the past'
+  ).notEmpty(),
+  // .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
+      console.log(errors)
       return res.status(400).json({ errors: errors.array() })
     }
 

@@ -18,6 +18,9 @@ import { SignalCellularNullOutlined } from '@mui/icons-material'
 import { useHistory } from 'react-router-dom'
 
 import { logout } from 'services/redux/actions/auth'
+import { ROLES } from 'constants/AppConstants'
+
+import s from './styles.module.scss'
 
 const AvatarBox = ({ logout, user }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -30,29 +33,49 @@ const AvatarBox = ({ logout, user }) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
 
   const handleProfile = () => {
-    const path = '/edit-profile'
-    history.push(path)
+    history.push('/edit-profile')
+  }
+
+  const handleCourse = () => {
+    history.push('/courses/create_course')
+  }
+
+  const handleCreateBlog = () => {
+    history.push('/blogs/create_blog')
+  }
+
+  const handleStuff = () => {
+    history.push('/my_stuff')
   }
 
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account settings">
-          <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            {user && (user.avatar ? (
-              <Avatar src={user.avatar} sx={{ width: 32, height: 32 }}></Avatar>
-            ) : (
-              <Avatar sx={{ width: 32, height: 32 }}>
-                {user.name.slice(0, 1).toUpperCase()}
-              </Avatar>
-            ))}
-          </IconButton>
-        </Tooltip>
+      <Box
+        className={s.root}
+        sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
+      >
+        {user && (
+          <Tooltip title={user.name}>
+            <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+              {user.avatar ? (
+                <Avatar
+                  src={user.avatar}
+                  sx={{ width: 32, height: 32 }}
+                ></Avatar>
+              ) : (
+                <Avatar sx={{ width: 32, height: 32 }}>
+                  {user.name.slice(0, 1).toUpperCase()}
+                </Avatar>
+              )}
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -67,7 +90,12 @@ const AvatarBox = ({ logout, user }) => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleProfile}>{t('header.profile')}</MenuItem>
-        <MenuItem>{t('header.myCourses')}</MenuItem>
+        <MenuItem onClick={handleStuff}>{t('header.myStuff')}</MenuItem>
+        <Divider />
+        {user && user.roles.includes(ROLES.CREATOR) ? (
+          <MenuItem onClick={handleCourse}>{t('header.createCourse')}</MenuItem>
+        ) : null}
+        <MenuItem onClick={handleCreateBlog}>{t('header.createBlog')}</MenuItem>
         <Divider />
         <MenuItem onClick={logout}>
           <ListItemIcon>

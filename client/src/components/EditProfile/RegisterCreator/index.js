@@ -81,16 +81,8 @@ const RegisterCreator = ({ registerCreator, auth: { user } }) => {
   }
 
   return (
-    <Box className={s.root}>
-      <header className={s.header}>
-        <Typography className={s.title} variant="h3">
-          {t('editProfile.creator.title')}
-        </Typography>
-        <Typography className={s.decs} variant="p">
-          {t('editProfile.creator.decs')}
-        </Typography>
-      </header>
-      <section className={s.content}>
+    <React.Fragment>
+      <section className={s.root}>
         <div className={s.benefit}>
           <Typography variant="h4" className={s.title}>
             {t('editProfile.creator.benefits')}
@@ -157,7 +149,7 @@ const RegisterCreator = ({ registerCreator, auth: { user } }) => {
           </Button>
         </form>
       </section>
-    </Box>
+    </React.Fragment>
   )
 }
 

@@ -3,18 +3,21 @@ import { hover } from '@testing-library/user-event/dist/hover'
 
 const useStyles = makeStyles(() => ({
   root: {
+    position: 'sticky',
+    top: 100,
+
     '& .MuiSvgIcon-root': {
       fontSize: '20px'
     },
     '& .MuiListItemIcon-root': {
       // textAlign: 'center',
-    }, 
-    '& .MuiListItemButton-root' : {
-      marginBottom: '5px',
-      marginLeft: '-31px',
     },
-    '& .MuiListItemButton-root:hover' : {
-      background: 'none',
+    '& .MuiListItemButton-root': {
+      marginBottom: '5px',
+      marginLeft: '-31px'
+    },
+    '& .MuiListItemButton-root:hover': {
+      background: 'none'
     }
   }
 }))

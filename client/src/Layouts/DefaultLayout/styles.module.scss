@@ -9,12 +9,12 @@
   & .nav {
     flex-grow: 0;
     display: flex;
-    position: sticky;
-    top: 0;
+    position: sticky !important;
   }
 
   & .child {
     flex-grow: 20;
     background-color: var(--white-1);
+    padding-right: 20px;
   }
 }

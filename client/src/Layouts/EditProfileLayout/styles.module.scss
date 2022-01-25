@@ -8,9 +8,8 @@
 
   & .nav {
     flex-grow: 0;
-    display: flex;
-    position: sticky;
-    top: 0;
+    // display: flex;
+    position: sticky !important;
   }
 
   & .child {

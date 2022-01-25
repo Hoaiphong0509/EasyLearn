@@ -1,0 +1,20 @@
+.root {
+  & .area {
+    margin: 20px 0;
+
+    & .index {
+      font-weight: bold;
+      color: var(--dark-blue);
+      margin-bottom: 10px;
+    }
+  }
+  & .blogArea {
+    margin: 20px 0;
+
+    & .index {
+      font-weight: bold;
+      color: var(--dark-blue);
+      margin-bottom: 10px;
+    }
+  }
+}

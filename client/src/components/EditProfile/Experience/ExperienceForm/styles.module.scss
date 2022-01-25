@@ -1,0 +1,11 @@
+.from {
+  width: inherit;
+  & .stack {
+    background-color: bisque;
+    & .formControl {
+      & .textField {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.root {
+  & .itemSections {
+    display: flex;
+    flex-direction: column;
+
+    & .indexSections {
+      background: var(--dark-blue);
+
+      & .titleSections {
+        color: var(--white-1);
+        font-weight: bold;
+      }
+    }
+
+    & .itemVideos {
+      margin-left: 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      width: 100%;
+
+      & .itemVideos {
+        & .btnVideo {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.active {
+  background-color: var(--smooth-blue);
+  color: var(--black-1);
+}

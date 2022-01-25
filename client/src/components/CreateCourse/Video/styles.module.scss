@@ -1,0 +1,35 @@
+.video_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px auto;
+  color: #fff;
+  background: var(--smooth-blue);
+
+  padding: 16px;
+  border-radius: 5px;
+  width: 70%;
+
+  & .videoIn4 {
+    display: flex;
+    color: var(--black-1);
+
+    & .in4 {
+      font-size: 16px;
+      margin-right: 5px;
+    }
+  }
+
+  & .icons {
+    & .btn {
+      color: var(--black-1);
+      margin-right: 5px;
+    }
+  }
+}
+
+.complete {
+  text-decoration: line-through;
+  opacity: 0.4;
+}

@@ -1,58 +1,41 @@
 .root {
-  & .header {
-    text-align: center;
-    border-bottom: 2px solid var(--black-1);
-    padding: 20px 0;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 
+  & .benefit {
     & .title {
-      margin-bottom: 20px;
       color: var(--dark-blue);
+      text-decoration: underline;
     }
 
-    & .decs {
-      color: var(--normal-blue);
+    & .listBen {
+      list-style-type: '✅';
+
+      & li {
+        font-size: 17px;
+        color: var(--normal-blue);
+      }
     }
   }
 
-  & .content {
-    margin-top: 20px;
+  & .formControl {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    align-items: center;
 
-    & .benefit {
-      & .title {
-        color: var(--dark-blue);
-        text-decoration: underline;
-      }
-
-      & .listBen {
-        list-style-type: '✅';
-
-        & li {
-          font-size: 17px;
-          color: var(--normal-blue);
-        }
-      }
+    & .textField {
+      width: 450px;
+      margin-bottom: 15px;
     }
 
-    & .formControl {
+    & .btnGetInTouch {
+      height: 50px;
       display: flex;
-      flex-direction: column;
-
-      & .textField {
-        width: 450px;
-        margin-bottom: 15px;
-      }
-
-      & .btnGetInTouch {
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 30px;
-      }
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
     }
   }
 }

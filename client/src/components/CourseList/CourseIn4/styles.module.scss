@@ -1,0 +1,140 @@
+.root {
+  margin: 20px 80px;
+  display: flex;
+
+  & .in4Course {
+    width: 70%;
+    margin-right: 10px;
+
+    & .header {
+      & .title {
+        font-weight: bold;
+        color: var(--dark-blue);
+        margin-bottom: 20px;
+      }
+
+      & .desc {
+        color: var(--normal-blue);
+        margin-bottom: 20px;
+      }
+
+      & .in4Creator {
+        display: flex;
+        align-items: center;
+
+        & .avt {
+          margin-right: 10px;
+        }
+        & .creator {
+          color: var(--black-0);
+          font-style: italic;
+        }
+      }
+    }
+
+    & .box {
+      border: 1px solid var(--dark-blue);
+      margin: 20px 0;
+      padding: 20px;
+
+      & .boxTitle {
+        display: flex;
+        align-items: center;
+
+        & .title {
+          margin-right: 45px;
+          font-weight: bold;
+          font-style: italic;
+          color: var(--dark-blue);
+        }
+      }
+
+      & .list {
+        & .listItemText {
+          & .gainText {
+            font-size: 18px;
+            color: var(--black-0);
+          }
+        }
+      }
+
+      & .sectionName {
+        margin-top: 20px;
+        color: (--dark-blue);
+      }
+    }
+  }
+
+  & .overviewCourse {
+    width: 30%;
+    height: 500px;
+    position: sticky;
+    top: 100px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+    & .headerOverview {
+      position: relative;
+
+      & img {
+        width: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+      }
+
+      & .playIntro {
+        position: absolute;
+        top: calc(50% - 40px);
+        left: calc(50% - 40px);
+      }
+    }
+
+    & .containOverview {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      & .prices {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: var(--red);
+        margin-bottom: 30px;
+      }
+
+      & .btnGetCourse {
+        background: var(--smooth-blue);
+        color: var(--white-1);
+        padding: 20px 40px;
+      }
+
+      & .quickIn4 {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.videoIntro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  background-color: var(--white-0);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & .introTitle {
+    margin: 20px;
+    font-weight: bold;
+    color: var(--dark-blue);
+  }
+
+  & iframe {
+    width: 100%;
+    height: 500px;
+  }
+}

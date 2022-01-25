@@ -1,0 +1,21 @@
+.card {
+  margin-bottom: 20px;
+  background: var(--white-1) !important;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+  & .cardContent {
+    & .title {
+      color: var((--dark-blue));
+      font-weight: bold;
+    }
+    & .company,
+    & .location {
+      color: var((--normal-blue));
+      font-weight: bold;
+    }
+
+    & .location {
+      color: var((--black-0));
+    }
+  }
+}

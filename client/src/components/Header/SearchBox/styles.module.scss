@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  justify-content: center;
+
+  & .form {
+    width: 60%;
+
+    & .textField {
+      width: 100%;
+    }
+  }
+
+  & .resultSearch {
+    width: 700px !important;
+    background-color: aquamarine;
+  }
+}

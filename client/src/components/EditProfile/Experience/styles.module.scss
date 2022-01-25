@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+
+  & .listExp {
+    width: 50%;
+    padding: 20px;
+  }
+  & .formExp {
+    padding: 20px;
+    width: 50%;
+    position: sticky;
+    top: 20px;
+  }
+}

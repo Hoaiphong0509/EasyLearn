@@ -2,13 +2,23 @@ const mongoose = require('mongoose')
 
 const CourseSchema = new mongoose.Schema(
   {
-    owner: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
     title: {
       type: String,
       required: true,
+    },
+    img: {
+      type: String,
+      required: true,
+    },
+    creator: {
+      type: String,
+    },
+    avatar: {
+      type: String,
     },
     description: {
       type: String,
@@ -36,15 +46,23 @@ const CourseSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        videos: {
-          type: [String],
-          required: true,
-        },
+        videos: [
+          {
+            name: {
+              type: String,
+              required: true,
+            },
+            link: {
+              type: String,
+              required: true,
+            },
+          },
+        ],
       },
     ],
     prices: {
       type: String,
-      default: 50,
+      default: 0,
       required: true,
     },
     students: [

@@ -2,6 +2,10 @@
     "app_title": "Easy Learn",
     "language": "Language",
     "welcome_message": "Welcome",
+    "courses": "Courses",
+    "blogs": "Blogs",
+    "save": "Save",
+    "delete": "Delete",
     "auth": {
         "learnToKnow": "learn to know",
         "password": "Password",
@@ -23,16 +27,56 @@
         "invalidPassword": "Invalid Password",
         "invalidConfirmPassword": "Confirm Password does not match"
     },
+    "banner": {
+        "discord": {
+            "title": "Easy Learn in Discord",
+            "desc": "Join the Lonely Zoo discord server to learn & have fun together. Besides, make new friends and exchange, exchange with each other",
+            "join": "Join"
+        },
+        "facebook": {
+            "title": "Easy Learn on Facebook",
+            "desc": "Follow EasyLearn & Lonely Zoo's facebook page for more interesting information about learning & entertainment",
+            "join": "Join"
+        },
+        "youtube": {
+            "title": "Easy Learn with Youtube",
+            "desc": "Subscribe to Easy Learn's Youtube channel to follow the courses posted on it",
+            "sub": "Subscribe"
+        }
+    },
     "header": {
         "search": "Search",
         "profile": "Profile",
         "myCourses": "My Courses",
         "login": "Login",
-        "logout": "Logout"
+        "logout": "Logout",
+        "myStuff": "My Stuff",
+        "createCourse": "Create course",
+        "createBlog": "Create blog"
+    },
+    "areaStudy": {
+        "overview": "Overview",
+        "gains": "Gains",
+        "requires": "Requires"
+    },
+    "profile": {
+        "contact": "Contact",
+        "skills": "Skills",
+        "exp": "Experience",
+        "edu": "Education",
+        "content": "Content",
+        "blogs": "Blogs",
+        "courses": " Courses"
     },
     "editProfile": {
-        "general": "General",
-        "account": "Account",
+        "general": {
+            "title": "General",
+            "desc": "Overview of your account"
+        },
+        "account": {
+            "title": "Account",
+            "desc": "Change security information"
+        },
         "creator": {
             "title": "EasyLearn Creator",
             "decs": "Become a collaborator with EasyLearn and share your knowledge with everyone",
@@ -49,6 +93,59 @@
             "getInTouch": " Get In Touch",
             "registerSuccess": "Register success 💝"
         },
-        "avatar": "Avatar"
+        "avatar": {
+            "title": "Avatar",
+            "desc": "Take a look your avatar"
+        },
+        "experience": {
+            "title": "Experience",
+            "desc": "Let everyone know you have experience in your field",
+            "titleExp": "Job title",
+            "company": "Company",
+            "location": "Location",
+            "from": "From date",
+            "to": "To date",
+            "current": "Current",
+            "descExp": "Brief description of your job",
+            "notHaveExp": "You have no information about your experience"
+        },
+        "education": {
+            "title": "Education",
+            "desc": "Let everyone know where you used to study",
+            "school": "School",
+            "degree": "Degree",
+            "fieldofstudy": "Field of study",
+            "descEdu": "Briefly describe what you have learned",
+            "notHaveEdu": "You have no information about your education"
+        }
+    },
+    "course": {
+        "manageCourse": "Manage course",
+        "createCourse": "Create own course",
+        "changeImg": {
+            "title": "Change your image course",
+            "desc": "Change your course image. If you continue without changing, the current image will serve as the main profile picture for your course."
+        },
+        "uploadImg": "Upload & Save image",
+        "continue": "Continue"
+    },
+    "blog": {
+        "manageBlog": "Manage blog",
+        "createBlog": "Create own blog"
+    },
+    "myStuff": {
+        "title": "Manage your content",
+        "desc": "View content that you have created such as videos, blogs",
+        "blogs": "My Blogs",
+        "learnings": "My Learnings"
+    },
+    "notFound": {
+        "title": "OOPS!",
+        "desc": "Error 404: Page Not Found",
+        "goHome": "Go home"
+    },
+    "serverErr": {
+        "title": "SERVER ERROR!",
+        "desc": "Error 500: Something is wrong on the server. EasyLearn apologize for this inconvenience"
     }
 }

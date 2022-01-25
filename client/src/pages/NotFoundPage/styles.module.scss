@@ -1,0 +1,95 @@
+.root {
+  position: relative;
+  height: 100vh;
+  background-color: var(--white-1);
+
+  & .notFound {
+    max-width: 620px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    & .bg_page {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      z-index: -1;
+
+      & div {
+        width: 100%;
+        background: var(--white-0);
+        border-radius: 90px;
+        height: 125px;
+      }
+
+      & .not_found:nth-child(1) {
+        -webkit-box-shadow: 5px 5px 0px 0px var(--white-2);
+        box-shadow: 5px 5px 0px 0px var(--white-2);
+      }
+      & .not_found:nth-child(2) {
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3);
+        -webkit-box-shadow: 5px 5px 0px 0px var(--white-2);
+        box-shadow: 5px 5px 0px 0px var(--white-2);
+        position: relative;
+        z-index: 10;
+      }
+      & .not_found:nth-child(3) {
+        -webkit-box-shadow: 5px 5px 0px 0px var(--white-2);
+        box-shadow: 5px 5px 0px 0px var(--white-2);
+        position: relative;
+        z-index: 90;
+      }
+    }
+
+    & .title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 86px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: var(--dark-blue);
+    }
+
+    & .err {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 20px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    & .desc {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 26px;
+      margin: 0;
+      font-weight: 700;
+      color: var(--normal-blue);
+    }
+
+    & .btn {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 14px;
+      text-decoration: none;
+      text-transform: uppercase;
+      background: var(--green);
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+  }
+}

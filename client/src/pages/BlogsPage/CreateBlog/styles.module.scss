@@ -1,0 +1,33 @@
+.root {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+
+  & .form {
+    width: 70%;
+    border: 1px solid var(--black-0);
+    padding: 20px;
+
+    & .formControl {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      & .textField {
+        width: 80%;
+        margin-bottom: 20px;
+      }
+
+      & .editorField {
+        width: 80% !important;
+      }
+
+      & .btn {
+        margin-top: 20px;
+        height: 25px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -19,6 +19,8 @@ const signJWT = require('../helper/signJWT')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
 const Blog = require('../models/Blog')
+const Course = require('../models/Course')
+const checkObjectId = require('../middleware/checkObjectId')
 
 // @route  POST api/users/register_student
 // @desc   Register student
@@ -52,30 +54,32 @@ router.post(
         return res.status(400).json({ errors: [{ msg: 'msgErrEmail' }] })
       }
 
-      const verifier = new Verifier(API_EMAIL)
-      verifier.verify(email, async (err, data) => {
-        if (err) return res.status(500).json({ errors: [{ msg: err }] })
-        if (data.smtpCheck === false)
-          return res.status(400).json({ errors: [{ msg: 'msgErrExistEmail' }] })
-        const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' })
+      //TODO CHECK REAL EMAIL
+      // const verifier = new Verifier(API_EMAIL)
+      // verifier.verify(email, async (err, data) => {
+      //   if (err) return res.status(500).json({ errors: [{ msg: err }] })
+      //   if (data.smtpCheck === false)
+      //     return res.status(400).json({ errors: [{ msg: 'msgErrExistEmail' }] })
+      // })
 
-        user = new User({
-          name,
-          email: email.toLowerCase(),
-          avatar,
-          password,
-        })
+      const avatar = gravatar.url(email, { s: '200', r: 'pg', d: 'mm' })
 
-        //Encrypt password
-        const salt = await bcrypt.genSalt(10)
-        user.password = await bcrypt.hash(password, salt)
-
-        await user.save()
-
-        const token = await signJWT(req.user._id)
-
-        res.json({ token })
+      user = new User({
+        name,
+        email: email.toLowerCase(),
+        avatar,
+        password,
       })
+
+      //Encrypt password
+      const salt = await bcrypt.genSalt(10)
+      user.password = await bcrypt.hash(password, salt)
+
+      await user.save()
+
+      const token = await signJWT(user.id)
+
+      res.json({ token })
     } catch (error) {
       error({ message: `router: ${error.message}`, badge: true })
       res.status(500).send('Server Error')
@@ -101,11 +105,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
+    const user = await User.findById(req.user.id).select('-password')
+
     const { skills, phone, ...rest } = req.body
 
     const profileFields = {
       user: req.user.id,
       phone,
+      name: user.name,
+      avatar: user.avatar,
+      email: user.email,
       skills: Array.isArray(skills)
         ? skills
         : skills.split(',').map((skill) => ' ' + skill.trim()),
@@ -143,23 +152,27 @@ router.post(
   authorize(),
   multerSingle.single('avatar'),
   async (req, res) => {
+    console.log(req.file)
     const { buffer } = req.file
+
     try {
       const { secure_url } = await bufferUpload(
         buffer,
         CLOUDINARY_PATH_AVATAR,
         'avatar',
-        800,
-        800
+        200,
+        200
       )
-
-      await User.findOneAndUpdate(
+      await User.findByIdAndUpdate(req.user.id, {
+        $set: { avatar: secure_url },
+      })
+      await Profile.findOneAndUpdate(
         { user: req.user.id },
-        { $set: { avatar: secure_url } }
+        {
+          $set: { avatar: secure_url },
+        }
       )
-
       const token = await signJWT(req.user.id)
-
       return res.json({ token })
     } catch (error) {
       console.log('error:', error.message)
@@ -181,5 +194,76 @@ router.get('/myblogs', authorize(), async (req, res) => {
     res.status(500).send('Server Error')
   }
 })
+
+// @route  POST api/user/add_learning/:id_course
+// @desc   Add course into lerning
+// @access Private
+router.post(
+  '/add_learning/:id_course',
+  authorize(),
+  checkObjectId('id_course'),
+  async (req, res) => {
+    try {
+      const course = await Course.findById(req.params.id_course)
+
+      const { _id, title, description, creator, avatar, img } = course
+
+      if (!course) return res.status(400).json({ msg: 'Course not available' })
+
+      await User.findByIdAndUpdate(req.user.id, {
+        $push: {
+          learnings: {
+            learning: _id,
+            title,
+            description,
+            creator,
+            avatar,
+            img,
+          },
+        },
+      })
+
+      res.json({ msg: 'Add courses successfully' })
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route  POST api/user/search
+// @desc   Search
+// @access Private
+router.post(
+  '/search',
+  check('keyword', 'Keyword is required').notEmpty(),
+  async (req, res) => {
+    try {
+      const result = {
+        courses: [],
+        blogs: [],
+      }
+
+      const { keyword } = req.body
+      const courses = await Course.find()
+      const blogs = await Blog.find()
+
+      result.courses = courses.filter((c) =>
+        c.title.toLowerCase().includes(keyword.toLowerCase())
+      )
+      result.blogs = blogs.filter((b) =>
+        b.title.toLowerCase().includes(keyword.toLowerCase())
+      )
+
+      if (result.courses.length == 0 && result.blogs.length)
+        return res.status(400).json({ msg: "Couldn't find anything" })
+
+      res.send(result)
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
 module.exports = router

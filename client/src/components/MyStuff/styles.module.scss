@@ -1,0 +1,29 @@
+.root {
+  margin: 30px 20px;
+
+  & .header {
+    margin-bottom: 30px;
+
+    & .title {
+      font-weight: bold;
+      color: var(--dark-blue);
+      margin-bottom: 20px;
+    }
+    & .desc {
+      font-weight: bold;
+      color: var(--black-0);
+      margin: 30px 0;
+    }
+  }
+
+  & .stuff {
+    & .tabStuff {
+      padding: 20px 0;
+    }
+
+    & .tabPanelStuff {
+      padding: 30px;
+      border: 1px solid var(--dark-blue);
+    }
+  }
+}

@@ -8,7 +8,12 @@ const ProfileSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true
+    },
+    email: {
+      type: String,
+    },
+    avatar: {
+      type: String,
     },
     phone: {
       type: String,

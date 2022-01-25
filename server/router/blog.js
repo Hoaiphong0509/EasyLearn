@@ -3,11 +3,15 @@ const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
 const authorize = require('../middleware/authorize')
+const multer = require('multer')
+const bufferUpload = require('../helper/bufferUpload')
+const multerSingle = multer()
 const role = require('../helper/role')
 
 const Blog = require('../models/Blog')
 const User = require('../models/User')
 const checkObjectId = require('../middleware/checkObjectId')
+const { CLOUDINARY_PATH_BLOG } = require('../config')
 
 // @route    POST api/blog
 // @desc     Create a blog
@@ -49,6 +53,37 @@ router.post(
   }
 )
 
+// @route  POST api/blog/add_img_blog/:id
+// @desc   Add image for blog
+// @access Private
+router.post(
+  '/add_img_blog/:id',
+  authorize(),
+  checkObjectId('id'),
+  multerSingle.single('img'),
+  async (req, res) => {
+    const { buffer } = req.file
+    try {
+      const { secure_url } = await bufferUpload(
+        buffer,
+        CLOUDINARY_PATH_BLOG,
+        'avatar',
+        848,
+        420
+      )
+
+      const result = await Blog.findByIdAndUpdate(req.params.id, {
+        $set: { img: secure_url },
+      })
+
+      return res.send(result)
+    } catch (error) {
+      console.log('error:', error.message)
+      res.send('Something went wrong please try again later..')
+    }
+  }
+)
+
 // @route    PUT api/blog/:id
 // @desc     Edit a blog
 // @access   Private
@@ -56,8 +91,8 @@ router.post(
 
 // @route    GET api/blog
 // @desc     Get all blogs
-// @access   Private
-router.get('/', authorize(), async (req, res) => {
+// @access   Public
+router.get('/', async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ date: -1 })
     res.json(blogs)
@@ -67,10 +102,44 @@ router.get('/', authorize(), async (req, res) => {
   }
 })
 
+// @route    GET api/blog/my_blogs
+// @desc     Get all my blogs
+// @access   Private
+router.get('/my_blogs', authorize(), async (req, res) => {
+  try {
+    const blogs = await Blog.find().sort({ date: -1 })
+    const result = blogs.filter((b) => b.user._id.toString() === req.user.id)
+    res.send(result)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route    GET api/blog/get_blogs/:user_id
+// @desc     Get all blogs by user Id
+// @access   PUBLIC
+router.get(
+  '/get_blogs/:user_id',
+  checkObjectId('user_id'),
+  async (req, res) => {
+    try {
+      const blogs = await Blog.find().sort({ date: -1 })
+      const result = blogs.filter(
+        (b) => b.user._id.toString() === req.params.user_id
+      )
+      res.send(result)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
 // @route    GET api/blog/:id
 // @desc     Get blog by ID
-// @access   Private
-router.get('/:id', authorize(), checkObjectId('id'), async (req, res) => {
+// @access   Public
+router.get('/:id', checkObjectId('id'), async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
 
@@ -127,7 +196,6 @@ router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
 
-    // Check if the post has already been liked
     if (blog.likes.some((like) => like.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: 'Blog already liked' })
     }

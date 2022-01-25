@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Box, Typography } from '@mui/material'
+import { Avatar, Box, Typography } from '@mui/material'
 import { connect } from 'react-redux'
 
 import s from './styles.module.scss'
+import { width } from '@mui/system'
 
 const In4Profile = ({ auth: { user } }) => {
   return (
     <Box className={s.root}>
-      <img src={user.avatar} alt={user.name} />
+      <Avatar
+        src={user.avatar}
+        alt={user.name}
+        sx={{ width: 154, height: 154 }}
+      />
       <Typography variant="h4" className={s.name}>
         {user.name}
       </Typography>
