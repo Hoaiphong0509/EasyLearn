@@ -1,7 +1,6 @@
 import api from 'utils/api'
 import { AUTHS, TOAST_TYPE } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
-import setAuthToken from 'utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
   try {

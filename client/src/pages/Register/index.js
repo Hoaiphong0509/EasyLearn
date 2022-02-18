@@ -13,6 +13,7 @@ import logo from 'assets/img/logoSymbol.png'
 import { Link, Redirect } from 'react-router-dom'
 import { register } from 'services/redux/actions/auth'
 import { isRequired, isEmail, isPassword, isName } from 'utils/AppUltils'
+import useUnsaved from 'hooks/useUnsaved'
 
 const Register = ({ register, isAuthenticated }) => {
   const [isValidName, setIsValidName] = useState(true)
@@ -28,6 +29,8 @@ const Register = ({ register, isAuthenticated }) => {
   const c = useStyles()
   const { t } = useTranslation()
 
+  const [Prompt, setDirty, setPristine] = useUnsaved()
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,6 +44,7 @@ const Register = ({ register, isAuthenticated }) => {
     if (e.target.name === 'confirmPassword')
       if (e.target.value !== password) setIsValidPassword(false)
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setDirty()
   }
 
   const onBlur = (e) => {
@@ -198,10 +202,14 @@ const Register = ({ register, isAuthenticated }) => {
             type="submit"
             className={s.btnLogin}
             variant="contained"
+            onClick={() => {
+              setPristine()
+            }}
           >
             {t('auth.register')}
           </Button>
         </form>
+        {Prompt}
         <div className={s.footer}>
           <Link className={s.link} to="/">
             {t('auth.backToHome')}

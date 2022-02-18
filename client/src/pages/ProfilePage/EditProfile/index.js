@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
-import TabPanel from 'components/common/TabPanel'
+import TabPanel from 'components/common/TabPanel/TabPanel'
 import In4Profile from 'components/EditProfile/In4Profile'
 
 import { connect } from 'react-redux'
@@ -49,7 +49,9 @@ const EditProfile = ({
             >
               <Tab label={t('editProfile.account.title')} />
               <Tab label={t('editProfile.avatar.title')} />
-              <Tab label={t('editProfile.general.title')} />
+              {user.roles.includes(ROLES.CREATOR) ? (
+                <Tab label={t('editProfile.general.title')} />
+              ) : null}
               {user.roles.includes(ROLES.CREATOR) ? (
                 <Tab label={t('editProfile.experience.title')} />
               ) : null}
@@ -89,19 +91,21 @@ const EditProfile = ({
               <Avatar />
             </Box>
           </TabPanel>
-          <TabPanel value={value} index={2}>
-            <Box className={s.boxPanel}>
-              <header className={s.header}>
-                <Typography className={s.title} variant="h3">
-                  {t('editProfile.general.title')}
-                </Typography>
-                <Typography className={s.decs} variant="p">
-                  {t('editProfile.general.desc')}
-                </Typography>
-              </header>
-              {user && profile && <General user={user} profile={profile} />}
-            </Box>
-          </TabPanel>
+          {user.roles.includes(ROLES.CREATOR) ? (
+            <TabPanel value={value} index={2}>
+              <Box className={s.boxPanel}>
+                <header className={s.header}>
+                  <Typography className={s.title} variant="h3">
+                    {t('editProfile.general.title')}
+                  </Typography>
+                  <Typography className={s.decs} variant="p">
+                    {t('editProfile.general.desc')}
+                  </Typography>
+                </header>
+                {user && profile && <General user={user} profile={profile} />}
+              </Box>
+            </TabPanel>
+          ) : null}
           {user.roles.includes(ROLES.CREATOR) ? (
             <TabPanel value={value} index={3}>
               <Box className={s.boxPanel}>
@@ -113,9 +117,7 @@ const EditProfile = ({
                     {t('editProfile.experience.desc')}
                   </Typography>
                 </header>
-                {user && profile && (
-                  <Experience user={user} profile={profile} />
-                )}
+                {user && profile && <Experience user={user} profile={profile} />}
               </Box>
             </TabPanel>
           ) : null}

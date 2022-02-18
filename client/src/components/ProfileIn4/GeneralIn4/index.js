@@ -17,7 +17,7 @@ import moment from 'moment'
 
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
-import TabPanel from 'components/common/TabPanel'
+import TabPanel from 'components/common/TabPanel/TabPanel'
 import CourseItemSmall from './CourseItemSmall'
 import BlogItemSmall from './BlogItemSmall'
 

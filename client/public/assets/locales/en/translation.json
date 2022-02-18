@@ -6,6 +6,11 @@
     "blogs": "Blogs",
     "save": "Save",
     "delete": "Delete",
+    "modal": {
+        "warnTitle": "Warning",
+        "unSaved": "Are you sure want to discard changes?",
+        "notify": "Notifications"
+    },
     "auth": {
         "learnToKnow": "learn to know",
         "password": "Password",

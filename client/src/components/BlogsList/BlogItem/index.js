@@ -1,4 +1,4 @@
-import { Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
@@ -9,7 +9,6 @@ import { addLike, removeLike, cleanUpBlog } from 'services/redux/actions/blog'
 import { cleanUpProfile } from 'services/redux/actions/profile'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import cn from 'classnames'
 import { Link } from 'react-router-dom'
 
 const BlogItem = ({
@@ -19,7 +18,7 @@ const BlogItem = ({
   cleanUpBlog,
   cleanUpProfile
 }) => {
-  const { _id, user, title, img, name, avatar, likes } = blog
+  const { _id, user, title, name, avatar, likes } = blog
 
   return (
     <React.Fragment>
@@ -36,7 +35,7 @@ const BlogItem = ({
         <div className={s.footer}>
           <Link to={`/profile/${user}`} onClick={cleanUpProfile}>
             <div className={s.in4}>
-              <img src={avatar} alt="avt_creator" />
+              <Avatar src={avatar} alt={name} />
               <Typography className={s.creator} variant="p">
                 {name}
               </Typography>

@@ -7,7 +7,8 @@
       "components/*": ["components/*"],
       "assets/*": ["assets/*"],
       "layouts/*": ["layouts/*"],
-      "services/*": ["services/*"]
+      "services/*": ["services/*"],
+      "hooks/*": ["hooks/*"]
     }
   }
 }

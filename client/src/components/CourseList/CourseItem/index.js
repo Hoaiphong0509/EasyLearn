@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Avatar, Box, Typography } from '@mui/material'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -27,7 +27,7 @@ const CourseItem = ({ cleanUpCourse, cleanUpProfile, course }) => {
             onClick={cleanUpProfile}
             className={s.link}
           >
-            <img src={avatar} alt="avt_creator" />
+            <Avatar src={avatar} alt={creator} />
             <Typography className={s.creator} variant="p">
               {creator}
             </Typography>

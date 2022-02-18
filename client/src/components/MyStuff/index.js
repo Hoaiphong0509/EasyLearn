@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material'
-import TabPanel from 'components/common/TabPanel'
+import TabPanel from 'components/common/TabPanel/TabPanel'
 import React, { useState } from 'react'
 import MyBlogsList from './MyBlogsList'
 import MyLearnings from './MyLearnings'

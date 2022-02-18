@@ -1,5 +1,5 @@
 import { Box, List, Tab, Tabs, Typography } from '@mui/material'
-import TabPanel from 'components/common/TabPanel'
+import TabPanel from 'components/common/TabPanel/TabPanel'
 import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
 import React, { useState } from 'react'
 

@@ -6,6 +6,11 @@
     "blogs": "Blogs",
     "save": "Lưu",
     "delete": "Xóa",
+    "modal": {
+        "warnTitle": "Lưu ý!",
+        "unSaved": "Bạn có chắc chắn muốn hủy các thay đổi không?",
+        "notify": "Thông báo"
+    },
     "auth": {
         "learnToKnow": "học để hiểu biết",
         "password": "Mật khẩu",
