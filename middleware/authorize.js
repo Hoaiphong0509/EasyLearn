@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-const { error } = require('consola')
 const { SECRET } = require('../config')
 
 const authorize = (roles = []) => {
@@ -13,17 +12,17 @@ const authorize = (roles = []) => {
         if (error) {
           return res.status(401).json({ msg: 'Token is not valid' })
         } else {
-          req.user = decoded.user
-          const user = await User.findById(req.user.id).select('-password')
+          req.user = decoded || decoded.user
+          const user = await User.findById(req.user._id)
           if (roles.length && !user.roles.includes(roles)) {
             return res.status(401).json({ message: 'Unauthorized' })
           }
-          
+
           next()
         }
       })
     } catch (err) {
-      error({ message: 'something wrong with auth middleware', badge: true })
+      console.log('something wrong with auth middleware')
       res.status(500).json({ msg: 'Server Error' })
     }
   }

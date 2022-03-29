@@ -1,42 +1,18 @@
 const express = require('express')
-const connectDB = require('./helper/db')
+const logger = require('morgan')
+const connectDB = require('./utils/db')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const { success } = require('consola')
-const fileUpload = require('express-fileupload')
-const { v2: cloudinary } = require('cloudinary')
-
-const {
-  CLOUDINARY_NAME,
-  CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET,
-} = require('./config')
 
 const app = express()
-
-//Constant app
-// const { PORT } = require('./config')
 
 //Connect DB
 connectDB()
 
-//Init Middleware
-cloudinary.config({
-  cloud_name: CLOUDINARY_NAME,
-  api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
-})
-
 app.use(cors())
+// app.use(logger('combined'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(
-//   fileUpload({
-//     createParentPath: true,
-//   })
-// )
-
-// app.use(express.json());
 
 //Define route
 app.use('/api/admin', require('./router/admin'))
@@ -52,7 +28,7 @@ app.use('/api/moderator', require('./router/moderator'))
 
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
-  app.use(express.static('../client/build'))
+  app.use(express.static('./client/build'))
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
@@ -61,6 +37,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () =>
-  success({ message: `Server started on port ${PORT} 🔥🔥🔥`, badge: true })
-)
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT} 🔥🔥🔥`)
+})

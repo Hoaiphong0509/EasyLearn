@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
-const { error } = require('consola')
 const authorize = require('../middleware/authorize')
 const checkObjectId = require('../middleware/checkObjectId')
 const normalize = require('normalize-url')
@@ -22,7 +21,7 @@ router.get('/me', authorize(), async (req, res) => {
 
     res.json(profile)
   } catch (err) {
-    error({ msg: err.message, badge: true })
+    console.log(err.message)
     res.status(500).send('Server Error')
   }
 })
@@ -104,7 +103,7 @@ router.get(
 
       return res.json(profile)
     } catch (err) {
-      error({ msg: err.message, badge: true })
+      console.log(err.message)
       return res.status(500).json({ msg: 'Server error' })
     }
   }
@@ -143,7 +142,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      error({ msg: err.message, badge: true })
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -163,7 +162,7 @@ router.delete('/experience/:exp_id', authorize(), async (req, res) => {
     await foundProfile.save()
     return res.status(200).json(foundProfile)
   } catch (error) {
-    error({ msg: err.message, badge: true })
+    console.log(err.message)
     return res.status(500).json({ msg: 'Server error' })
   }
 })
@@ -198,7 +197,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      error({ msg: err.message, badge: true })
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -217,7 +216,7 @@ router.delete('/education/:edu_id', authorize(), async (req, res) => {
     await foundProfile.save()
     return res.status(200).json(foundProfile)
   } catch (error) {
-    error({ msg: err.message, badge: true })
+    console.log(err.message)
     return res.status(500).json({ msg: 'Server error' })
   }
 })

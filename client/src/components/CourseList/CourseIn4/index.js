@@ -30,13 +30,16 @@ import PropsTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
+import { useTranslation } from 'react-i18next'
 
 import { cleanUpProfile } from 'services/redux/actions/profile'
 
 const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const { t } = useTranslation()
 
   const {
     _id,
@@ -85,7 +88,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
           </header>
           <div className={s.box}>
             <Typography className={s.boxTitle} variant="h4">
-              Bạn sẽ học được gì?
+              {t('course.gains')}
             </Typography>
             <List className={s.list}>
               {gains.map((gain, index) => (
@@ -104,7 +107,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
           </div>
           <div className={s.box}>
             <Typography className={s.boxTitle} variant="h4">
-              Yêu cầu
+              {t('course.required')}
             </Typography>
             <List className={s.list}>
               {requires.map((require, index) => (
@@ -124,7 +127,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
           <div className={s.box}>
             <Box className={s.boxTitle}>
               <Typography className={s.title} variant="h4">
-                Nội dung khóa học
+                {t('course.content')}
               </Typography>
               <FormControlLabel
                 control={
@@ -189,7 +192,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
                   className={s.introTitle}
                   variant="h5"
                 >
-                  Introduction Course
+                  {t('course.intro')}
                 </Typography>
                 <iframe
                   src={`${LINK_EMBED_YOUTUBE}${sections[0].videos[0].link}`}
@@ -202,7 +205,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
               Miễn Phí
             </Typography>
             <Button onClick={() => getInTouche(_id)} className={s.btnGetCourse}>
-              Get in touch
+              {t('course.getInTouch')}
             </Button>
             <List className={s.quickIn4}>
               <ListItem>

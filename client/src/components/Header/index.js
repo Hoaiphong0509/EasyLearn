@@ -1,12 +1,10 @@
 import React, { Fragment, useEffect } from 'react'
 import {
   Grid,
-  TextField,
   Stack,
   FormControl,
   FormControlLabel,
   Tooltip,
-  Button,
   IconButton,
   Badge
 } from '@mui/material'
@@ -24,6 +22,11 @@ import { Notifications } from '@mui/icons-material'
 import AvatarBox from './AvatarBox'
 import SearchBox from './SearchBox'
 
+import GoogleLogin from 'react-google-login'
+import { ENV } from 'constants/AppConstants'
+
+import { googleLogin } from 'services/redux/actions/auth'
+
 const languages = [
   {
     code: 'en',
@@ -37,7 +40,7 @@ const languages = [
   }
 ]
 
-const Header = ({ auth: { isAuthenticated, user } }) => {
+const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
   const c = useStyles()
   const currentLanguageCode =
     (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
@@ -56,6 +59,14 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
     }
   }
 
+  const responseGoogleAuth = async (authResult) => {
+    try {
+      await googleLogin(authResult.tokenId)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const authLinks = (
     <>
       <IconButton aria-label="cart">
@@ -69,9 +80,14 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
 
   const guestLinks = (
     <>
-      <Button variant="contained" className={s.button}>
-        <Link to="/login">{t('header.login')}</Link>
-      </Button>
+      <GoogleLogin
+        clientId={ENV.GOOGLE_CLIENT_ID}
+        buttonText="Login with google"
+        redirectUri="postmessage"
+        onSuccess={responseGoogleAuth}
+        onFailure={responseGoogleAuth}
+        cookiePolicy={'single_host_origin'}
+      />
     </>
   )
 
@@ -121,11 +137,12 @@ const Header = ({ auth: { isAuthenticated, user } }) => {
 }
 
 Header.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  googleLogin: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, null)(Header)
+export default connect(mapStateToProps, { googleLogin })(Header)

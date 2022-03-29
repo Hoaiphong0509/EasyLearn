@@ -6,27 +6,15 @@ const ProfileSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
-    name: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    avatar: {
-      type: String,
-    },
     phone: {
       type: String,
-      required: true,
     },
     status: {
       type: String,
       default: 'activity',
-      required: true,
     },
     skills: {
       type: [String],
-      required: true,
     },
     bio: {
       type: String,
@@ -35,18 +23,15 @@ const ProfileSchema = new mongoose.Schema(
       {
         title: {
           type: String,
-          required: true,
         },
         company: {
           type: String,
-          required: true,
         },
         location: {
           type: String,
         },
         from: {
           type: Date,
-          required: true,
         },
         to: {
           type: Date,
@@ -64,19 +49,15 @@ const ProfileSchema = new mongoose.Schema(
       {
         school: {
           type: String,
-          required: true,
         },
         degree: {
           type: String,
-          required: true,
         },
         fieldofstudy: {
           type: String,
-          required: true,
         },
         from: {
           type: Date,
-          required: true,
         },
         to: {
           type: Date,
@@ -111,6 +92,42 @@ const ProfileSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    blogs: [
+      {
+        blog: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
+    courses: [
+      {
+        course: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
+    learnings: [
+      {
+        learning: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        title: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        creator: {
+          type: String,
+        },
+        avatar: {
+          type: String,
+        },
+        img: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

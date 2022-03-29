@@ -10,8 +10,6 @@ import EditProfileLayout from 'layouts/EditProfileLayout'
 import BlankLayout from 'layouts/BlankLayout'
 
 import Home from 'pages/Home'
-import Login from 'pages/Login'
-import Register from 'pages/Register'
 import EditProfile from 'pages/ProfilePage/EditProfile'
 import ProfilePage from 'pages/ProfilePage'
 import CoursesPage from 'pages/CoursesPage'
@@ -31,8 +29,6 @@ const Routes = () => {
     <section className="container">
       <Switch>
         <Route exact path="/" layout={DefaultLayout} component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
         <Route
           exact
           path="/profile/:id"

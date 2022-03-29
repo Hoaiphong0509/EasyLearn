@@ -3,7 +3,7 @@ import store from 'services/store'
 import { AUTHS } from 'constants/AppConstants'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json'
   }

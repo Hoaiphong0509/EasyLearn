@@ -132,7 +132,12 @@
             "desc": "Thay đổi hình ảnh khóa học của bạn. Nếu bạn tiếp tục mà không thay đổi, thì hình ảnh hiện tại sẽ làm ảnh đại diện chính cho khóa học của bạn."
         },
         "uploadImg": "Tải & Lưu ảnh",
-        "continue": "Tiếp tục"
+        "continue": "Tiếp tục",
+        "gains": "Bạn sẽ học được gì?",
+        "required": "Yêu cầu",
+        "content": "Nội dung",
+        "getInTouch": "THEO DÕI",
+        "intro": "Giới thiệu khóa học"
     },
     "blog": {
         "manageBlog": "Quản lý blog",

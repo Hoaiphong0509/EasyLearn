@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
-const { error } = require('consola')
 const authorize = require('../middleware/authorize')
 const checkObjectId = require('../middleware/checkObjectId')
 
@@ -19,7 +18,7 @@ router.get('/mycourses', authorize(role.Creator), async (req, res) => {
 
     res.send(courses)
   } catch (error) {
-    console.error(error.message)
+    console.log(error.message)
     res.status(500).send('Server Error')
   }
 })

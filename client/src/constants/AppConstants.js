@@ -9,6 +9,14 @@ export const COURSE_IMG_DEFAULT =
 export const AVATAR_DEFAULT =
   'https://res.cloudinary.com/hoaiphong/image/upload/v1639892737/EasyLearn/Img/Avatar/abrr3bvn0t2ogytnvoid.png'
 
+export const ENV = {
+  GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+  GITHUB_CLIENT_ID: process.env.REACT_APP_GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
+  FACEBOOK_CLIENT_ID: process.env.REACT_APP_FACEBOOK_ACCESS_TOKEN
+}
+
 export const AUTHS = {
   USER_LOADED: 'USER_LOADED',
   AUTH_ERROR: 'AUTH_ERROR',

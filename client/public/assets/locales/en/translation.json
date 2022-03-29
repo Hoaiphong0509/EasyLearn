@@ -132,7 +132,12 @@
             "desc": "Change your course image. If you continue without changing, the current image will serve as the main profile picture for your course."
         },
         "uploadImg": "Upload & Save image",
-        "continue": "Continue"
+        "continue": "Continue",
+        "gains": "What will you achieve?",
+        "required": "Required",
+        "content": "Content",
+        "getInTouch": " GET IN TOUCH",
+        "intro": "Introduction Course"
     },
     "blog": {
         "manageBlog": "Manage blog",

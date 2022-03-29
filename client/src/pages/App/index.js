@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from 'services/store'
@@ -7,10 +7,6 @@ import { loadUser } from 'services/redux/actions/auth'
 import { AUTHS } from 'constants/AppConstants'
 
 import Route from 'components/Routing/Route'
-import PrivateRoute from 'components/Routing/PrivateRoute'
-
-import DefaultLayout from 'layouts/DefaultLayout'
-import BlankLayout from 'layouts/BlankLayout'
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -20,7 +16,6 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-
 import Routes from 'components/Routing/Routes'
 
 const App = () => {
@@ -28,6 +23,7 @@ const App = () => {
     if (localStorage.token) {
       setAuthToken(localStorage.token)
     }
+
     store.dispatch(loadUser())
 
     window.addEventListener('storage', () => {

@@ -1,0 +1,17 @@
+require('dotenv').config()
+
+module.exports = {
+  DB: process.env.APP_DB,
+  SECRET: process.env.APP_SECRET,
+  PORT: process.env.APP_PORT,
+  API_EMAIL: process.env.API_KEY_EMAIL_VERIFY,
+  TOKEN_EXPRIRES: process.env.TOKEN_EXPRIRES,
+  CLIENT_URL: process.env.CLIENT_URL,
+  COURSE_IMG_DEFAULT: process.env.COURSE_IMG_DEFAULT,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
+  FACEBOOK_ACCESS_TOKEN: process.env.GOOGLE_CLIENT_ID,
+  GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+}

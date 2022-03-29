@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const { error } = require('consola')
 const { SECRET, TOKEN_EXPRIRES } = require('../config')
 
 const signJWT = (userId) => {
@@ -12,7 +11,7 @@ const signJWT = (userId) => {
 
     jwt.sign(payload, SECRET, { expiresIn: TOKEN_EXPRIRES }, (err, token) => {
       if (err) {
-        error({ msg: `Error in signJWT: ${err.message}`, badge: true })
+        console.log(`Error in signJWT: ${err.message}`)
         return reject(err)
       }
       resolve(token)

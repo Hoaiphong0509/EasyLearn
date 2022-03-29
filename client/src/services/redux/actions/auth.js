@@ -1,6 +1,7 @@
 import api from 'utils/api'
 import { AUTHS, TOAST_TYPE } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
+import setAuthToken from 'utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -17,59 +18,12 @@ export const loadUser = () => async (dispatch) => {
   }
 }
 
-export const register = (formData, t) => async (dispatch) => {
+export const googleLogin = (idToken) => async (dispatch) => {
   try {
-    const res = await api.post('/users/register_student', formData)
-    dispatch({
-      type: AUTHS.REGISTER_SUCCESS,
-      payload: res.data
-    })
-    dispatch(loadUser())
-  } catch (error) {
-    const errMsgs = error.response.data.errors
-    console.log({ errMsgs })
+    const res = await api.post('/auth/google', { idToken })
 
-    if (errMsgs) {
-      switch (errMsgs[0].msg) {
-        case 'msgErrInvalidEmail':
-          showToast({
-            message: t('auth.msgErrInvalidEmail'),
-            type: TOAST_TYPE.ERROR
-          })
-          break
-        case 'msgErrEmail':
-          showToast({
-            message: t('auth.msgErrEmail'),
-            type: TOAST_TYPE.ERROR
-          })
-          break
-        case 'msgErrExistEmail':
-          showToast({
-            message: t('auth.msgErrExistEmail'),
-            type: TOAST_TYPE.ERROR
-          })
-          break
-        case 'msgErrPassword':
-          showToast({
-            message: t('auth.msgErrPassword'),
-            type: TOAST_TYPE.ERROR
-          })
-          break
-        default:
-          break
-      }
-    }
-
-    dispatch({
-      type: AUTHS.REGISTER_FAIL
-    })
-  }
-}
-
-export const login = (formData, t) => async (dispatch) => {
-  try {
-    const res = await api.post('/auth', formData)
-
+    // setAuthToken(res.data.token)
+    // localStorage.setItem('user', JSON.stringify(res.data.user))
     dispatch({
       type: AUTHS.LOGIN_SUCCESS,
       payload: res.data
@@ -81,7 +35,7 @@ export const login = (formData, t) => async (dispatch) => {
 
     if (errors) {
       showToast({
-        message: t('auth.invalidInfor'),
+        // message: t('auth.invalidInfor'),
         type: TOAST_TYPE.ERROR
       })
     }
