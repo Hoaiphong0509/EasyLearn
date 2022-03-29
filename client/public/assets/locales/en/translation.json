@@ -18,6 +18,7 @@
         "confirmPassword": "Confirm Password",
         "email": "Email",
         "login": "Login",
+        "googleLogin": "Login with Google",
         "backToHome": "Back to home",
         "register": "Register",
         "notEmty": "Is Required",
@@ -76,7 +77,10 @@
     "editProfile": {
         "general": {
             "title": "General",
-            "desc": "Overview of your account"
+            "desc": "Overview of your account",
+            "knowAs": "Display name",
+            "bio": "Introduction",
+            "skills": "Skills"
         },
         "account": {
             "title": "Account",
@@ -90,10 +94,8 @@
             "ben2": "Gain \"Creator\" role in server Discord",
             "ben3": "Share, learn more knowledge",
             "ben4": "Make money with your own content",
-            "skills": "Skills",
             "phone": "Phone number",
             "location": "Location",
-            "bio": "Bio",
             "invalidPhone": "Invalid phone number",
             "getInTouch": " Get In Touch",
             "registerSuccess": "Register success 💝"

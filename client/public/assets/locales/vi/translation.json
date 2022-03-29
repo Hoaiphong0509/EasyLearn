@@ -18,6 +18,7 @@
         "confirmPassword": "Xác nhận mật khẩu",
         "email": "Email",
         "login": "Đăng nhập",
+        "googleLogin": "Đăng nhập với Google",
         "backToHome": "Về trang chủ",
         "register": "Đăng ký",
         "notEmty": "Không được trống",
@@ -76,7 +77,10 @@
     "editProfile": {
         "general": {
             "title": "Thông tin chung",
-            "desc": "Tổng quan về tài khoản của bạn"
+            "desc": "Tổng quan về tài khoản của bạn",
+            "knowAs": "Tên hiển thị",
+            "bio": "Giới thiệu",
+            "skills": "Kỹ năng"
         },
         "account": {
             "title": "Tài khoản",
@@ -90,7 +94,6 @@
             "ben2": "Hưởng role Creator trong server Discord",
             "ben3": "Được chia sẻ, được học hỏi thêm kiến thức",
             "ben4": "Kiểm tiền bằng nội dung do chính bạn đăng tải",
-            "skills": "Kỹ năng",
             "phone": "Số điện thoại",
             "location": "Địa điểm",
             "bio": "Tiểu sử",

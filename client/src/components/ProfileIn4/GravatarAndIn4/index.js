@@ -10,12 +10,11 @@ import {
   Typography
 } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import s from './styles.module.scss'
-import cn from './styles.module.scss'
 
-const GaravatarAndIn4 = ({ numberCourses, numberBlogs, social, avatar }) => {
+
+const GravatarAndIn4 = ({ numberCourses, numberBlogs, social, avatar }) => {
   return (
     <React.Fragment>
       <Box className={s.root}>
@@ -24,7 +23,6 @@ const GaravatarAndIn4 = ({ numberCourses, numberBlogs, social, avatar }) => {
           className={s.root}
           display="flex"
           flexDirection="row"
-          className={s.stack}
         >
           <Box className={s.stackItem}>
             <Tooltip title="Course" placement="right" arrow>
@@ -85,4 +83,4 @@ const GaravatarAndIn4 = ({ numberCourses, numberBlogs, social, avatar }) => {
   )
 }
 
-export default GaravatarAndIn4
+export default GravatarAndIn4

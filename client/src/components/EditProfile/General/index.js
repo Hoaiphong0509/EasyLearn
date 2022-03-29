@@ -23,13 +23,12 @@ import { useTranslation } from 'react-i18next'
 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { ROLES } from 'constants/AppConstants'
 import { editProfile } from 'services/redux/actions/profile'
 
 const initialState = {
-  phone: '',
-  skills: '',
+  knowAs: '',
   bio: '',
+  skills: '',
   twitter: '',
   facebook: '',
   linkedin: '',
@@ -56,10 +55,9 @@ const General = ({ user, profile, editProfile }) => {
   }, [profile])
 
   const {
-    phone,
-    status,
-    skills,
+    knowAs,
     bio,
+    skills,
     twitter,
     facebook,
     linkedin,
@@ -75,47 +73,6 @@ const General = ({ user, profile, editProfile }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const FormCreator = () => {
-    if (profile)
-      return (
-        <>
-          <FormControl className={s.formControl}>
-            <Chip label={t('editProfile.creator.phone')} className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="phone"
-              value={phone}
-              placeholder="EX: +84123456789, 0123456789"
-              onChange={handeleChange}
-            />
-          </FormControl>
-          <FormControl className={s.formControl}>
-            <Chip label={t('editProfile.creator.skills')} className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="skills"
-              value={skills}
-              placeholder="html, css, javascript"
-              onChange={handeleChange}
-            />
-          </FormControl>
-          <FormControl className={s.formControl}>
-            <Chip label={t('editProfile.creator.bio')} className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="bio"
-              value={bio}
-              placeholder="Something about you"
-              onChange={handeleChange}
-            />
-          </FormControl>
-          <Divider sx={{ marginBottom: '20px' }} />
-        </>
-      )
-
-    return null
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -127,7 +84,40 @@ const General = ({ user, profile, editProfile }) => {
       <section className={cn(s.root, c.root)}>
         {user && (
           <form className={s.form} onSubmit={handleSubmit}>
-            {user.roles.includes(ROLES.CREATOR) ? <FormCreator /> : null}
+            <FormControl className={s.formControl}>
+              <Chip
+                label={t('editProfile.general.knowAs')}
+                className={s.chip}
+              />
+              <TextField
+                className={s.textField}
+                name="knowAs"
+                value={knowAs}
+                placeholder="EX: Nguyễn Hoài Phong"
+                onChange={handeleChange}
+              />
+            </FormControl>
+            <FormControl className={s.formControl}>
+              <Chip label={t('editProfile.general.bio')} className={s.chip} />
+              <TextField
+                className={s.textField}
+                name="bio"
+                value={bio}
+                placeholder="Something about you"
+                onChange={handeleChange}
+              />
+            </FormControl>
+            <FormControl className={s.formControl}>
+              <Chip label={t('editProfile.general.skills')} className={s.chip} />
+              <TextField
+                className={s.textField}
+                name="skills"
+                value={skills}
+                placeholder="Something about you"
+                onChange={handeleChange}
+              />
+            </FormControl>
+            <Divider sx={{ marginBottom: '20px' }} />
 
             {profile && (
               <>

@@ -46,9 +46,9 @@ export const googleLogin = (idToken) => async (dispatch) => {
   }
 }
 
-export const registerCreator = (formData, t) => async (dispatch) => {
+export const registerCreator = (t) => async (dispatch) => {
   try {
-    const res = await api.post('/users/register_creator', formData)
+    const res = await api.post('/users/register_creator')
     dispatch({
       type: AUTHS.REGISTER_CREATOR_SUCCESS,
       payload: res.data

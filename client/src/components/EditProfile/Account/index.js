@@ -14,19 +14,10 @@ const Account = ({ user }) => {
   const { name, email } = user
   const [formData, setFormData] = useState({
     name,
-    email,
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    email
   })
 
-  const {
-    name: nameUser,
-    email: emailUser,
-    oldPassword,
-    newPassword,
-    confirmPassword
-  } = formData
+  const { name: nameUser, email: emailUser } = formData
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -49,6 +40,7 @@ const Account = ({ user }) => {
               name="name"
               value={nameUser}
               onChange={handleChange}
+              disabled={true}
             />
           </FormControl>
           <FormControl className={s.formControl}>
@@ -58,42 +50,9 @@ const Account = ({ user }) => {
               name="email"
               value={emailUser}
               onChange={handleChange}
+              disabled={true}
             />
           </FormControl>
-          <Divider sx={{ margin: '20px 0' }} />
-          <FormControl className={s.formControl}>
-            <Chip label="Old Password" className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="oldPassword"
-              value={oldPassword}
-              onChange={handleChange}
-              type="password"
-            />
-          </FormControl>
-          <FormControl className={s.formControl}>
-            <Chip label="New Password" className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="newPassword"
-              value={newPassword}
-              onChange={handleChange}
-              type="password"
-            />
-          </FormControl>
-          <FormControl className={s.formControl}>
-            <Chip label="Confirm Password" className={s.chip} />
-            <TextField
-              className={s.textField}
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={handleChange}
-              type="password"
-            />
-          </FormControl>
-          <Button className={s.btnSubmit} type="submit">
-            Save
-          </Button>
         </form>
       </Box>
     </React.Fragment>

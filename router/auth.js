@@ -4,13 +4,9 @@ const User = require('../models/User')
 const Profile = require('../models/Profile')
 const authorize = require('../middleware/authorize')
 
-const {
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  SECRET,
-} = require('../config/index')
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../config/index')
 const { OAuth2Client } = require('google-auth-library')
-const jwt = require('jsonwebtoken')
+const signJWT = require('../utils/signJWT')
 
 const oAuthClient = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
 
@@ -19,9 +15,9 @@ const oAuthClient = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
 // @access   Private
 router.get('/', authorize(), async (req, res) => {
   try {
-    console.log(req.user)
-    const user = await User.findById(req.user._id)
-    res.json(user)
+    const user = await User.findById(req.user.id)
+    if (user) return res.json(user)
+    return res.status(400).json({ errors: 'Please try again' })
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
@@ -56,22 +52,9 @@ router.post('/google', async (req, res) => {
 
         await User.findOne({ email }).exec(async (err, user) => {
           if (user) {
-            const token = jwt.sign({ _id: user._id }, SECRET, {
-              expiresIn: '3d',
-            })
+            const token = await signJWT(user._id)
             return res.json({ token })
           }
-
-          console.log('RUNNING HERE')
-          const gData = {
-            email,
-            name,
-            firstName: given_name,
-            lastName: family_name,
-            avatar: picture,
-          }
-
-          console.log('newUser Data:', gData)
           const newUser = new User({
             email,
             name,
@@ -79,32 +62,12 @@ router.post('/google', async (req, res) => {
             lastName: family_name,
             avatar: picture,
           })
-          const profile = new Profile({ user: newUser._id })
-          console.log('ALMOST SAVE')
+          const profile = new Profile({ user: newUser._id, knowAs: name })
+
           await newUser.save()
           await profile.save()
-          const token = jwt.sign({ _id: newUser._id }, SECRET, {
-            expiresIn: '3d',
-          })
-          return res.json({
-            token,
-          })
-
-          // await newUser.save(async (newErr, userData) => {
-          //   if (newErr)
-          //     return res
-          //       .status(400)
-          //       .json({ errors: 'Failed to sign up with google account' })
-
-          //   const profile = new Profile({ user: userData._id })
-          //   await profile.save()
-          //   const token = jwt.sign({ _id: userData._id }, SECRET, {
-          //     expiresIn: '3d',
-          //   })
-          //   return res.json({
-          //     token,
-          //   })
-          // })
+          const token = await signJWT(newUser._id)
+          return res.json({ token })
         })
       })
       .catch((err) => {

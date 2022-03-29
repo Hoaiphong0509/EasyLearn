@@ -29,63 +29,48 @@ router.get('/me', authorize(), async (req, res) => {
 // @route  POST api/profile/me
 // @desc   Update Profile
 // @access Private
-router.post(
-  '/me',
-  authorize(),
-  check('skills', 'Skills is required').notEmpty(),
-  check('phone', 'Phone is invalid').matches(
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
-    'i'
-  ),
-  async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      error({ errors: errors.array(), badge: true })
-      return res.status(400).json({ errors: errors.array() })
-    }
-
-    const {
-      skills,
-      phone,
-      youtube,
-      twitter,
-      instagram,
-      linkedin,
-      facebook,
-      ...rest
-    } = req.body
-
-    const profileFields = {
-      user: req.user.id,
-      phone,
-      skills: Array.isArray(skills)
-        ? skills
-        : skills.split(',').map((skill) => ' ' + skill.trim()),
-      ...rest,
-    }
-
-    const socialFields = { youtube, twitter, instagram, linkedin, facebook }
-
-    // normalize social fields to ensure valid url
-    for (const [key, value] of Object.entries(socialFields)) {
-      if (value && value.length > 0)
-        socialFields[key] = normalize(value, { forceHttps: true })
-    }
-    profileFields.social = socialFields
-
-    try {
-      let profile = await Profile.findOneAndUpdate(
-        { user: req.user.id },
-        { $set: profileFields },
-        { new: true, upsert: true, setDefaultsOnInsert: true }
-      )
-      return res.json(profile)
-    } catch (err) {
-      error({ message: `router: ${error.message}`, badge: true })
-      return res.status(500).send('Server Error')
-    }
+router.post('/me', authorize(), async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    error({ errors: errors.array(), badge: true })
+    return res.status(400).json({ errors: errors.array() })
   }
-)
+
+  const { youtube, twitter, instagram, linkedin, facebook, skills, ...rest } =
+    req.body
+
+  const profileFields = {
+    user: req.user.id,
+    skills: Array.isArray(skills)
+      ? skills
+      : skills.split(',').map((skill) => ' ' + skill.trim()),
+    ...rest,
+  }
+
+  console.log('profileFields:', profileFields)
+
+  const socialFields = { youtube, twitter, instagram, linkedin, facebook }
+
+  // normalize social fields to ensure valid url
+  for (const [key, value] of Object.entries(socialFields)) {
+    if (value && value.length > 0)
+      socialFields[key] = normalize(value, { forceHttps: true })
+  }
+
+  profileFields.social = socialFields
+
+  try {
+    let profile = await Profile.findOneAndUpdate(
+      { user: req.user.id },
+      { $set: profileFields },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    )
+    return res.json(profile)
+  } catch (err) {
+    error({ message: `router: ${error.message}`, badge: true })
+    return res.status(500).send('Server Error')
+  }
+})
 
 // @route    GET api/profile/:user_id
 // @desc     Get profile by user ID

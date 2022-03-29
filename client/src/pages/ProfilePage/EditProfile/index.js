@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 import s from './styles.module.scss'
 import RegisterCreator from 'components/EditProfile/RegisterCreator'
 import General from 'components/EditProfile/General'
-import Avatar from 'components/EditProfile/Avatar'
 import Account from 'components/EditProfile/Account'
 import Experience from 'components/EditProfile/Experience'
 import Education from 'components/EditProfile/Education'
@@ -24,7 +23,7 @@ const EditProfile = ({
 }) => {
   useEffect(() => {
     getCurrentProfile()
-  }, [getCurrentProfile])
+  }, [getCurrentProfile, profile])
 
   const [value, setValue] = useState(0)
 
@@ -39,7 +38,7 @@ const EditProfile = ({
       <Grid container>
         <Grid item xs={3} md={3} className={s.tabs}>
           <Box className={s.boxTabs}>
-            <In4Profile />
+            {user && profile && <In4Profile user={user} profile={profile} />}
             <Tabs
               value={value}
               onChange={handleChange}
@@ -48,10 +47,7 @@ const EditProfile = ({
               scrollButtons={false}
             >
               <Tab label={t('editProfile.account.title')} />
-              <Tab label={t('editProfile.avatar.title')} />
-              {user.roles.includes(ROLES.CREATOR) ? (
-                <Tab label={t('editProfile.general.title')} />
-              ) : null}
+              <Tab label={t('editProfile.general.title')} />
               {user.roles.includes(ROLES.CREATOR) ? (
                 <Tab label={t('editProfile.experience.title')} />
               ) : null}
@@ -82,32 +78,17 @@ const EditProfile = ({
             <Box className={s.boxPanel}>
               <header className={s.header}>
                 <Typography className={s.title} variant="h3">
-                  {t('editProfile.avatar.title')}
+                  {t('editProfile.general.title')}
                 </Typography>
                 <Typography className={s.decs} variant="p">
-                  {t('editProfile.avatar.desc')}
+                  {t('editProfile.general.desc')}
                 </Typography>
               </header>
-              <Avatar />
+              {user && profile && <General user={user} profile={profile} />}
             </Box>
           </TabPanel>
           {user.roles.includes(ROLES.CREATOR) ? (
             <TabPanel value={value} index={2}>
-              <Box className={s.boxPanel}>
-                <header className={s.header}>
-                  <Typography className={s.title} variant="h3">
-                    {t('editProfile.general.title')}
-                  </Typography>
-                  <Typography className={s.decs} variant="p">
-                    {t('editProfile.general.desc')}
-                  </Typography>
-                </header>
-                {user && profile && <General user={user} profile={profile} />}
-              </Box>
-            </TabPanel>
-          ) : null}
-          {user.roles.includes(ROLES.CREATOR) ? (
-            <TabPanel value={value} index={3}>
               <Box className={s.boxPanel}>
                 <header className={s.header}>
                   <Typography className={s.title} variant="h3">
@@ -117,12 +98,14 @@ const EditProfile = ({
                     {t('editProfile.experience.desc')}
                   </Typography>
                 </header>
-                {user && profile && <Experience user={user} profile={profile} />}
+                {user && profile && (
+                  <Experience user={user} profile={profile} />
+                )}
               </Box>
             </TabPanel>
           ) : null}
           {user.roles.includes(ROLES.CREATOR) ? (
-            <TabPanel value={value} index={4}>
+            <TabPanel value={value} index={3}>
               <Box className={s.boxPanel}>
                 <header className={s.header}>
                   <Typography className={s.title} variant="h3">
@@ -137,7 +120,7 @@ const EditProfile = ({
             </TabPanel>
           ) : null}
           {user.roles.includes(ROLES.CREATOR) ? null : (
-            <TabPanel value={value} index={3}>
+            <TabPanel value={value} index={2}>
               <Box className={s.boxPanel}>
                 <header className={s.header}>
                   <Typography className={s.title} variant="h3">

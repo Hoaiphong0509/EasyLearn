@@ -11,7 +11,7 @@ import { Button } from '@mui/material'
 import { changeAvatar } from 'services/redux/actions/user'
 import { AVATAR_DEFAULT } from 'constants/AppConstants'
 
-const Avatar = ({ auth: { user }, changeAvatar }) => {
+const Avatar = ({ auth: { user } }) => {
   const [selectedImage, setSelectedImage] = useState()
   const c = useStyles()
 

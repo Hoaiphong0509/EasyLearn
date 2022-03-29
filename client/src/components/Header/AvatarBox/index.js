@@ -61,7 +61,7 @@ const AvatarBox = ({ logout, user }) => {
         sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
       >
         {user && (
-          <Tooltip title={user.name}>
+          <Tooltip title={user.knowAs ? user.knowAs : user.name}>
             <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
               {user.avatar ? (
                 <Avatar

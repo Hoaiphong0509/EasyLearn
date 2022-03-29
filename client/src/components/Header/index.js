@@ -18,7 +18,6 @@ import classnames from 'classnames'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Notifications } from '@mui/icons-material'
 import AvatarBox from './AvatarBox'
 import SearchBox from './SearchBox'
 
@@ -69,11 +68,6 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
 
   const authLinks = (
     <>
-      <IconButton aria-label="cart">
-        <Badge className={c.badge} badgeContent={4}>
-          <Notifications sx={{ fontSize: '36px' }} />
-        </Badge>
-      </IconButton>
       <AvatarBox user={user} />
     </>
   )
@@ -82,7 +76,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
     <>
       <GoogleLogin
         clientId={ENV.GOOGLE_CLIENT_ID}
-        buttonText="Login with google"
+        buttonText={t('auth.googleLogin')}
         redirectUri="postmessage"
         onSuccess={responseGoogleAuth}
         onFailure={responseGoogleAuth}

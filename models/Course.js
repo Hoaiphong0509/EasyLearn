@@ -60,11 +60,6 @@ const CourseSchema = new mongoose.Schema(
         ],
       },
     ],
-    prices: {
-      type: String,
-      default: 0,
-      required: true,
-    },
     students: [
       {
         user: {
