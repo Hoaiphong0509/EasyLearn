@@ -7,11 +7,41 @@
   & .content {
     margin-bottom: 10px;
     height: 150px;
-    background-color: var(--smooth-blue);
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      // background: rgba(1, 1, 1, 0.3);
+      background: rgba(255, 255, 255, 0.3);
+
+    }
+
+    // background-color: var(--smooth-blue);
+    // background: url('https://res.cloudinary.com/hoaiphong/image/upload/v1648610510/EasyLearn/Img/Blog/blog_default_ywjbrr.jpg');
 
     & .title {
       padding: 20px;
       color: var(--dark-blue);
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+
+      // &:after {
+      //   content: '';
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   height: 100%;
+      //   width: 100%;
+      //   // z-index: -1;
+      //   // background: rgba(1, 1, 1, 0.3);
+      //   background: rgba(255, 255, 255, 0.7);
+      // }
     }
   }
 

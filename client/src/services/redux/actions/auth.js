@@ -1,7 +1,6 @@
 import api from 'utils/api'
 import { AUTHS, TOAST_TYPE } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
-import setAuthToken from 'utils/setAuthToken'
 
 export const loadUser = () => async (dispatch) => {
   try {
@@ -22,8 +21,6 @@ export const googleLogin = (idToken) => async (dispatch) => {
   try {
     const res = await api.post('/auth/google', { idToken })
 
-    // setAuthToken(res.data.token)
-    // localStorage.setItem('user', JSON.stringify(res.data.user))
     dispatch({
       type: AUTHS.LOGIN_SUCCESS,
       payload: res.data
@@ -31,9 +28,8 @@ export const googleLogin = (idToken) => async (dispatch) => {
     dispatch(loadUser())
   } catch (err) {
     console.log({ err })
-    const errors = err.response.data.errors
 
-    if (errors) {
+    if (err) {
       showToast({
         // message: t('auth.invalidInfor'),
         type: TOAST_TYPE.ERROR
@@ -59,9 +55,9 @@ export const registerCreator = (t) => async (dispatch) => {
     })
     dispatch(loadUser())
   } catch (error) {
-    const errors = error.response.data.errors
+    console.log({ error })
 
-    if (errors) {
+    if (error) {
       showToast({
         message: 'something wrong!',
         type: TOAST_TYPE.ERROR

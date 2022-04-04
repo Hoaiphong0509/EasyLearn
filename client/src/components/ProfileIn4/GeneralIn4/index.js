@@ -1,4 +1,4 @@
-import { ArrowForwardIos, Email, PhoneAndroid } from '@mui/icons-material'
+import { ArrowForwardIos, Email } from '@mui/icons-material'
 import {
   Box,
   Card,
@@ -23,8 +23,6 @@ import BlogItemSmall from './BlogItemSmall'
 
 const GeneralIn4 = ({
   name,
-  email,
-  phone,
   skills,
   bio,
   experience,
@@ -50,23 +48,6 @@ const GeneralIn4 = ({
           <Typography className={s.bio} variant="h5">
             {bio}
           </Typography>
-          <Box className={s.contactBox}>
-            <Typography className={s.contact} variant="h6">
-              {t('profile.contact')}
-            </Typography>
-            <Box className={s.boxItemContact}>
-              <PhoneAndroid className={s.icon} fontSize="15px" />
-              <Typography className={s.text} variant="p">
-                {phone}
-              </Typography>
-            </Box>
-            <Box className={s.boxItemContact}>
-              <Email className={s.icon} fontSize="15px" />
-              <Typography className={s.text} variant="p">
-                {email}
-              </Typography>
-            </Box>
-          </Box>
           <Box className={s.skillsBox}>
             <Typography className={s.contact} variant="h6">
               {t('profile.skills')}

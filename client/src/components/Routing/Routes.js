@@ -23,6 +23,7 @@ import MyStuffPage from 'pages/MyStuffPage'
 import AddImageCoursePage from 'pages/CoursesPage/AddImageCoursePage'
 import NotFoundPage from 'pages/NotFoundPage'
 import ServerErrorPage from 'pages/ServerErrorPage'
+import AddImageBlog from 'pages/BlogsPage/AddImageBlog'
 
 const Routes = () => {
   return (
@@ -76,6 +77,12 @@ const Routes = () => {
           path="/blogs/create_blog"
           layout={DefaultLayout}
           component={CreateBlog}
+        />
+        <Route
+          exact
+          path="/blogs/add_img/:id"
+          component={AddImageBlog}
+          layout={DefaultLayout}
         />
         <PrivateRoute
           exact

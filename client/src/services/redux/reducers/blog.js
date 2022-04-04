@@ -28,6 +28,7 @@ const blogReducer = (state = initialState, action) => {
     case BLOGS.ADD_IMG:
       return {
         ...state,
+        blog: payload,
         blogs: [payload, ...state.blogs],
         loading: false
       }

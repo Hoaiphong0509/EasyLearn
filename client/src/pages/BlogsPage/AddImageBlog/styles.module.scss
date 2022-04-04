@@ -1,0 +1,60 @@
+.root {
+  margin: 20px 0px;
+  display: flex;
+  justify-content: center;
+
+  & .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--dark-blue);
+    width: 80%;
+
+    & .imgCourse {
+      padding: 40px 20px;
+      width: 70%;
+
+      & img {
+        width: 827px;
+        height: 540px;
+        object-fit: cover;
+      }
+    }
+
+    & .content {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      height: 100%;
+      padding-top: 70px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      padding-right: 20px;
+
+      & .title {
+        font-weight: bold;
+        color: var(--dark-blue);
+        margin-bottom: 15px;
+      }
+
+      & .desc {
+        color: var(--black-0);
+        margin-bottom: 15px;
+      }
+
+      & .btnBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        & .btnSave {
+          margin-right: 40px;
+          width: 150px;
+        }
+        & .btnContinue {
+          width: 150px;
+        }
+      }
+    }
+  }
+}

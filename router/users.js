@@ -92,25 +92,23 @@ router.post(
   check('keyword', 'Keyword is required').notEmpty(),
   async (req, res) => {
     try {
-      const result = {
-        courses: [],
-        blogs: [],
-      }
-
       const { keyword } = req.body
       const courses = await Course.find()
       const blogs = await Blog.find()
 
-      result.courses = courses.filter((c) =>
-        c.title.toLowerCase().includes(keyword.toLowerCase())
-      )
-      result.blogs = blogs.filter((b) =>
-        b.title.toLowerCase().includes(keyword.toLowerCase())
-      )
+      const result = {
+        courses: courses.filter((c) =>
+          c.title.toLowerCase().includes(keyword.toLowerCase())
+        ),
+        blogs: blogs.filter((b) =>
+          b.title.toLowerCase().includes(keyword.toLowerCase())
+        ),
+      }
 
-      if (result.courses.length == 0 && result.blogs.length)
+      if (result.courses.length == 0 && result.blogs.length == 0)
         return res.status(400).json({ msg: "Couldn't find anything" })
 
+      console.log(result)
       res.send(result)
     } catch (error) {
       console.error(error.message)

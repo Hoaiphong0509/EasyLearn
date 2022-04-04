@@ -5,6 +5,19 @@ const BlogSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
   },
+  author: {
+    name: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+    },
+  },
+  status: {
+    type: String,
+    default: 'approved',
+    enum: ['unapproved', 'approved', 'draft'],
+  },
   title: {
     type: String,
     required: true,
@@ -12,12 +25,6 @@ const BlogSchema = new Schema({
   text: {
     type: String,
     required: true,
-  },
-  name: {
-    type: String,
-  },
-  avatar: {
-    type: String,
   },
   img: {
     type: String,

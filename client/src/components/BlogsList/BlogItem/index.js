@@ -18,26 +18,31 @@ const BlogItem = ({
   cleanUpBlog,
   cleanUpProfile
 }) => {
-  const { _id, user, title, name, avatar, likes } = blog
+  const { _id, user, title, author, likes, img } = blog
+
+  const imgBlg = `url("${img}")`
 
   return (
     <React.Fragment>
       <Box className={s.root}>
         <Link to={`/blogs/blog_detail/${_id}`} onClick={cleanUpBlog}>
-          <div className={s.content}>
+          <Box
+            className={s.content}
+            sx={{ background: `${img ? imgBlg : 'red'}` }}
+          >
             <Tooltip title={title} placement="top-start" arrow>
               <Typography className={s.title} variant="h4">
                 {title}
               </Typography>
             </Tooltip>
-          </div>
+          </Box>
         </Link>
         <div className={s.footer}>
           <Link to={`/profile/${user}`} onClick={cleanUpProfile}>
             <div className={s.in4}>
-              <Avatar src={avatar} alt={name} />
+              <Avatar src={author.avatar} alt={author.name} />
               <Typography className={s.creator} variant="p">
-                {name}
+                {author.name}
               </Typography>
             </div>
           </Link>

@@ -39,6 +39,7 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
     requires: '',
     sections: []
   })
+  
 
   const crs = useSelector((state) => state.course)
 
@@ -51,7 +52,7 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
     }
   }, [crs])
 
-  const { title, description, punchLike, gains, requires, sections } =
+  const { title, description, punchLike, gains, requires } =
     courseData
 
   const handleSections = (sections) => {
@@ -64,9 +65,9 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    addCourse(courseData)
 
-    //TODO FIX: Not use history on here
+    console.log('COURSE: ', courseData)
+    // addCourse(courseData)
   }
 
   return (

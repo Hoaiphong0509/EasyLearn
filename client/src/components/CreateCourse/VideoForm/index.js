@@ -1,5 +1,6 @@
 import { Button, FormControl, TextField } from '@mui/material'
 import React, { useState, useEffect, useRef } from 'react'
+import { getCodeYoutube } from 'utils/AppUltils'
 
 import s from './styles.module.scss'
 
@@ -18,7 +19,7 @@ function VideoForm(props) {
     setName(e.target.value)
   }
   const handleChangeLink = (e) => {
-    setLink(e.target.value)
+    setLink(getCodeYoutube(e.target.value))
   }
 
   const handleSubmit = (e) => {
@@ -27,9 +28,6 @@ function VideoForm(props) {
       name: name,
       link: link
     })
-    // a tự fĩ cái đang bị lõi đi
-    // nameRef.current.reset()
-    // linkRef.current.reset()
     setName('')
     setLink('')
   }

@@ -51,8 +51,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
     requires,
     sections,
     gains,
-    punchLike,
-    prices
+    punchLike
   } = course
   const [codeVideo, setCodeVideo] = useState('')
 

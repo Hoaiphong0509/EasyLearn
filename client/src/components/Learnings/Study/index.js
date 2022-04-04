@@ -21,18 +21,6 @@ const Study = ({ course }) => {
     setValue(newValue)
   }
 
-  const {
-    title,
-    img,
-    creator,
-    avatar,
-    description,
-    requires,
-    gains,
-    punchLike,
-    sections
-  } = course
-
   const handleChangeVideo = (code) => {
     setCodeLink(code)
   }

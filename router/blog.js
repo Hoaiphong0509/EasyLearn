@@ -3,11 +3,16 @@ const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
 const authorize = require('../middleware/authorize')
+const multer = require('multer')
+const bufferUpload = require('../utils/bufferUpload')
+const multerSingle = multer()
 const role = require('../helper/role')
 
 const Blog = require('../models/Blog')
 const User = require('../models/User')
+const Profile = require('../models/Profile')
 const checkObjectId = require('../middleware/checkObjectId')
+const { CLOUDINARY_PATH_BLOG, BLOG_IMG_DEFAULT } = require('../config')
 
 // @route    POST api/blog
 // @desc     Create a blog
@@ -23,15 +28,20 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
+    const { title, text } = req.body
+
     try {
-      const user = await User.findById(req.user.id).select('-password')
+      const profile = await Profile.findOne({ user: req.user.id })
 
       const newBlog = new Blog({
-        title: req.body.title,
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
         user: req.user.id,
+        author: {
+          name: profile.name,
+          avatar: profile.avatar,
+        },
+        title,
+        text,
+        img: BLOG_IMG_DEFAULT,
       })
 
       await User.findOneAndUpdate(
@@ -43,7 +53,7 @@ router.post(
 
       res.json(blog)
     } catch (err) {
-       console.log(err.message)
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -52,33 +62,33 @@ router.post(
 // @route  POST api/blog/add_img_blog/:id
 // @desc   Add image for blog
 // @access Private
-// router.post(
-//   '/add_img_blog/:id',
-//   authorize(),
-//   checkObjectId('id'),
-//   multerSingle.single('img'),
-//   async (req, res) => {
-//     const { buffer } = req.file
-//     try {
-//       const { secure_url } = await bufferUpload(
-//         buffer,
-//         CLOUDINARY_PATH_BLOG,
-//         'avatar',
-//         848,
-//         420
-//       )
+router.post(
+  '/add_img_blog/:id',
+  authorize(),
+  checkObjectId('id'),
+  multerSingle.single('img'),
+  async (req, res) => {
+    const { buffer } = req.file
+    try {
+      const { secure_url } = await bufferUpload(
+        buffer,
+        CLOUDINARY_PATH_BLOG,
+        'avatar',
+        848,
+        420
+      )
 
-//       const result = await Blog.findByIdAndUpdate(req.params.id, {
-//         $set: { img: secure_url },
-//       })
+      const result = await Blog.findByIdAndUpdate(req.params.id, {
+        $set: { img: secure_url, status: 'approved' },
+      })
 
-//       return res.send(result)
-//     } catch (error) {
-//       console.log('error:', error.message)
-//       res.send('Something went wrong please try again later..')
-//     }
-//   }
-// )
+      return res.send(result)
+    } catch (error) {
+      console.log('error:', error.message)
+      res.send('Something went wrong please try again later..')
+    }
+  }
+)
 
 // @route    PUT api/blog/:id
 // @desc     Edit a blog
@@ -93,7 +103,7 @@ router.get('/', async (req, res) => {
     const blogs = await Blog.find().sort({ date: -1 })
     res.json(blogs)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
     res.status(500).send('Server Error')
   }
 })
@@ -107,7 +117,7 @@ router.get('/my_blogs', authorize(), async (req, res) => {
     const result = blogs.filter((b) => b.user._id.toString() === req.user.id)
     res.send(result)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
     res.status(500).send('Server Error')
   }
 })
@@ -126,7 +136,7 @@ router.get(
       )
       res.send(result)
     } catch (err) {
-       console.log(err.message)
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -145,7 +155,7 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
 
     res.json(blog)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
 
     res.status(500).send('Server Error')
   }
@@ -179,7 +189,7 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     res.json(user.blogs)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
 
     res.status(500).send('Server Error')
   }
@@ -202,7 +212,7 @@ router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     return res.json(blog.likes)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
     res.status(500).send('Server Error')
   }
 })
@@ -232,7 +242,7 @@ router.put(
 
       return res.json(blog.likes)
     } catch (err) {
-       console.log(err.message)
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -269,7 +279,7 @@ router.post(
 
       res.json(blog.comments)
     } catch (err) {
-       console.log(err.message)
+      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -303,7 +313,7 @@ router.delete('/comment/:id/:comment_id', authorize(), async (req, res) => {
 
     return res.json(blog.comments)
   } catch (err) {
-     console.log(err.message)
+    console.log(err.message)
     return res.status(500).send('Server Error')
   }
 })

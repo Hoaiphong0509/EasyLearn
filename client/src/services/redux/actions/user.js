@@ -21,7 +21,7 @@ export const changeAvatar = (file) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: {msg: err }
     })
   }
 }
@@ -42,14 +42,18 @@ export const getInTouche = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: {msg: err }
     })
   }
 }
 
 export const search = (keyword) => async (dispatch) => {
   try {
+    console.log('key:', keyword)
+
     const res = await api.post(`/users/search`, keyword)
+
+    console.log('SEARCH RES: ', res.data)
     dispatch({
       type: USERS.SEARCH_KEYWORD,
       payload: res.data
@@ -57,7 +61,7 @@ export const search = (keyword) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }

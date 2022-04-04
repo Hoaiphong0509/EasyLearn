@@ -16,6 +16,7 @@ const ProfilePage = ({
   profile: { profile },
   course: { courses },
   blog: { blogs, loading },
+  user: { user },
   match
 }) => {
   useEffect(() => {
@@ -28,7 +29,12 @@ const ProfilePage = ({
     <Spinner name="cube-grid" color="aqua" />
   ) : (
     <React.Fragment>
-      <ProfileIn4 profile={profile} courses={courses} blogs={blogs} />
+      <ProfileIn4
+        profile={profile}
+        courses={courses}
+        blogs={blogs}
+        user={user}
+      />
     </React.Fragment>
   )
 }
@@ -45,7 +51,8 @@ ProfilePage.prototype = {
 const mapStateToProps = (state) => ({
   profile: state.profile,
   course: state.course,
-  blog: state.blog
+  blog: state.blog,
+  user: state.user
 })
 
 export default connect(mapStateToProps, {

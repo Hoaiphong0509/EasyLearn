@@ -22,3 +22,9 @@ export const isPhoneNumber = (phone) => {
   const phoneno = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
   return phone.match(phoneno)
 }
+
+export const getCodeYoutube = (value) => {
+  const REGEX = /v=(\w+)/
+  const res = value.match(REGEX)
+  return res[1]
+}

@@ -19,10 +19,12 @@ import { useHistory } from 'react-router-dom'
 
 import { logout } from 'services/redux/actions/auth'
 import { ROLES } from 'constants/AppConstants'
+import { cleanUpBlog } from 'services/redux/actions/blog'
+import { cleanUpCourse } from 'services/redux/actions/course'
 
 import s from './styles.module.scss'
 
-const AvatarBox = ({ logout, user }) => {
+const AvatarBox = ({ logout, user, cleanUpBlog }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const history = useHistory()
   const open = Boolean(anchorEl)
@@ -43,10 +45,12 @@ const AvatarBox = ({ logout, user }) => {
   }
 
   const handleCourse = () => {
+    cleanUpCourse()
     history.push('/courses/create_course')
   }
 
   const handleCreateBlog = () => {
+    cleanUpBlog()
     history.push('/blogs/create_blog')
   }
 
@@ -109,7 +113,9 @@ const AvatarBox = ({ logout, user }) => {
 }
 
 AvatarBox.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  cleanUpBlog: PropTypes.func.isRequired,
+  cleanUpCourse: PropTypes.func.isRequired
 }
 
-export default connect(null, { logout })(AvatarBox)
+export default connect(null, { logout, cleanUpBlog, cleanUpCourse })(AvatarBox)

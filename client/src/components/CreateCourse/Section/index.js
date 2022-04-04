@@ -73,7 +73,7 @@ const Section = ({
           </div>
         </section>
         <section className={s.videos}>
-          <Videos key={index} index={index} videos={section.videos} setVideo={handleSetVideo} /> {/* Chỗ này phảie truyền 1 cái gì đó để nhận diện id seaction.*/}
+          <Videos key={index} index={index} videos={section.videos} setVideo={handleSetVideo} />
         </section>
       </div>
     )

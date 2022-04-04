@@ -14,7 +14,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -30,7 +30,7 @@ export const getProfile = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -50,7 +50,7 @@ export const editProfile = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -75,7 +75,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
     })
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -93,11 +93,9 @@ export const addEducation = (formData, history) => async (dispatch) => {
       type: TOAST.SUCCESS
     })
   } catch (err) {
-    const errors = err.response.data.errors
-
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -113,7 +111,7 @@ export const deleteExperience = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -129,7 +127,7 @@ export const deleteEducation = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PROFILES.PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }

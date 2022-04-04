@@ -14,7 +14,7 @@ export const getCourses = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSES.COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -30,7 +30,7 @@ export const getCoursesByUserId = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSES.COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -46,7 +46,7 @@ export const getCourse = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSES.COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -67,7 +67,7 @@ export const addCourse = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSES.COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }
@@ -87,7 +87,7 @@ export const changeImgCourse = (id, file) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: COURSES.COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err }
     })
   }
 }

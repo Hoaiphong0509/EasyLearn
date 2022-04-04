@@ -44,7 +44,7 @@ const BlogIn4 = ({
   deleteComment,
   auth: { user }
 }) => {
-  const { _id, title, text, name, avatar, likes, comments } = blog
+  const { _id, title, text, author, likes, comments } = blog
 
   const [state, setState] = useState({
     right: false
@@ -90,23 +90,23 @@ const BlogIn4 = ({
               {title}
             </Typography>
             <div className={s.in4Creator}>
-              {avatar ? (
+              {author.avatar ? (
                 <>
                   <Avatar
-                    src={avatar}
+                    src={author.avatar}
                     sx={{ width: 128, height: 128 }}
                   ></Avatar>
                   <Typography className={s.nameCreator} variant="h4">
-                    {name}
+                    {author.name}
                   </Typography>
                 </>
               ) : (
                 <>
                   <Avatar sx={{ width: 128, height: 128 }}>
-                    {name.slice(0, 1).toUpperCase()}
+                    {author.name.slice(0, 1).toUpperCase()}
                   </Avatar>
                   <Typography className={s.nameCreator} variant="h4">
-                    {name}
+                    {author.name}
                   </Typography>
                 </>
               )}

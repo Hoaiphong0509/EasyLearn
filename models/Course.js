@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const CourseSchema = new mongoose.Schema(
   {
@@ -14,11 +15,13 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    creator: {
-      type: String,
-    },
-    avatar: {
-      type: String,
+    author: {
+      name: {
+        type: String,
+      },
+      avatar: {
+        type: String,
+      },
     },
     description: {
       type: String,
@@ -56,6 +59,27 @@ const CourseSchema = new mongoose.Schema(
               type: String,
               required: true,
             },
+            comments: [
+              {
+                user: {
+                  type: Schema.Types.ObjectId,
+                },
+                text: {
+                  type: String,
+                  required: true,
+                },
+                name: {
+                  type: String,
+                },
+                avatar: {
+                  type: String,
+                },
+                date: {
+                  type: Date,
+                  default: Date.now,
+                },
+              },
+            ],
           },
         ],
       },

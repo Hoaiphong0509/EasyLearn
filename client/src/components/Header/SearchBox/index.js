@@ -123,9 +123,9 @@ const SearchBox = ({ search, searchResult }) => {
             </MenuList>
             <Divider />
             <MenuList>
-              {searchResult &&
-                searchResult.blogs.length > 0 &&
-                searchResult.blogs.map((blog) => (
+              {resultSearch &&
+                resultSearch.blogs.length > 0 &&
+                resultSearch.blogs.map((blog) => (
                   <Box key={blog._id}>
                     <Typography
                       sx={{
@@ -145,7 +145,7 @@ const SearchBox = ({ search, searchResult }) => {
                             height: 64,
                             marginRight: '10px'
                           }}
-                          src={blog.avatar}
+                          src={blog.author.avatar}
                         />
                         <Typography
                           sx={{

@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Box,
-  Button,
-  Chip,
-  Divider,
-  FormControl,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@mui/material'
-
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { Button, Chip, Divider, FormControl } from '@mui/material'
 
 import TextField from '@mui/material/TextField'
 
@@ -26,7 +14,6 @@ import { connect } from 'react-redux'
 import { editProfile } from 'services/redux/actions/profile'
 
 const initialState = {
-  knowAs: '',
   bio: '',
   skills: '',
   twitter: '',
@@ -54,16 +41,8 @@ const General = ({ user, profile, editProfile }) => {
     }
   }, [profile])
 
-  const {
-    knowAs,
-    bio,
-    skills,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram
-  } = formData
+  const { bio, skills, twitter, facebook, linkedin, youtube, instagram } =
+    formData
 
   const { t } = useTranslation()
 
@@ -85,19 +64,6 @@ const General = ({ user, profile, editProfile }) => {
         {user && (
           <form className={s.form} onSubmit={handleSubmit}>
             <FormControl className={s.formControl}>
-              <Chip
-                label={t('editProfile.general.knowAs')}
-                className={s.chip}
-              />
-              <TextField
-                className={s.textField}
-                name="knowAs"
-                value={knowAs}
-                placeholder="EX: Nguyễn Hoài Phong"
-                onChange={handeleChange}
-              />
-            </FormControl>
-            <FormControl className={s.formControl}>
               <Chip label={t('editProfile.general.bio')} className={s.chip} />
               <TextField
                 className={s.textField}
@@ -108,7 +74,10 @@ const General = ({ user, profile, editProfile }) => {
               />
             </FormControl>
             <FormControl className={s.formControl}>
-              <Chip label={t('editProfile.general.skills')} className={s.chip} />
+              <Chip
+                label={t('editProfile.general.skills')}
+                className={s.chip}
+              />
               <TextField
                 className={s.textField}
                 name="skills"

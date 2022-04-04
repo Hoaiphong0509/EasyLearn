@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import s from './styles.module.scss'
 import { connect } from 'react-redux'
 import { getCourse } from 'services/redux/actions/course'
 import Spinner from 'react-spinkit'
