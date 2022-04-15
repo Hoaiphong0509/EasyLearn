@@ -19,6 +19,37 @@ export const getCourses = () => async (dispatch) => {
   }
 }
 
+export const getMyLearnings = () => async (dispatch) => {
+  try {
+    const res = await api.get('/course/get_mylearnings')
+
+    dispatch({
+      type: COURSES.GET_LEARNINGS,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
+export const getMyCourses = () => async (dispatch) => {
+  try {
+    const res = await api.get('/course/get_mycourses')
+    dispatch({
+      type: COURSES.GET_MYCOURSES,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const getCoursesByUserId = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/course/get_courses/${id}`)
@@ -53,7 +84,7 @@ export const getCourse = (id) => async (dispatch) => {
 
 export const addCourse = (formData) => async (dispatch) => {
   try {
-    const res = await api.post('/course/mycourses', formData)
+    const res = await api.post('/course', formData)
 
     dispatch({
       type: COURSES.ADD_COURSE,
@@ -72,9 +103,46 @@ export const addCourse = (formData) => async (dispatch) => {
   }
 }
 
+export const editCourse = (id, formData) => async (dispatch) => {
+  try {
+    const res = await api.put(`/course/edit/${id}`, formData)
+
+    dispatch({
+      type: COURSES.EDIT_COURSE,
+      payload: res.data
+    })
+
+    showToast({
+      message: 'Successfully!',
+      type: TOAST_TYPE.SUCCESS
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
+export const deleteCourse = (id) => async (dispatch) => {
+  try {
+    await api.delete(`/course/${id}`)
+
+    dispatch({
+      type: COURSES.REMOVE_COURSE,
+      payload: id
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const changeImgCourse = (id, file) => async (dispatch) => {
   try {
-    const res = await api.post(`/course/mycourses/change_img/${id}`, file)
+    const res = await api.post(`/course/change_img/${id}`, file)
 
     dispatch({
       type: COURSES.CHANGE_IMG,

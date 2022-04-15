@@ -29,9 +29,9 @@ const Banner = () => {
           Tham gia vào server discord để cùng nhau học & tập giải trí
         </Typography>
         <Button>
-          <a target="_blank" href="https://discord.gg/2sS8Cy4SHD">
+          <Link target="_blank" href="https://discord.gg/2sS8Cy4SHD">
             Tham gia
-          </a>
+          </Link>
         </Button>
       </div>
       <div className={s.image}>

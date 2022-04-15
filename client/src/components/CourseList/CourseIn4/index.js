@@ -11,55 +11,110 @@ import {
   ListItemText,
   Modal,
   Switch,
+  Tooltip,
   Typography
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import { useHistory } from 'react-router-dom'
 
 import s from './styles.module.scss'
 
 import CheckIcon from '@mui/icons-material/Check'
 import CircleIcon from '@mui/icons-material/Circle'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import ListIcon from '@mui/icons-material/List'
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 
-import { getInTouche } from 'services/redux/actions/user'
+import { getInTouche } from 'services/redux/actions/profile'
+import { deleteCourse } from 'services/redux/actions/course'
 import PropsTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
+import ConfirmDialog from 'components/ConfirmDialog'
 
-import { cleanUpProfile } from 'services/redux/actions/profile'
+import {
+  cleanUpProfile,
+  getCurrentProfile
+} from 'services/redux/actions/profile'
 
-const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
+const CourseIn4 = ({
+  auth: { user },
+  course,
+  getInTouche,
+  profile: { profile, loading },
+  cleanUpProfile,
+  deleteCourse,
+  getCurrentProfile
+}) => {
   const [open, setOpen] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const { t } = useTranslation()
+  const history = useHistory()
 
   const {
     _id,
+    user: userCourse,
     title,
     img,
-    creator,
-    avatar,
+    author,
     description,
     requires,
     sections,
     gains,
-    punchLike
+    punchLike,
+    students
   } = course
-  const [codeVideo, setCodeVideo] = useState('')
 
   const [checked, setChecked] = useState(true)
 
-  if (user && user.learnings.some((l) => l.learning == _id)) {
+  useEffect(async () => {
+    await getCurrentProfile()
+  }, [])
+
+  if (profile && students.some((s) => s.user === profile.user)) {
     return <Redirect to={`/learning/${_id}`} />
   }
+
+  const handleAddLearning = async () => {
+    await getInTouche(_id)
+    history.replace(`/learning/${_id}`)
+  }
+
+  const owner = (
+    <Box>
+      <Tooltip title="Edit" placement="top-start">
+        <IconButton
+          color="primary"
+          onClick={() => history.push(`/courses/edit_course/${_id}`)}
+        >
+          <ModeEditIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Delete" placement="top-start">
+        <IconButton color="primary" onClick={() => setConfirmOpen(true)}>
+          <DeleteForeverIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Photo" placement="top-start">
+        <IconButton
+          color="primary"
+          onClick={() => history.push(`/courses/add_img/${_id}`)}
+        >
+          <InsertPhotoIcon />
+        </IconButton>
+      </Tooltip>
+    </Box>
+  )
 
   return (
     <React.Fragment>
@@ -72,18 +127,16 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
             <Typography className={s.desc} variant="h5">
               {description}
             </Typography>
-            {user && (
-              <Link to={`/profile/${user._id}`} onClick={cleanUpProfile}>
-                <div className={s.in4Creator}>
-                  <Avatar
-                    className={s.avt}
-                    src={avatar}
-                    sx={{ width: 68, height: 68 }}
-                  />
-                  <Typography className={s.creator}>{creator}</Typography>
-                </div>
-              </Link>
-            )}
+            <Link to={`/profile/${userCourse}`} onClick={cleanUpProfile}>
+              <div className={s.in4Creator}>
+                <Avatar
+                  className={s.avt}
+                  src={author.avatar}
+                  sx={{ width: 68, height: 68 }}
+                />
+                <Typography className={s.creator}>{author.name}</Typography>
+              </div>
+            </Link>
           </header>
           <div className={s.box}>
             <Typography className={s.boxTitle} variant="h4">
@@ -142,19 +195,6 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
             </Box>
             {sections.map((section, indexSection) => (
               <Box key={section._id}>
-                {/* TODO OPEN EACH COURSE */}
-                {/* <FormControlLabel
-                  control={
-                    <Switch
-                      // checked={section.isExpanse}
-                      onChange={(e) => {
-                        section.isExpanse = e.target.checked
-                        console.log(section)
-                      }}
-                    />
-                  }
-                  label={section.name}
-                /> */}
                 <Typography variant="h5" className={s.sectionName}>
                   {`Section ${indexSection + 1}: `} {section.name}
                 </Typography>
@@ -200,10 +240,7 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
             </Modal>
           </header>
           <section className={s.containOverview}>
-            <Typography className={s.prices} variant="h5">
-              Miễn Phí
-            </Typography>
-            <Button onClick={() => getInTouche(_id)} className={s.btnGetCourse}>
+            <Button onClick={handleAddLearning} className={s.btnGetCourse}>
               {t('course.getInTouch')}
             </Button>
             <List className={s.quickIn4}>
@@ -240,23 +277,41 @@ const CourseIn4 = ({ course, getInTouche, auth: { user }, cleanUpProfile }) => {
                 </ListItemText>
               </ListItem>
             </List>
+            {user && user._id === userCourse ? owner : null}
           </section>
         </Box>
+        <ConfirmDialog
+          title="Delete course?"
+          open={confirmOpen}
+          setOpen={setConfirmOpen}
+          onConfirm={async () => {
+            await deleteCourse(_id)
+            history.replace('/my_stuff')
+          }}
+        >
+          Are you sure you want to delete this course?
+        </ConfirmDialog>
       </Box>
     </React.Fragment>
   )
 }
 
 CourseIn4.prototype = {
-  getInTouche: PropsTypes.func.isRequired,
   auth: PropsTypes.func.isRequired,
-  cleanUpProfile: PropsTypes.func.isRequired
+  getInTouche: PropsTypes.func.isRequired,
+  cleanUpProfile: PropsTypes.func.isRequired,
+  deleteCourse: PropsTypes.func.isRequired,
+  getCurrentProfile: PropsTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 })
 
-export default connect(mapStateToProps, { getInTouche, cleanUpProfile })(
-  CourseIn4
-)
+export default connect(mapStateToProps, {
+  getInTouche,
+  cleanUpProfile,
+  deleteCourse,
+  getCurrentProfile
+})(CourseIn4)

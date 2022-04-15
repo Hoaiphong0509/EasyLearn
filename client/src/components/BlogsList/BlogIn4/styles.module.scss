@@ -29,12 +29,15 @@
     & .content {
       font-size: 21px;
     }
+  }
 
-    & .footer {
-      & .icon {
-        margin-right: 20px;
-        cursor: pointer;
-      }
+  .footer {
+    position: fixed;
+    margin-top: 50px;
+    margin-left: -70%;
+    & .icon {
+      margin-right: 20px;
+      cursor: pointer;
     }
   }
 }

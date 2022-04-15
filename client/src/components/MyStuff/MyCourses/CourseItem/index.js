@@ -1,8 +1,8 @@
 import React from 'react'
 import s from './styles.module.scss'
 
-const LearningItem = ({ learning }) => {
-  const { _id, title, img, creator, avatar } = learning
+const CourseItem = ({ course }) => {
+  const { _id, title, img, creator, avatar } = course
   return (
     <React.Fragment>
       <Box className={s.root}>
@@ -23,4 +23,4 @@ const LearningItem = ({ learning }) => {
   )
 }
 
-export default LearningItem
+export default CourseItem

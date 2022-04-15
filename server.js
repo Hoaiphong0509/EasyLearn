@@ -3,12 +3,23 @@ const logger = require('morgan')
 const connectDB = require('./utils/db')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const { v2: cloudinary } = require('cloudinary')
 
 const app = express()
+const {
+  CLOUDINARY_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+} = require('./config')
 
 //Connect DB
 connectDB()
 
+cloudinary.config({
+  cloud_name: CLOUDINARY_NAME,
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
+})
 app.use(cors())
 // app.use(logger('combined'))
 app.use(bodyParser.json())

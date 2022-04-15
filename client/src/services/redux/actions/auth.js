@@ -1,5 +1,11 @@
 import api from 'utils/api'
-import { AUTHS, TOAST_TYPE } from 'constants/AppConstants'
+import {
+  AUTHS,
+  BLOGS,
+  COURSES,
+  PROFILES,
+  TOAST_TYPE
+} from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
 
 export const loadUser = () => async (dispatch) => {
@@ -70,4 +76,21 @@ export const registerCreator = (t) => async (dispatch) => {
   }
 }
 
-export const logout = () => ({ type: AUTHS.LOGOUT })
+export const logout = () => async (dispatch) => {
+  dispatch({
+    type: AUTHS.LOGOUT,
+    payload: null
+  })
+  dispatch({
+    type: PROFILES.CLEAR_PROFILE,
+    payload: null
+  })
+  dispatch({
+    type: BLOGS.CLEAN,
+    payload: null
+  })
+  dispatch({
+    type: COURSES.CLEAN,
+    payload: null
+  })
+}

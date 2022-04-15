@@ -7,9 +7,7 @@ const bufferUpload = async (buffer, path, tags, width, height) => {
       {
         folder: path,
         tags,
-        width,
-        height,
-        crop: 'fit',
+        transformation: [{ height, width, crop: 'scale', quality: '90' }],
       },
       (err, result) => {
         if (err) {

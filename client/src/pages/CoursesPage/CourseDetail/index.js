@@ -7,9 +7,10 @@ import Spinner from 'react-spinkit'
 import CourseIn4 from 'components/CourseList/CourseIn4'
 
 const CourseDetail = ({ getCourse, course: { course, loading }, match }) => {
-  useEffect(() => {
-    getCourse(match.params.id)
+  useEffect(async () => {
+    await getCourse(match.params.id)
   }, [getCourse, match.params.id])
+
 
   return loading || course === null ? (
     <Spinner name="cube-grid" color="aqua" />
@@ -21,8 +22,9 @@ const CourseDetail = ({ getCourse, course: { course, loading }, match }) => {
 }
 
 CourseDetail.prototype = {
-  getCourse: PropTypes.func.isRequired,
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  getCourse: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

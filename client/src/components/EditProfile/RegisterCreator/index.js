@@ -6,13 +6,16 @@ import PropTypes from 'prop-types'
 import s from './styles.module.scss'
 import { registerCreator } from 'services/redux/actions/auth'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const RegisterCreator = ({ registerCreator }) => {
   const { t } = useTranslation()
+  const history = useHistory()
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    registerCreator(t)
+    await registerCreator(t)
+    history.replace('/edit-profile')
   }
 
   return (

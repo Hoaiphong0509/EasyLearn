@@ -7,7 +7,6 @@ import PrivateRoute from 'components/Routing/PrivateRoute'
 
 import DefaultLayout from 'layouts/DefaultLayout'
 import EditProfileLayout from 'layouts/EditProfileLayout'
-import BlankLayout from 'layouts/BlankLayout'
 
 import Home from 'pages/Home'
 import EditProfile from 'pages/ProfilePage/EditProfile'
@@ -24,6 +23,8 @@ import AddImageCoursePage from 'pages/CoursesPage/AddImageCoursePage'
 import NotFoundPage from 'pages/NotFoundPage'
 import ServerErrorPage from 'pages/ServerErrorPage'
 import AddImageBlog from 'pages/BlogsPage/AddImageBlog'
+import EditBlog from 'pages/BlogsPage/EditBlog'
+import EditCourse from 'pages/CoursesPage/EditCourse'
 
 const Routes = () => {
   return (
@@ -56,6 +57,12 @@ const Routes = () => {
         />
         <PrivateRoute
           exact
+          path="/courses/edit_course/:id"
+          layout={DefaultLayout}
+          component={EditCourse}
+        />
+        <PrivateRoute
+          exact
           path="/courses/add_img/:id"
           component={AddImageCoursePage}
           layout={DefaultLayout}
@@ -77,6 +84,12 @@ const Routes = () => {
           path="/blogs/create_blog"
           layout={DefaultLayout}
           component={CreateBlog}
+        />
+        <PrivateRoute
+          exact
+          path="/blogs/edit_blog/:id"
+          layout={DefaultLayout}
+          component={EditBlog}
         />
         <Route
           exact

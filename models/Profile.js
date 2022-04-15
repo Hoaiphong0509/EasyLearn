@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const ProfileSchema = new mongoose.Schema(
   {
@@ -95,42 +96,6 @@ const ProfileSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    blogs: [
-      {
-        blog: {
-          type: mongoose.Schema.Types.ObjectId,
-        },
-      },
-    ],
-    courses: [
-      {
-        course: {
-          type: mongoose.Schema.Types.ObjectId,
-        },
-      },
-    ],
-    learnings: [
-      {
-        learning: {
-          type: mongoose.Schema.Types.ObjectId,
-        },
-        title: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        creator: {
-          type: String,
-        },
-        avatar: {
-          type: String,
-        },
-        img: {
-          type: String,
-        },
-      },
-    ],
   },
   {
     timestamps: true,

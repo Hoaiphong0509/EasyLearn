@@ -8,26 +8,39 @@ import { changeImgCourse, cleanUpCourse } from 'services/redux/actions/course'
 import { Box, Button, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
+import { validateSizeFile } from 'utils/AppUltils'
+import { showToast } from 'utils/UIHelper'
+import { TOAST_TYPE } from 'constants/AppConstants'
 
 const ChangeImg = ({ changeImgCourse, cleanUpCourse, course }) => {
   const [selectedImage, setSelectedImage] = useState()
+  const [imgForm, setImgForm] = useState()
   const { t } = useTranslation()
   const history = useHistory()
 
   const { _id, img } = course
 
   const imageChange = async (e) => {
-    const uploadForm = new FormData()
-    uploadForm.append('img', e.target.files[0])
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0])
-      changeImgCourse(_id, uploadForm)
+    if (validateSizeFile(e.target)) {
+      showToast({
+        message: 'TO BIG',
+        type: TOAST_TYPE.ERROR
+      })
+    } else {
+      const uploadForm = new FormData()
+      uploadForm.append('img', e.target.files[0])
+      if (e.target.files && e.target.files.length > 0) {
+        setSelectedImage(e.target.files[0])
+        setImgForm(uploadForm)
+      }
     }
   }
 
-  const handleContinue = () => {
-    history.push('/')
+  const handleContinue = async () => {
+    if (!imgForm) return history.replace(`/courses/course_detail/${_id}`)
+    await changeImgCourse(_id, imgForm)
     cleanUpCourse()
+    return history.replace(`/courses/course_detail/${_id}`)
   }
 
   return (

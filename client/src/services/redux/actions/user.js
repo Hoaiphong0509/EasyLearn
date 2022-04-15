@@ -26,30 +26,8 @@ export const changeAvatar = (file) => async (dispatch) => {
   }
 }
 
-export const getInTouche = (id) => async (dispatch) => {
-  try {
-    const res = await api.post(`/users/add_learning/${id}`)
-
-    dispatch({
-      type: USERS.GET_IN_TOUCHE,
-      payload: res.data
-    })
-    dispatch(loadUser())
-    showToast({
-      message: 'Successfully!',
-      type: TOAST_TYPE.SUCCESS
-    })
-  } catch (err) {
-    dispatch({
-      type: USERS.USER_ERRORS,
-      payload: {msg: err }
-    })
-  }
-}
-
 export const search = (keyword) => async (dispatch) => {
   try {
-    console.log('key:', keyword)
 
     const res = await api.post(`/users/search`, keyword)
 

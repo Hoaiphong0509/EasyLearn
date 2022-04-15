@@ -150,7 +150,8 @@
         "title": "Quản lý nội dung của bạn",
         "desc": "Xem các nội dung mà bạn đã tạo như là blogs, khóa đang học",
         "blogs": "Blogs",
-        "learnings": "Khóa đang học"
+        "learnings": "Khóa đang học",
+        "courses": "Khóa của tôi"
     },
     "notFound": {
         "title": "OOPS!",

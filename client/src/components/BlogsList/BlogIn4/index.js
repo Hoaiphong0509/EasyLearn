@@ -5,24 +5,25 @@ import {
   Container,
   Divider,
   Drawer,
-  FormControl,
   IconButton,
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  TextField,
+  Menu,
+  MenuItem,
   Typography
 } from '@mui/material'
 import React, { useState } from 'react'
 
+import { useHistory } from 'react-router-dom'
 import s from './styles.module.scss'
 import Interweave from 'interweave'
 
 import CommentIcon from '@mui/icons-material/Comment'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
-import SendIcon from '@mui/icons-material/Send'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 
 import PropTypes from 'prop-types'
 
@@ -30,27 +31,31 @@ import {
   addLike,
   removeLike,
   addComment,
-  deleteComment
+  deleteComment,
+  deleteBlog
 } from 'services/redux/actions/blog'
 import { connect } from 'react-redux'
 import CommentForm from 'components/Comments/CommentForm'
 import CommentItem from 'components/Comments/CommentItem'
 
-const BlogIn4 = ({
-  blog,
-  addLike,
-  removeLike,
-  addComment,
-  deleteComment,
-  auth: { user }
-}) => {
-  const { _id, title, text, author, likes, comments } = blog
+const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
+  const history = useHistory()
+  const { _id, title, text, author, likes, comments, user: userBlog } = blog
+
+  const [numLikes, setNumLikes] = useState(likes.length)
 
   const [state, setState] = useState({
     right: false
   })
 
-  const [cmt, setCmt] = useState('')
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -63,13 +68,7 @@ const BlogIn4 = ({
     setState({ ...state, [anchor]: open })
   }
 
-  const handleComment = (e) => {
-    e.preventDefault()
-    // addComment(_id, { cmt })
-    setCmt('')
-  }
-
-  const areaComment = (anchor) => (
+  const areaComment = () => (
     <Box sx={{ width: 969 }}>
       <CommentForm blogId={_id} user={user} />
       <Divider />
@@ -81,9 +80,94 @@ const BlogIn4 = ({
     </Box>
   )
 
+  const interaction = (
+    <footer className={s.footer}>
+      <Badge className={s.icon} badgeContent={numLikes} color="primary">
+        <IconButton
+          onClick={() => {
+            addLike(_id)
+            setNumLikes(likes.length)
+          }}
+        >
+          <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
+        </IconButton>
+      </Badge>
+      <Badge className={s.icon} badgeContent={comments.length} color="success">
+        <IconButton onClick={toggleDrawer('right', true)}>
+          <CommentIcon color="primary" sx={{ fontSize: 50 }} />
+        </IconButton>
+      </Badge>
+      <Drawer
+        anchor="right"
+        open={state['right']}
+        onClose={toggleDrawer('right', false)}
+      >
+        {areaComment('right')}
+      </Drawer>
+      <Badge className={s.icon} color="primary">
+        <IconButton
+          onClick={() => {
+            removeLike(_id)
+            setNumLikes(likes.length)
+          }}
+        >
+          <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
+        </IconButton>
+      </Badge>
+      {user && user._id === userBlog ? (
+        <Badge className={s.icon} color="primary">
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon sx={{ fontSize: 50 }} />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button'
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => history.push(`/blogs/edit_blog/${_id}`)}>
+              Edit
+              <IconButton>
+                <ModeEditIcon color="default" sx={{ fontSize: 20 }} />
+              </IconButton>
+            </MenuItem>
+            <MenuItem
+              onClick={async () => {
+                await deleteBlog(_id)
+                history.replace('/my_stuff')
+              }}
+            >
+              Delete
+              <IconButton>
+                <DeleteForeverIcon color="default" sx={{ fontSize: 20 }} />
+              </IconButton>
+            </MenuItem>
+            <MenuItem onClick={() => history.push(`/blogs/add_img/${_id}`)}>
+              Change image
+              <IconButton>
+                <InsertPhotoIcon color="default" sx={{ fontSize: 20 }} />
+              </IconButton>
+            </MenuItem>
+          </Menu>
+        </Badge>
+      ) : null}
+    </footer>
+  )
+
   return (
     <React.Fragment>
       <Box className={s.root}>
+        {user && interaction}
         <Container className={s.container}>
           <header className={s.header}>
             <Typography variant="h2" className={s.title}>
@@ -115,38 +199,6 @@ const BlogIn4 = ({
           <section className={s.content}>
             <Interweave content={text} />
           </section>
-          <footer className={s.footer}>
-            <Badge
-              className={s.icon}
-              badgeContent={likes.length}
-              color="primary"
-            >
-              <IconButton onClick={() => addLike(_id)}>
-                <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
-              </IconButton>
-            </Badge>
-            <Badge
-              className={s.icon}
-              badgeContent={comments.length}
-              color="success"
-            >
-              <IconButton onClick={toggleDrawer('right', true)}>
-                <CommentIcon color="primary" sx={{ fontSize: 50 }} />
-              </IconButton>
-            </Badge>
-            <Drawer
-              anchor="right"
-              open={state['right']}
-              onClose={toggleDrawer('right', false)}
-            >
-              {areaComment('right')}
-            </Drawer>
-            <Badge className={s.icon} color="primary">
-              <IconButton onClick={() => removeLike(_id)}>
-                <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
-              </IconButton>
-            </Badge>
-          </footer>
         </Container>
       </Box>
     </React.Fragment>
@@ -154,11 +206,12 @@ const BlogIn4 = ({
 }
 
 BlogIn4.prototype = {
+  auth: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  deleteBlog: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -169,5 +222,6 @@ export default connect(mapStateToProps, {
   addLike,
   removeLike,
   addComment,
-  deleteComment
+  deleteComment,
+  deleteBlog
 })(BlogIn4)

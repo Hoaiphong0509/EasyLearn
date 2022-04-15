@@ -13,7 +13,7 @@ export const getBlogs = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -29,7 +29,7 @@ export const getMyBlogs = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -45,7 +45,7 @@ export const getBlogsByUserId = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -65,7 +65,7 @@ export const addLike = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
 
     showToast({
@@ -92,7 +92,7 @@ export const removeLike = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
 
     showToast({
@@ -113,7 +113,7 @@ export const deleteBlog = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -133,14 +133,34 @@ export const addBlog = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
+    })
+  }
+}
+
+export const editBlog = (id, formData) => async (dispatch) => {
+  try {
+    const res = await api.put(`/blog/edit/${id}`, formData)
+
+    dispatch({
+      type: BLOGS.EDIT_BLOG,
+      payload: res.data
+    })
+    showToast({
+      message: 'Successfully!',
+      type: TOAST_TYPE.SUCCESS
+    })
+  } catch (err) {
+    dispatch({
+      type: BLOGS.BLOG_ERRORS,
+      payload: { msg: err }
     })
   }
 }
 
 export const changeImgBlog = (id, img) => async (dispatch) => {
   try {
-    const res = await api.post(`/blog/add_img_blog/${id}`, img)
+    const res = await api.put(`/blog/change_img/${id}`, img)
 
     dispatch({
       type: BLOGS.ADD_IMG,
@@ -149,7 +169,7 @@ export const changeImgBlog = (id, img) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -181,7 +201,7 @@ export const addComment = (blogId, formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -197,7 +217,7 @@ export const deleteComment = (blogId, commentId) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }

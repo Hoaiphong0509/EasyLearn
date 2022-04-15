@@ -32,9 +32,10 @@ const Experience = ({ profile }) => {
             </Typography>
           ) : (
             <List>
-              {experience.map((exp) => (
-                <ExperienceItem experience={exp} key={exp._id} />
-              ))}
+              {experience &&
+                experience.map((exp) => (
+                  <ExperienceItem experience={exp} key={exp._id} />
+                ))}
             </List>
           )}
         </Box>

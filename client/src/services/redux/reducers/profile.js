@@ -18,6 +18,12 @@ const profileReducer = (state = initialState, action) => {
         profile: payload,
         loading: false
       }
+    case PROFILES.GET_IN_TOUCHE:
+      return {
+        ...state,
+        profile: { learnings: [payload, ...state.profile.learnings] },
+        loading: false
+      }
     case PROFILES.GET_PROFILES:
       return {
         ...state,

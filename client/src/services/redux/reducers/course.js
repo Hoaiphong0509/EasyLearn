@@ -2,6 +2,8 @@ import { COURSES } from 'constants/AppConstants'
 
 const initialState = {
   courses: [],
+  mylearnings: [],
+  mycourses: [],
   course: null,
   loading: true,
   error: {}
@@ -17,6 +19,18 @@ const courseReducer = (state = initialState, action) => {
         courses: payload,
         loading: false
       }
+    case COURSES.GET_LEARNINGS:
+      return {
+        ...state,
+        mylearnings: payload,
+        loading: false
+      }
+    case COURSES.GET_MYCOURSES:
+      return {
+        ...state,
+        mycourses: payload,
+        loading: false
+      }
     case COURSES.GET_COURSE:
       return {
         ...state,
@@ -30,7 +44,13 @@ const courseReducer = (state = initialState, action) => {
         courses: [payload, ...state.courses],
         loading: false
       }
-    case COURSES.UPDATE_COURSE:
+    case COURSES.REMOVE_COURSE:
+      return {
+        ...state,
+        courses: state.courses.filter((course) => course._id !== payload),
+        loading: false
+      }
+    case COURSES.EDIT_COURSE:
     case COURSES.CHANGE_IMG:
       return {
         ...state,
@@ -42,12 +62,17 @@ const courseReducer = (state = initialState, action) => {
         ...state,
         error: payload,
         loading: false,
-        course: null
+        course: null,
+        courses: [],
+        mylearnings: [],
+        mycourses: []
       }
-    case COURSES.CLEAN: 
+    case COURSES.CLEAN:
       return {
         ...state,
         course: null,
+        mylearnings: [],
+        mycourses: [],
         loading: false
       }
     default:

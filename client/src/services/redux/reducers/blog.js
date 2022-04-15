@@ -32,6 +32,12 @@ const blogReducer = (state = initialState, action) => {
         blogs: [payload, ...state.blogs],
         loading: false
       }
+    case BLOGS.EDIT_BLOG:
+      return {
+        ...state,
+        blog: payload,
+        loading: false
+      }
     case BLOGS.REMOVE_BLOG:
       return {
         ...state,

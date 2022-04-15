@@ -1,17 +1,16 @@
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import TabPanel from 'components/common/TabPanel/TabPanel'
 import React, { useState } from 'react'
-import MyBlogsList from './MyBlogsList'
-import MyLearnings from './MyLearnings'
 
 import { useTranslation } from 'react-i18next'
 
 import s from './styles.module.scss'
+import { ROLES } from 'constants/AppConstants'
 import BlogsList from 'components/BlogsList'
+import MyCourses from './MyCourses'
+import MyLearnings from './MyLearnings'
 
-const MyStuff = ({ blogs, user }) => {
-  const { learnings } = user
-
+const MyStuff = ({ blogs, user, learnings, courses }) => {
   const [value, setValue] = useState(0)
 
   const { t } = useTranslation()
@@ -41,6 +40,9 @@ const MyStuff = ({ blogs, user }) => {
             >
               <Tab label={t('myStuff.blogs')} />
               <Tab label={t('myStuff.learnings')} />
+              {user.roles.includes(ROLES.CREATOR) ? (
+                <Tab label={t('myStuff.courses')} />
+              ) : null}
             </Tabs>
           </Box>
           <Box className={s.tabPanelStuff}>
@@ -54,6 +56,13 @@ const MyStuff = ({ blogs, user }) => {
                 <MyLearnings learnings={learnings} />
               </Box>
             </TabPanel>
+            {user.roles.includes(ROLES.CREATOR) ? (
+              <TabPanel value={value} index={2}>
+                <Box className={s.boxPanel}>
+                  <MyCourses courses={courses} />
+                </Box>
+              </TabPanel>
+            ) : null}
           </Box>
         </section>
       </Box>

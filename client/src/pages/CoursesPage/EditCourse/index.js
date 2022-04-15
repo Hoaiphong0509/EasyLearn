@@ -1,59 +1,42 @@
-import { AddAlarm } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Chip,
-  Divider,
-  FormControl,
-  Input,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography
-} from '@mui/material'
-import React, { useEffect, useState, useRef } from 'react'
+import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
-import AddIcon from '@mui/icons-material/Add'
 
 import s from './styles.module.scss'
 import Sections from 'components/CreateCourse/Sections'
 
 import PropTypes from 'prop-types'
 
-import { addCourse } from 'services/redux/actions/course'
+import Spinner from 'react-spinkit'
+import { editCourse, getCourse } from 'services/redux/actions/course'
 import { connect } from 'react-redux'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 
-const CreateCourse = ({ addCourse, course: { course, loading } }) => {
+const EditCourse = ({
+  getCourse,
+  editCourse,
+  course: { course, loading },
+  match
+}) => {
   const history = useHistory()
-  const [courseData, setCourseData] = useState({
-    title: '',
-    description: '',
-    punchLike: '',
-    gains: '',
-    requires: '',
-    sections: []
-  })
-  
-
-  const crs = useSelector((state) => state.course)
 
   useEffect(() => {
-    console.log('new course: ', crs)
+    getCourse(match.params.id)
+  }, [getCourse, match.params.id])
 
-    if (crs && crs.course) history.push(`/courses/add_img/${crs.course._id}`)
-    return () => {
-      console.log('Prev course: ', crs)
-    }
-  }, [crs])
+  console.log('COURSE:', course)
 
-  const { title, description, punchLike, gains, requires } =
-    courseData
+  const [courseData, setCourseData] = useState({
+    title: course.title,
+    description: course.description,
+    punchLike: course.punchLike,
+    gains: course.gains,
+    requires: course.requires,
+    sections: course.sections
+  })
+
+  const { title, description, punchLike, gains, requires } = courseData
 
   const handleSections = (sections) => {
     setCourseData({ ...courseData, sections: sections })
@@ -63,19 +46,19 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // console.log('COURSE: ', courseData)
-    addCourse(courseData)
+    await editCourse(course._id, courseData)
+    history.replace(`/courses/course_detail/${course._id}`)
   }
-
-  return (
+  return loading || course === null ? (
+    <Spinner name="cube-grid" color="aqua" />
+  ) : (
     <React.Fragment>
       <Box className={s.root}>
         <form className={s.form} onSubmit={handleSubmit}>
           <FormControl className={s.formControlImg}>
-            <img src={COURSE_IMG_DEFAULT} alt="img" />
+            <img src={course ? course.img : COURSE_IMG_DEFAULT} alt="img" />
           </FormControl>
 
           <FormControl className={s.formControl}>
@@ -135,7 +118,10 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
                 Nội dung khóa học
               </Typography>
             </div>
-            <Sections onSections={handleSections} />
+            <Sections
+              sectionsCrs={course.sections}
+              onSections={handleSections}
+            />
           </FormControl>
 
           <FormControl className={s.footer}>
@@ -149,8 +135,9 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
   )
 }
 
-CreateCourse.prototype = {
-  addCourse: PropTypes.func.isRequired,
+EditCourse.prototype = {
+  getCourse: PropTypes.func.isRequired,
+  editCourse: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired
 }
 
@@ -158,4 +145,4 @@ const mapStateToProps = (state) => ({
   course: state.course
 })
 
-export default connect(mapStateToProps, { addCourse })(CreateCourse)
+export default connect(mapStateToProps, { getCourse, editCourse })(EditCourse)

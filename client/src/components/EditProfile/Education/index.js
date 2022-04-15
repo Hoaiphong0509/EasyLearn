@@ -32,9 +32,10 @@ const Education = ({ profile }) => {
             </Typography>
           ) : (
             <List>
-              {education.map((edu) => (
-                <EducationItem education={edu} key={edu._id} />
-              ))}
+              {education &&
+                education.map((edu) => (
+                  <EducationItem education={edu} key={edu._id} />
+                ))}
             </List>
           )}
         </Box>

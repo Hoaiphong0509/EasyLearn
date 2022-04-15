@@ -18,11 +18,6 @@ const userReducer = (state = initialState, action) => {
         token: payload,
         loading: false
       }
-    case USERS.GET_IN_TOUCHE:
-      return {
-        ...state,
-        loading: false
-      }
     case USERS.SEARCH_KEYWORD:
       return {
         ...state,

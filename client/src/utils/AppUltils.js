@@ -28,3 +28,8 @@ export const getCodeYoutube = (value) => {
   const res = value.match(REGEX)
   return res[1]
 }
+
+export const validateSizeFile = (input) => {
+  const fileSize = input.files[0].size / 1024 / 1024 // in MiB
+  return fileSize > 0.2 ? true : false
+}

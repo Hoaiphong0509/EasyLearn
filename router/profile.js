@@ -5,6 +5,7 @@ const authorize = require('../middleware/authorize')
 const checkObjectId = require('../middleware/checkObjectId')
 const normalize = require('normalize-url')
 const Profile = require('../models/Profile')
+const Course = require('../models/Course')
 
 // @route    GET api/profile/me
 // @desc     Get current users profile
@@ -32,7 +33,7 @@ router.get('/me', authorize(), async (req, res) => {
 router.post('/me', authorize(), async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    error({ errors: errors.array(), badge: true })
+    console.log({ errors: errors.array() })
     return res.status(400).json({ errors: errors.array() })
   }
 
@@ -46,8 +47,6 @@ router.post('/me', authorize(), async (req, res) => {
       : skills.split(',').map((skill) => ' ' + skill.trim()),
     ...rest,
   }
-
-  console.log('profileFields:', profileFields)
 
   const socialFields = { youtube, twitter, instagram, linkedin, facebook }
 
@@ -67,7 +66,7 @@ router.post('/me', authorize(), async (req, res) => {
     )
     return res.json(profile)
   } catch (err) {
-    error({ message: `router: ${error.message}`, badge: true })
+    console.log({ errors: errors.array() })
     return res.status(500).send('Server Error')
   }
 })
@@ -90,6 +89,30 @@ router.get(
     } catch (err) {
       console.log(err.message)
       return res.status(500).json({ msg: 'Server error' })
+    }
+  }
+)
+
+// @route  POST api/profile/add_learning/:id
+// @desc   Add course into lerning
+// @access Private
+router.post(
+  '/add_learning/:id',
+  authorize(),
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+      const course = await Course.findById(req.params.id)
+
+      if (!course) return res.status(400).json({ msg: 'Course not available' })
+      await course.students.push({ user: req.user.id })
+
+      await course.save()
+
+      res.json({ msg: 'Add courses successfully' })
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send('Server Error')
     }
   }
 )

@@ -149,7 +149,8 @@
         "title": "Manage your content",
         "desc": "View content that you have created such as videos, blogs",
         "blogs": "My Blogs",
-        "learnings": "My Learnings"
+        "learnings": "My Learnings",
+        "courses": "My Courses"
     },
     "notFound": {
         "title": "OOPS!",

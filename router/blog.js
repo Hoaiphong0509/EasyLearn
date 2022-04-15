@@ -6,7 +6,6 @@ const authorize = require('../middleware/authorize')
 const multer = require('multer')
 const bufferUpload = require('../utils/bufferUpload')
 const multerSingle = multer()
-const role = require('../helper/role')
 
 const Blog = require('../models/Blog')
 const User = require('../models/User')
@@ -32,19 +31,20 @@ router.post(
 
     try {
       const profile = await Profile.findOne({ user: req.user.id })
+      const user = await User.findById(req.user.id)
 
       const newBlog = new Blog({
         user: req.user.id,
         author: {
-          name: profile.name,
-          avatar: profile.avatar,
+          name: user.name,
+          avatar: user.avatar,
         },
         title,
         text,
         img: BLOG_IMG_DEFAULT,
       })
 
-      await User.findOneAndUpdate(
+      await Profile.findOneAndUpdate(
         { user: req.user.id },
         { $push: { blogs: { blog: newBlog._id } } }
       )
@@ -62,8 +62,8 @@ router.post(
 // @route  POST api/blog/add_img_blog/:id
 // @desc   Add image for blog
 // @access Private
-router.post(
-  '/add_img_blog/:id',
+router.put(
+  '/change_img/:id',
   authorize(),
   checkObjectId('id'),
   multerSingle.single('img'),
@@ -79,7 +79,7 @@ router.post(
       )
 
       const result = await Blog.findByIdAndUpdate(req.params.id, {
-        $set: { img: secure_url, status: 'approved' },
+        $set: { img: secure_url },
       })
 
       return res.send(result)
@@ -90,10 +90,41 @@ router.post(
   }
 )
 
-// @route    PUT api/blog/:id
+// @route    PUT api/blog/edit/:id
 // @desc     Edit a blog
 // @access   Private
-// @TODO
+router.put(
+  '/edit/:id',
+  authorize(),
+  check('title', 'Title is required').notEmpty(),
+  check('text', 'Text is required').notEmpty(),
+  checkObjectId('id'),
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { title, text } = req.body
+
+    console.log('ID:', req.params.id)
+
+    try {
+      const blogField = {
+        title: title,
+        text: text,
+      }
+
+      const blog = await Blog.findByIdAndUpdate(req.params.id, {
+        $set: blogField,
+      })
+      res.json(blog)
+    } catch (err) {
+      console.log(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
 // @route    GET api/blog
 // @desc     Get all blogs
@@ -167,9 +198,6 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
 router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
-    const user = await User.findById(req.user.id)
-
-    console.log(user.blogs)
 
     if (!blog) {
       return res.status(404).json({ msg: 'Blog not found' })
@@ -180,14 +208,9 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' })
     }
 
-    user.blogs = user.blogs.filter(
-      ({ blog }) => blog.toString() !== req.params.id
-    )
-
-    await user.save()
     await blog.remove()
 
-    res.json(user.blogs)
+    res.json({ msg: 'Blog removed' })
   } catch (err) {
     console.log(err.message)
 

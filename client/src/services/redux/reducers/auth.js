@@ -4,7 +4,7 @@ const initialsState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: true,
-  user: null
+  user: null,
 }
 
 const authReducer = (state = initialsState, action) => {

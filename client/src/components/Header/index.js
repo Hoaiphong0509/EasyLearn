@@ -5,9 +5,10 @@ import {
   FormControl,
   FormControlLabel,
   Tooltip,
-  IconButton,
-  Badge
+  Badge,
+  IconButton
 } from '@mui/material'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
@@ -68,6 +69,14 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
 
   const authLinks = (
     <>
+      <Tooltip title="Notify">
+        <Badge>
+          <IconButton>
+            <NotificationsIcon color="primary" sx={{ fontSize: 32 }} />
+          </IconButton>
+        </Badge>
+      </Tooltip>
+
       <AvatarBox user={user} />
     </>
   )

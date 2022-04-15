@@ -10,11 +10,9 @@ import Tooltip from '@mui/material/Tooltip'
 import Logout from '@mui/icons-material/Logout'
 
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import useStyles from './useStyles'
-import { SignalCellularNullOutlined } from '@mui/icons-material'
 import { useHistory } from 'react-router-dom'
 
 import { logout } from 'services/redux/actions/auth'
@@ -24,7 +22,7 @@ import { cleanUpCourse } from 'services/redux/actions/course'
 
 import s from './styles.module.scss'
 
-const AvatarBox = ({ logout, user, cleanUpBlog }) => {
+const AvatarBox = ({ logout, user, cleanUpBlog, cleanUpCourse }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const history = useHistory()
   const open = Boolean(anchorEl)
@@ -101,7 +99,12 @@ const AvatarBox = ({ logout, user, cleanUpBlog }) => {
         ) : null}
         <MenuItem onClick={handleCreateBlog}>{t('header.createBlog')}</MenuItem>
         <Divider />
-        <MenuItem onClick={logout}>
+        <MenuItem
+          onClick={() => {
+            history.replace('/')
+            logout()
+          }}
+        >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

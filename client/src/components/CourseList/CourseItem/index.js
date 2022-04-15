@@ -9,7 +9,7 @@ import { cleanUpCourse } from 'services/redux/actions/course'
 import { cleanUpProfile } from 'services/redux/actions/profile'
 
 const CourseItem = ({ cleanUpCourse, cleanUpProfile, course }) => {
-  const { _id, title, img, creator, avatar, user } = course
+  const { _id, user, title, img, author } = course
   return (
     <React.Fragment>
       <Box className={s.root}>
@@ -27,9 +27,9 @@ const CourseItem = ({ cleanUpCourse, cleanUpProfile, course }) => {
             onClick={cleanUpProfile}
             className={s.link}
           >
-            <Avatar src={avatar} alt={creator} />
+            <Avatar src={author.avatar} alt={author.name} />
             <Typography className={s.creator} variant="p">
-              {creator}
+              {author.name}
             </Typography>
           </Link>
         </div>

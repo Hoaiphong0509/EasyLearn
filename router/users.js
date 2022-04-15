@@ -48,42 +48,6 @@ router.get('/myblogs', authorize(), async (req, res) => {
   }
 })
 
-// @route  POST api/user/add_learning/:id_course
-// @desc   Add course into lerning
-// @access Private
-router.post(
-  '/add_learning/:id_course',
-  authorize(),
-  checkObjectId('id_course'),
-  async (req, res) => {
-    try {
-      const course = await Course.findById(req.params.id_course)
-
-      const { _id, title, description, creator, avatar, img } = course
-
-      if (!course) return res.status(400).json({ msg: 'Course not available' })
-
-      await User.findByIdAndUpdate(req.user.id, {
-        $push: {
-          learnings: {
-            learning: _id,
-            title,
-            description,
-            creator,
-            avatar,
-            img,
-          },
-        },
-      })
-
-      res.json({ msg: 'Add courses successfully' })
-    } catch (error) {
-      console.error(error.message)
-      res.status(500).send('Server Error')
-    }
-  }
-)
-
 // @route  POST api/user/search
 // @desc   Search
 // @access Private

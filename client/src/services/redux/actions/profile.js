@@ -35,6 +35,22 @@ export const getProfile = (id) => async (dispatch) => {
   }
 }
 
+export const getInTouche = (id) => async (dispatch) => {
+  try {
+    await api.post(`/profile/add_learning/${id}`)
+
+    dispatch({
+      type: PROFILES.GET_IN_TOUCHE,
+      payload: id
+    })
+  } catch (err) {
+    dispatch({
+      type: PROFILES.PROFILE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const editProfile = (formData) => async (dispatch) => {
   try {
     const res = await api.post('profile/me', formData)

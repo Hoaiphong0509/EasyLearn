@@ -4,7 +4,6 @@ import Video from '../Video'
 import VideoForm from '../VideoForm'
 
 function Videos(props) {
-  // console.log({props});
   const [videosData, setVideosData] = useState(props.videos ? props.videos : [])
 
   const addVideo = (video) => {

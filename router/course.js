@@ -2,11 +2,18 @@ const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
 const authorize = require('../middleware/authorize')
+const multer = require('multer')
+const bufferUpload = require('../utils/bufferUpload')
+const multerSingle = multer()
 const checkObjectId = require('../middleware/checkObjectId')
-const Course = require('../models/Course')
 
-const role = require('../helper/role')
+const Course = require('../models/Course')
 const User = require('../models/User')
+const Notify = require('../models/Notify')
+const Profile = require('../models/Profile')
+
+const { CLOUDINARY_PATH_COURSE_IMG, COURSE_IMG_DEFAULT } = require('../config')
+const role = require('../helper/role')
 
 // @route    GET api/course
 // @desc     Get courses
@@ -42,16 +49,42 @@ router.get(
   }
 )
 
-// @route    GET api/course/get_my_courses
-// @desc     Get my courses
-// @access   Creator
-router.get('/get_mylearning', authorize(role.Creator), async (req, res) => {
+// @route    GET api/course/get_learnings
+// @desc     Get my learnings
+// @access   Student, Creator
+router.get('/get_mylearnings', authorize(), async (req, res) => {
   try {
-    const courses = await Course.find({ user: req.user.id }).sort({ date: -1 })
-    res.json(courses)
+    const learnings = []
+    const courses = await Course.find()
+    courses.forEach((c) => {
+      c.students.forEach((s) => {
+        if (s.user._id.toString() === req.user.id) {
+          learnings.push(c)
+        }
+      })
+    })
+
+    res.json(learnings)
   } catch (err) {
     console.log(err.message)
 
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route    GET api/course/get_my_courses
+// @desc     Get my courses
+// @access   Creator
+router.get('/get_mycourses', authorize(), async (req, res) => {
+  try {
+    const courses = await Course.find({ user: req.user.id }).sort({ date: -1 })
+    res.json(courses)
+
+    // const blogs = await Blog.find().sort({ date: -1 })
+    // const result = blogs.filter((b) => b.user._id.toString() === req.user.id)
+    // res.send(result)
+  } catch (err) {
+    console.log(err.message)
     res.status(500).send('Server Error')
   }
 })
@@ -75,11 +108,11 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
   }
 })
 
-// @route  POST api/course/mycourses
+// @route  POST api/course
 // @desc   Create a course
 // @access Creator
 router.post(
-  '/mycourses',
+  '/',
   check('title', 'Title is required').notEmpty(),
   check('description', 'Description is required').notEmpty(),
   check('requires', 'Requires is required').notEmpty(),
@@ -88,13 +121,15 @@ router.post(
   authorize(),
   async (req, res) => {
     try {
-      const user = await User.findById(req.user.id).select('-password')
+      const user = await User.findById(req.user.id)
       const { requires, gains, img, sections, ...rest } = req.body
 
       const newCourse = new Course({
         user: req.user.id,
-        creator: user.name,
-        avatar: user.avatar,
+        author: {
+          name: user.name,
+          avatar: user.avatar,
+        },
         requires: Array.isArray(requires)
           ? requires
           : requires.split(',').map((require) => ' ' + require.trim()),
@@ -114,7 +149,7 @@ router.post(
         ...rest,
       })
 
-      await User.findOneAndUpdate(
+      await Profile.findOneAndUpdate(
         { user: req.user.id },
         { $push: { courses: { course: newCourse._id } } }
       )
@@ -129,99 +164,136 @@ router.post(
   }
 )
 
-// @route  POST api/course/mycourses/change_img/:id
+// @route  POST api/course/change_img/:id
 // @desc   Change img for course
 // @access Creator
-// router.post(
-//   '/mycourses/change_img/:id',
-//   authorize(),
-//   checkObjectId('id'),
-//   multerSingle.single('img'),
-//   async (req, res) => {
-//     const { buffer } = req.file
+router.post(
+  '/change_img/:id',
+  authorize(),
+  checkObjectId('id'),
+  multerSingle.single('img'),
+  async (req, res) => {
+    const { buffer } = req.file
 
-//     try {
-//       const { secure_url } = await bufferUpload(
-//         buffer,
-//         CLOUDINARY_PATH_COURSE_IMG,
-//         'avatar',
-//         854,
-//         480
-//       )
-//       const course = await Course.findByIdAndUpdate(req.params.id, {
-//         $set: { img: secure_url },
-//       })
-//       return res.json(course)
-//     } catch (error) {
-//       console.log('error:', error.message)
-//       res.send('Something went wrong please try again later..')
-//     }
-//   }
-// )
+    try {
+      const { secure_url } = await bufferUpload(
+        buffer,
+        CLOUDINARY_PATH_COURSE_IMG,
+        'avatar',
+        854,
+        480
+      )
+      const course = await Course.findByIdAndUpdate(req.params.id, {
+        $set: { img: secure_url },
+      })
+      return res.json(course)
+    } catch (error) {
+      console.log('error:', error.message)
+      res.send('Something went wrong please try again later..')
+    }
+  }
+)
 
-// @route    PUT api/course/mycourses/:id_course
+// @route    PUT api/course/edit/:id
 // @desc     Edit a mycourse
 // @access   Creator
-// router.put(
-//   '/mycourses/:id_course',
-//   authorize(role.Creator),
-//   checkObjectId('id_course'),
-//   check('title', 'Title is required').notEmpty(),
-//   check('description', 'Description is required').notEmpty(),
-//   check('requires', 'Requires is required').notEmpty(),
-//   check('gains', 'Gains is required').notEmpty(),
-//   check('prices', 'Prices is required').notEmpty(),
-//   check('sections', 'Sections is required').notEmpty(),
-//   multerSingle.single('img'),
-//   async (req, res) => {
-//     const errors = validationResult(req.body)
-//     const { buffer } = req.file
+router.put(
+  '/edit/:id',
+  authorize(role.Creator),
+  checkObjectId('id'),
+  check('title', 'Title is required').notEmpty(),
+  check('description', 'Description is required').notEmpty(),
+  check('requires', 'Requires is required').notEmpty(),
+  check('gains', 'Gains is required').notEmpty(),
+  check('sections', 'Sections is required').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req.body)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
 
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() })
-//     }
+    const course = await Course.findById(req.params.id)
+    if (!course) {
+      return res.status(404).json({ msg: 'Course not found' })
+    }
 
-//     const course = await Course.findById(req.params.id_course)
-//     if (!course) {
-//       return res.status(404).json({ msg: 'Course not found' })
-//     }
+    const { requires, gains, sections, ...rest } = req.body
 
-//     const { requires, gains, sections, ...rest } = req.body
+    const coursesFields = {
+      requires: Array.isArray(requires)
+        ? requires
+        : requires.split(',').map((require) => ' ' + require.trim()),
+      gains: Array.isArray(gains)
+        ? gains
+        : gains.split(',').map((gain) => ' ' + gain.trim()),
+      sections: Array.isArray(sections)
+        ? sections.map((section) => ({
+            name: section.name,
+            videos: section.videos.map((video) => ({
+              name: video.name,
+              link: video.link,
+            })),
+          }))
+        : [sections],
+      ...rest,
+    }
 
-//     const coursesFields = {
-//       owner: req.user.id,
-//       requires: Array.isArray(requires)
-//         ? requires
-//         : requires.split(',').map((require) => ' ' + require.trim()),
-//       gains: Array.isArray(gains)
-//         ? gains
-//         : gains.split(',').map((gain) => ' ' + gain.trim()),
-//       sections: Array.isArray(sections)
-//         ? sections.map((section) => ({
-//             name: section.name,
-//             videos: section.videos.map(
-//               (video) => 'https://www.youtube.com/watch?v=' + video
-//             ),
-//           }))
-//         : [sections],
-//       ...rest,
-//     }
+    try {
+      const result = await Course.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: coursesFields,
+        },
+        { upsert: true }
+      )
 
-//     try {
-//       const result = await Course.findByIdAndUpdate(
-//         req.params.id_course,
-//         {
-//           $set: coursesFields,
-//         },
-//         { upsert: true }
-//       )
+      res.send(result)
+    } catch (err) {
+      console.log(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
-//       res.send(result)
-//     } catch (err) {
-//        console.log(err.message)
-//       res.status(500).send('Server Error')
-//     }
-//   }
-// )
+// @route    DELETE api/course/:id
+// @desc     Delate a course
+// @access   Creator
+router.delete(
+  '/:id',
+  authorize(role.Creator),
+  checkObjectId('id'),
+  async (req, res) => {
+    try {
+      const course = await Course.findById(req.params.id)
+      const profile = await Profile.findById(req.user.id)
+
+      if (!course) {
+        return res.status(404).json({ msg: 'course not found' })
+      }
+
+      // Check user
+      if (course.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'User not authorized' })
+      }
+
+      const notify = new Notify({
+        user: req.user.id,
+        textVi: `Khóa học ${course.title} đã bị xóa.`,
+        textEn: `${course.title} has been deleted.`,
+        recipient: course.students,
+      })
+
+      if (course.students.length > 0) await notify.save()
+
+      await course.remove()
+
+      res.json(profile.course)
+    } catch (err) {
+      console.log(err.message)
+
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
 module.exports = router

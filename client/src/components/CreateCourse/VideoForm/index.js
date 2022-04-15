@@ -19,14 +19,14 @@ function VideoForm(props) {
     setName(e.target.value)
   }
   const handleChangeLink = (e) => {
-    setLink(getCodeYoutube(e.target.value))
+    setLink(e.target.value)
   }
 
   const handleSubmit = (e) => {
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       name: name,
-      link: link
+      link: getCodeYoutube(link)
     })
     setName('')
     setLink('')

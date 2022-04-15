@@ -6,7 +6,8 @@ import GaravatarAndIn4 from './GravatarAndIn4'
 import s from './styles.module.scss'
 
 const ProfileIn4 = ({ profile, courses, blogs }) => {
-  const { knowAs, skills, bio, experience, education, social, avatar } = profile
+  console.log('PROFILE:', profile)
+  const { knowAs, skills, bio, experience, education, social, user } = profile
 
   return (
     <Box className={s.root}>
@@ -27,7 +28,7 @@ const ProfileIn4 = ({ profile, courses, blogs }) => {
             numberCourses={courses.length}
             numberBlogs={blogs.length}
             social={social}
-            avatar={avatar}
+            avatar={user.avatar}
           />
         </Box>
       </Box>

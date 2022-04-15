@@ -15,8 +15,6 @@ const Section = ({
   updateSection,
   onSections
 }) => {
-  // cái cấu trúc file này có vấn đề.
-
   const [edit, setEdit] = useState({
     id: null,
     name: '',

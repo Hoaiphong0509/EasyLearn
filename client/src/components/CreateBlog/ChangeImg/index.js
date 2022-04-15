@@ -8,26 +8,41 @@ import { changeImgBlog, cleanUpBlog } from 'services/redux/actions/blog'
 import { Box, Button, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
+import { validateSizeFile } from 'utils/AppUltils'
+import { showToast } from 'utils/UIHelper'
+import { TOAST_TYPE } from 'constants/AppConstants'
 
 const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
   const [selectedImage, setSelectedImage] = useState()
+  const [imgForm, setImgForm] = useState()
   const { t } = useTranslation()
   const history = useHistory()
 
   const { _id, img } = blog
 
   const imageChange = async (e) => {
-    const uploadForm = new FormData()
-    uploadForm.append('img', e.target.files[0])
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0])
-      changeImgBlog(_id, uploadForm)
+    if (validateSizeFile(e.target)) {
+      showToast({
+        message: 'TO BIG',
+        type: TOAST_TYPE.ERROR
+      })
+    } else {
+      const uploadForm = new FormData()
+      uploadForm.append('img', e.target.files[0])
+      if (e.target.files && e.target.files.length > 0) {
+        setSelectedImage(e.target.files[0])
+        setImgForm(uploadForm)
+      }
     }
   }
 
-  const handleContinue = () => {
-    history.push('/')
+  const handleContinue = async () => {
+    if (!imgForm) {
+      return history.replace(`/blogs/blog_detail/${_id}`)
+    }
+    await changeImgBlog(_id, imgForm)
     cleanUpBlog()
+    return history.replace(`/blogs/blog_detail/${_id}`)
   }
 
   return (
