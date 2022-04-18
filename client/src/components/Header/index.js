@@ -21,6 +21,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AvatarBox from './AvatarBox'
 import SearchBox from './SearchBox'
+import NotifyBox from './NotifyBox'
 
 import GoogleLogin from 'react-google-login'
 import { ENV } from 'constants/AppConstants'
@@ -69,14 +70,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
 
   const authLinks = (
     <>
-      <Tooltip title="Notify">
-        <Badge>
-          <IconButton>
-            <NotificationsIcon color="primary" sx={{ fontSize: 32 }} />
-          </IconButton>
-        </Badge>
-      </Tooltip>
-
+      <NotifyBox />
       <AvatarBox user={user} />
     </>
   )

@@ -72,6 +72,14 @@ export const BLOGS = {
   CLEAN: 'CLEAN'
 }
 
+export const NOTIFY = {
+  GET_NOTIFY: 'GET_NOTIFY',
+  GET_NOTIFIES: 'GET_NOTIFIES',
+  MARK_READ: 'MARK_READ',
+  REMOVE_NOTIFY: 'REMOVE_NOTIFY',
+  NOTIFY_ERROR: 'NOTIFY_ERROR'
+}
+
 export const TOAST_TYPE = {
   SUCCESS: 'success',
   ERROR: 'error',

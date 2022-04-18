@@ -1,5 +1,4 @@
-import { Grid, Typography } from '@mui/material'
-import Banner from 'components/Banner'
+import { Typography } from '@mui/material'
 import BlogsList from 'components/BlogsList'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

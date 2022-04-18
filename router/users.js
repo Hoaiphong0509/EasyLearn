@@ -10,7 +10,7 @@ const User = require('../models/User')
 const Profile = require('../models/Profile')
 const Blog = require('../models/Blog')
 const Course = require('../models/Course')
-const checkObjectId = require('../middleware/checkObjectId')
+const Notify = require('../models/Notify')
 
 // @route  POST api/users/register_creator
 // @desc   Register creator
@@ -42,6 +42,41 @@ router.get('/myblogs', authorize(), async (req, res) => {
     const blogs = await Blog.find({ user: req.user.id })
 
     res.send(blogs)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route    DELETE api/user
+// @desc     Delete user
+// @access   Private
+router.get('/', authorize(), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+    const profile = await Profile.findOne({ user: req.user.id })
+    const blog = await Blog.findOne({ user: req.user.id })
+    const course = await Course.findOne({ user: req.user.id })
+
+    if (!user && !profile)
+      return res.status(400).json({ msg: 'User not found' })
+
+    if (blog && course) {
+      Course.deleteMany({ user: req.user.id })
+      Blog.deleteMany({ user: req.user.id })
+      const notify = new Notify({
+        user: req.user.id,
+        textVi: `Tài khoản \`${user.name}\` đã bị xóa nên khóa học \`${course.title}\` sẽ bị xóa theo.`,
+        textEn: `The \'${user.name}\' account has been deleted so the \'${course.title}\' course will be deleted accordingly.`,
+        recipient: course.students,
+      })
+
+      await notify.save()
+      await blog.remove()
+      await course.remove()
+    }
+
+    res.json({ msg: 'Remove user successfully' })
   } catch (error) {
     console.error(error.message)
     res.status(500).send('Server Error')
