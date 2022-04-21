@@ -6,7 +6,6 @@ import GaravatarAndIn4 from './GravatarAndIn4'
 import s from './styles.module.scss'
 
 const ProfileIn4 = ({ profile, courses, blogs }) => {
-  console.log('PROFILE:', profile)
   const { knowAs, skills, bio, experience, education, social, user } = profile
 
   return (

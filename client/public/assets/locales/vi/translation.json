@@ -63,7 +63,8 @@
     "areaStudy": {
         "overview": "Tổng quan",
         "gains": "Bạn sẽ đạt được",
-        "requires": "Yêu cầu"
+        "requires": "Yêu cầu",
+        "comments": "Bình luận"
     },
     "profile": {
         "contact": "Liên lạc",
@@ -145,6 +146,10 @@
     "blog": {
         "manageBlog": "Quản lý blog",
         "createBlog": "Tạo blog"
+    },
+    "notify": {
+        "noti:": "Thông báo",
+        "noneNotify": "Không có thông báo nào"
     },
     "myStuff": {
         "title": "Quản lý nội dung của bạn",

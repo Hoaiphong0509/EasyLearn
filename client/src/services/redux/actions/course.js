@@ -160,6 +160,45 @@ export const changeImgCourse = (id, file) => async (dispatch) => {
   }
 }
 
+export const addComment =
+  (courseId, sectionId, videoId, formData) => async (dispatch) => {
+    try {
+      const res = await api.post(
+        `/course/comment/${courseId}/${sectionId}/${videoId}`,
+        formData
+      )
+
+      dispatch({
+        type: COURSES.EDIT_COURSE,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: COURSES.COURSE_ERROR,
+        payload: { msg: err }
+      })
+    }
+  }
+
+export const deleteComment =
+  (courseId, sectionId, videoId, commentId) => async (dispatch) => {
+    try {
+      const res = await api.delete(
+        `/course/comment/${courseId}/${sectionId}/${videoId}/${commentId}`
+      )
+
+      dispatch({
+        type: COURSES.EDIT_COURSE,
+        payload: res.data
+      })
+    } catch (err) {
+      dispatch({
+        type: COURSES.COURSE_ERROR,
+        payload: { msg: err }
+      })
+    }
+  }
+
 export const cleanUpCourse = () => (dispatch) =>
   dispatch({
     type: COURSES.CLEAN,

@@ -6,6 +6,10 @@ const initialState = {
   mycourses: [],
   course: null,
   loading: true,
+  indexId: {
+    sectionIndex: null,
+    videoIndex: null
+  },
   error: {}
 }
 
@@ -57,12 +61,17 @@ const courseReducer = (state = initialState, action) => {
         course: payload,
         loading: false
       }
+
     case COURSES.COURSE_ERROR:
       return {
         ...state,
         error: payload,
         loading: false,
         course: null,
+        indexId: {
+          sectionIndex: null,
+          videoIndex: null
+        },
         courses: [],
         mylearnings: [],
         mycourses: []
@@ -71,6 +80,10 @@ const courseReducer = (state = initialState, action) => {
       return {
         ...state,
         course: null,
+        indexId: {
+          sectionIndex: null,
+          videoIndex: null
+        },
         mylearnings: [],
         mycourses: [],
         loading: false

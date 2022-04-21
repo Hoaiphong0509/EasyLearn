@@ -12,17 +12,17 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 
 import s from './styles.module.scss'
-import cn from 'classnames'
 
-const SectionsList = ({ course, onChangeVideo }) => {
+const SectionsList = ({ course, onChangeVideo, onGetVideo, onGetSection }) => {
   const { sections } = course
 
-  const [isActive, setIsActive] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(
+    course.sections[0].videos[0].link
+  )
 
-  const classVideo = cn({
-    [s.active]: true
-  })
-
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index)
+  }
   return (
     <React.Fragment>
       <List className={s.root}>
@@ -39,18 +39,20 @@ const SectionsList = ({ course, onChangeVideo }) => {
               </ListItemText>
             </ListItem>
             <List className={s.itemVideos}>
-              {section.videos.map((video) => (
+              {section.videos.map((video, i) => (
                 <ListItem
                   key={video._id}
                   className={s.itemVideos}
                   sx={{ width: '100%' }}
                 >
                   <ListItemButton
-                    onClick={() => {
-                      setIsActive(true)
+                    onClick={(event) => {
+                      handleListItemClick(event, video._id)
+                      onGetVideo(video)
+                      onGetSection(section)
                       onChangeVideo(video.link)
                     }}
-                    className={classVideo}
+                    selected={selectedIndex === video._id}
                     sx={{ width: '100%' }}
                   >
                     <ListItemIcon>

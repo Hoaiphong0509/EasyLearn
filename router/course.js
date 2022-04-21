@@ -255,6 +255,112 @@ router.put(
   }
 )
 
+// @route    POST api/course/comment/:id_course/:id_section/:id_video
+// @desc     Comment on a course
+// @access   Private
+router.post(
+  '/comment/:id_course/:id_section/:id_video',
+  authorize(),
+  checkObjectId('id_course'),
+  checkObjectId('id_section'),
+  checkObjectId('id_video'),
+  check('text', 'Text is required').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    try {
+      const idCourse = req.params.id_course
+      const idSection = req.params.id_section
+      const idVideo = req.params.id_video
+      const user = await User.findById(req.user.id)
+      const course = await Course.findById(idCourse)
+
+      const newComment = {
+        user: req.user.id,
+        text: req.body.text,
+        author: {
+          name: user.name,
+          avatar: user.avatar,
+        },
+      }
+
+      const index_section = course.sections.findIndex((s) => s.id === idSection)
+
+      const index_video = course.sections[index_section].videos.findIndex(
+        (v) => v.id === idVideo
+      )
+
+      course.sections[index_section].videos[index_video].comments.unshift(
+        newComment
+      )
+
+      await course.save()
+
+      res.json(course)
+    } catch (err) {
+      console.log(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    DELETE api/blog/comment/:id_course/:id_section/:id_video/:id_comment
+// @desc     Delete comment
+// @access   Private
+router.delete(
+  '/comment/:id_course/:id_section/:id_video/:id_comment',
+  checkObjectId('id_course'),
+  checkObjectId('id_section'),
+  checkObjectId('id_video'),
+  checkObjectId('id_comment'),
+  authorize(),
+  async (req, res) => {
+    try {
+      const idCourse = req.params.id_course
+      const idSection = req.params.id_section
+      const idVideo = req.params.id_video
+      const idComment = req.params.id_comment
+
+      const course = await Course.findById(idCourse)
+
+      // Pull out comment
+
+      const index_section = course.sections.findIndex((s) => s.id === idSection)
+
+      const index_video = course.sections[index_section].videos.findIndex(
+        (v) => v.id === idVideo
+      )
+
+      const comment = course.sections[index_section].videos[
+        index_video
+      ].comments.find((comment) => comment.id === idComment)
+      // Make sure comment exists
+      if (!comment) {
+        return res.status(404).json({ msg: 'Comment does not exist' })
+      }
+      // Check user
+      if (comment.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'User not authorized' })
+      }
+
+      course.sections[index_section].videos[index_video].comments =
+        course.sections[index_section].videos[index_video].comments.filter(
+          ({ id }) => id !== idComment
+        )
+
+      await course.save()
+
+      res.json(course)
+    } catch (err) {
+      console.log(err.message)
+      return res.status(500).send('Server Error')
+    }
+  }
+)
+
 // @route    DELETE api/course/:id
 // @desc     Delate a course
 // @access   Creator

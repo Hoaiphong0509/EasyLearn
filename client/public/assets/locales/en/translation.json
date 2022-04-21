@@ -63,7 +63,8 @@
     "areaStudy": {
         "overview": "Overview",
         "gains": "Gains",
-        "requires": "Requires"
+        "requires": "Requires",
+        "comments": "Comments"
     },
     "profile": {
         "contact": "Contact",
@@ -144,6 +145,10 @@
     "blog": {
         "manageBlog": "Manage blog",
         "createBlog": "Create own blog"
+    },
+    "notify": {
+        "noti:": "Notify",
+        "noneNotify": "No notify yet"
     },
     "myStuff": {
         "title": "Manage your content",

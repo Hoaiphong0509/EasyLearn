@@ -1,9 +1,10 @@
-import { Box, List, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Tab, Tabs } from '@mui/material'
 import TabPanel from 'components/common/TabPanel/TabPanel'
 import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
 import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import Comments from '../Comments'
 import Gains from '../Gains'
 import Overview from '../Overview'
 import Requireds from '../Requireds'
@@ -12,7 +13,9 @@ import SectionsList from '../SectionsList'
 import s from './styles.module.scss'
 
 const Study = ({ course }) => {
-  const [codeLink, setCodeLink] = useState('')
+  const [codeLink, setCodeLink] = useState(course.sections[0].videos[0].link)
+  const [videoforCmt, setVideoforCmt] = useState()
+  const [sectionforCmt, setSectionforCmt] = useState()
   const [value, setValue] = useState(0)
 
   const { t } = useTranslation()
@@ -23,6 +26,13 @@ const Study = ({ course }) => {
 
   const handleChangeVideo = (code) => {
     setCodeLink(code)
+  }
+
+  const handleGetVideo = (video) => {
+    setVideoforCmt(video)
+  }
+  const handleGetSection = (section) => {
+    setSectionforCmt(section)
   }
 
   return (
@@ -49,6 +59,7 @@ const Study = ({ course }) => {
                 <Tab label={t('areaStudy.overview')} />
                 <Tab label={t('areaStudy.gains')} />
                 <Tab label={t('areaStudy.requires')} />
+                <Tab label={t('areaStudy.comments')} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -66,10 +77,24 @@ const Study = ({ course }) => {
                 <Requireds course={course} />
               </Box>
             </TabPanel>
+            <TabPanel value={value} index={3}>
+              <Box className={s.boxPanel}>
+                <Comments
+                  course={course}
+                  section={sectionforCmt}
+                  video={videoforCmt}
+                />
+              </Box>
+            </TabPanel>
           </section>
         </Box>
         <Box className={s.sections}>
-          <SectionsList onChangeVideo={handleChangeVideo} course={course} />
+          <SectionsList
+            onChangeVideo={handleChangeVideo}
+            onGetVideo={handleGetVideo}
+            onGetSection={handleGetSection}
+            course={course}
+          />
         </Box>
       </Box>
     </React.Fragment>

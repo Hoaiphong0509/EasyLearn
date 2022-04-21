@@ -9,10 +9,10 @@ import {
   Typography
 } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import cookies from 'js-cookie'
 import { getMyNotifies, deleteNotify } from 'services/redux/actions/notify'
@@ -28,7 +28,9 @@ const NotifyBox = ({
 }) => {
   useEffect(async () => {
     await getMyNotifies()
-  }, [getMyNotifies, notifies])
+  }, [])
+
+  const { t } = useTranslation()
 
   const handleClose = () => {
     setAnchorEl(null)
@@ -42,7 +44,7 @@ const NotifyBox = ({
     <Spinner name="cube-grid" color="aqua" />
   ) : (
     <>
-      <Tooltip title="Notify">
+      <Tooltip title={`${t('notify.noti')}`}>
         <Badge badgeContent={notifies.length}>
           <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
             <NotificationsIcon color="primary" sx={{ fontSize: 32 }} />
@@ -93,7 +95,7 @@ const NotifyBox = ({
                 </Box>
               ))
             ) : (
-              <Typography>Không có thông báo nào</Typography>
+              <Typography>{t('notify.noneNotify')}</Typography>
             )}
           </MenuList>
         </Box>

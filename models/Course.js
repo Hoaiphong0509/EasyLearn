@@ -68,11 +68,13 @@ const CourseSchema = new mongoose.Schema(
                   type: String,
                   required: true,
                 },
-                name: {
-                  type: String,
-                },
-                avatar: {
-                  type: String,
+                author: {
+                  name: {
+                    type: String,
+                  },
+                  avatar: {
+                    type: String,
+                  },
                 },
                 date: {
                   type: Date,

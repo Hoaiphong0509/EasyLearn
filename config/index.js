@@ -2,6 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   DB: process.env.APP_DB,
+  DB_LOCALE: process.env.APP_DB_LOCALE,
   SECRET: process.env.APP_SECRET,
   PORT: process.env.APP_PORT,
   API_EMAIL: process.env.API_KEY_EMAIL_VERIFY,
