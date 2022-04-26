@@ -160,44 +160,40 @@ export const changeImgCourse = (id, file) => async (dispatch) => {
   }
 }
 
-export const addComment =
-  (courseId, sectionId, videoId, formData) => async (dispatch) => {
-    try {
-      const res = await api.post(
-        `/course/comment/${courseId}/${sectionId}/${videoId}`,
-        formData
-      )
+export const addComment = (courseId, videoId, formData) => async (dispatch) => {
+  try {
+    const res = await api.post(
+      `/course/comment/${courseId}/${videoId}`,
+      formData
+    )
 
-      dispatch({
-        type: COURSES.EDIT_COURSE,
-        payload: res.data
-      })
-    } catch (err) {
-      dispatch({
-        type: COURSES.COURSE_ERROR,
-        payload: { msg: err }
-      })
-    }
+    dispatch({
+      type: COURSES.ADD_COMMENT,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
   }
+}
 
-export const deleteComment =
-  (courseId, sectionId, videoId, commentId) => async (dispatch) => {
-    try {
-      const res = await api.delete(
-        `/course/comment/${courseId}/${sectionId}/${videoId}/${commentId}`
-      )
+export const deleteComment = (courseId, commentId) => async (dispatch) => {
+  try {
+    await api.delete(`/course/comment/${courseId}/${commentId}`)
 
-      dispatch({
-        type: COURSES.EDIT_COURSE,
-        payload: res.data
-      })
-    } catch (err) {
-      dispatch({
-        type: COURSES.COURSE_ERROR,
-        payload: { msg: err }
-      })
-    }
+    dispatch({
+      type: COURSES.REMOVE_COMMENT,
+      payload: commentId
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
   }
+}
 
 export const cleanUpCourse = () => (dispatch) =>
   dispatch({

@@ -59,29 +59,6 @@ const CourseSchema = new mongoose.Schema(
               type: String,
               required: true,
             },
-            comments: [
-              {
-                user: {
-                  type: Schema.Types.ObjectId,
-                },
-                text: {
-                  type: String,
-                  required: true,
-                },
-                author: {
-                  name: {
-                    type: String,
-                  },
-                  avatar: {
-                    type: String,
-                  },
-                },
-                date: {
-                  type: Date,
-                  default: Date.now,
-                },
-              },
-            ],
           },
         ],
       },
@@ -90,6 +67,32 @@ const CourseSchema = new mongoose.Schema(
       {
         user: {
           type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
+    comments: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+        },
+        text: {
+          type: String,
+          required: true,
+        },
+        author: {
+          name: {
+            type: String,
+          },
+          avatar: {
+            type: String,
+          },
+        },
+        videoId: {
+          type: String,
+        },
+        date: {
+          type: Date,
+          default: Date.now,
         },
       },
     ],

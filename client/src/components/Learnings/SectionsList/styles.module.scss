@@ -5,8 +5,11 @@
 
     & .indexSections {
       background: var(--dark-blue);
+      width: 100%;
+      display: flex;
 
       & .titleSections {
+        margin-left: 15px;
         color: var(--white-1);
         font-weight: bold;
       }

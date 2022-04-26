@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import Section from '../Section'
-import SectionForm from '../SectionForm'
+import Section from './Section'
+import SectionForm from './SectionForm'
 
 function Sections({ sectionsCrs, onSections }) {
   const [sections, setSections] = useState(sectionsCrs || [])
@@ -11,7 +11,7 @@ function Sections({ sectionsCrs, onSections }) {
       return
     }
 
-    const newSections = [section, ...sections]
+    const newSections = [...sections, section]
 
     setSections(newSections)
     onSections(newSections)

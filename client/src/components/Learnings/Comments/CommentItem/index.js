@@ -12,8 +12,6 @@ import s from './styles.module.scss'
 
 const CommentItem = ({
   courseId,
-  sectionId,
-  videoId,
   comment: { _id, user, text, author, date },
   auth,
   deleteComment
@@ -33,7 +31,10 @@ const CommentItem = ({
         </Typography>
         {!auth.loading && user === auth.user._id && (
           <IconButton
-            onClick={() => deleteComment(courseId, sectionId, videoId, _id)}
+            onClick={async () => {
+              console.log('CMT ID:', _id)
+              await deleteComment(courseId, _id)
+            }}
           >
             <DeleteOutline color="error" />
           </IconButton>

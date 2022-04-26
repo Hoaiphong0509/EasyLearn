@@ -23,13 +23,15 @@ function VideoForm(props) {
   }
 
   const handleSubmit = (e) => {
-    props.onSubmit({
-      id: Math.floor(Math.random() * 10000),
-      name: name,
-      link: getCodeYoutube(link)
-    })
-    setName('')
-    setLink('')
+    if (name && link) {
+      props.onSubmit({
+        id: Math.floor(Math.random() * 10000),
+        name: name,
+        link: getCodeYoutube(link)
+      })
+      setName('')
+      setLink('')
+    }
   }
   return (
     <FormControl className={s.video_form}>

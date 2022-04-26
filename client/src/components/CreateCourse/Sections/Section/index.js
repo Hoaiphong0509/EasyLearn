@@ -3,10 +3,9 @@ import SectionForm from '../SectionForm'
 import { Button } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
-import Videos from '../Videos'
+import Videos from './Videos'
 
 import s from './styles.module.scss'
-import cn from 'classnames'
 
 const Section = ({
   sections,
@@ -44,7 +43,6 @@ const Section = ({
   }
 
   return sections.map((section, index) => {
-    // console.log({index, section});
     return (
       <div className={s.section_row} key={index}>
         <section className={s.section}>

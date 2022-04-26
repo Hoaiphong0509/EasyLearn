@@ -259,10 +259,9 @@ router.put(
 // @desc     Comment on a course
 // @access   Private
 router.post(
-  '/comment/:id_course/:id_section/:id_video',
+  '/comment/:id_course/:id_video',
   authorize(),
   checkObjectId('id_course'),
-  checkObjectId('id_section'),
   checkObjectId('id_video'),
   check('text', 'Text is required').notEmpty(),
   async (req, res) => {
@@ -273,7 +272,6 @@ router.post(
 
     try {
       const idCourse = req.params.id_course
-      const idSection = req.params.id_section
       const idVideo = req.params.id_video
       const user = await User.findById(req.user.id)
       const course = await Course.findById(idCourse)
@@ -285,21 +283,14 @@ router.post(
           name: user.name,
           avatar: user.avatar,
         },
+        videoId: idVideo,
       }
 
-      const index_section = course.sections.findIndex((s) => s.id === idSection)
-
-      const index_video = course.sections[index_section].videos.findIndex(
-        (v) => v.id === idVideo
-      )
-
-      course.sections[index_section].videos[index_video].comments.unshift(
-        newComment
-      )
+      course.comments.unshift(newComment)
 
       await course.save()
 
-      res.json(course)
+      res.json(course.comments)
     } catch (err) {
       console.log(err.message)
       res.status(500).send('Server Error')
@@ -311,32 +302,21 @@ router.post(
 // @desc     Delete comment
 // @access   Private
 router.delete(
-  '/comment/:id_course/:id_section/:id_video/:id_comment',
+  '/comment/:id_course/:id_comment',
   checkObjectId('id_course'),
-  checkObjectId('id_section'),
-  checkObjectId('id_video'),
   checkObjectId('id_comment'),
   authorize(),
   async (req, res) => {
     try {
       const idCourse = req.params.id_course
-      const idSection = req.params.id_section
-      const idVideo = req.params.id_video
       const idComment = req.params.id_comment
 
       const course = await Course.findById(idCourse)
 
       // Pull out comment
-
-      const index_section = course.sections.findIndex((s) => s.id === idSection)
-
-      const index_video = course.sections[index_section].videos.findIndex(
-        (v) => v.id === idVideo
+      const comment = course.comments.find(
+        (comment) => comment.id === idComment
       )
-
-      const comment = course.sections[index_section].videos[
-        index_video
-      ].comments.find((comment) => comment.id === idComment)
       // Make sure comment exists
       if (!comment) {
         return res.status(404).json({ msg: 'Comment does not exist' })
@@ -346,14 +326,11 @@ router.delete(
         return res.status(401).json({ msg: 'User not authorized' })
       }
 
-      course.sections[index_section].videos[index_video].comments =
-        course.sections[index_section].videos[index_video].comments.filter(
-          ({ id }) => id !== idComment
-        )
+      course.comments = course.comments.filter(({ id }) => id !== idComment)
 
       await course.save()
 
-      res.json(course)
+      res.json(course.comments)
     } catch (err) {
       console.log(err.message)
       return res.status(500).send('Server Error')

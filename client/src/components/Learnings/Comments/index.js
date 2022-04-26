@@ -1,24 +1,16 @@
 import { Box, Divider } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { connect, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
 import s from './styles.module.scss'
 import CommentForm from './CommentForm'
 import CommentItem from './CommentItem'
 
 const Comments = ({ auth: { user }, course, section, video }) => {
-  const courseNe = useSelector((state) => state.course)
-
-  useEffect(() => {
-    console.log('new courseNe: ', courseNe)
-
-    return () => {
-      console.log('Prev courseNe: ', courseNe)
-    }
-  }, [courseNe])
+  console.log(video && video.comments)
   return (
-    <Box sx={{ padding: '20px' }}>
+    <Box className={s.root} sx={{ padding: '20px' }}>
       {video && (
         <>
           <CommentForm
@@ -29,15 +21,17 @@ const Comments = ({ auth: { user }, course, section, video }) => {
           />
           <Divider />
           <Box className={s.cmtList}>
-            {video.comments.map((comment) => (
-              <CommentItem
-                key={comment._id}
-                comment={comment}
-                courseId={course._id}
-                sectionId={section._id}
-                videoId={video._id}
-              />
-            ))}
+            {course.comments.map((comment, index) => {
+              if (comment.videoId === video._id)
+                return (
+                  <CommentItem
+                    key={index}
+                    comment={comment}
+                    courseId={course._id}
+                  />
+                )
+              else return null
+            })}
           </Box>
         </>
       )}

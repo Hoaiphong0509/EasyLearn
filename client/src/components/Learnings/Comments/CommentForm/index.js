@@ -12,9 +12,6 @@ import s from './styles.module.scss'
 
 const CommentForm = ({ courseId, sectionId, videoId, addComment, user }) => {
   const { avatar } = user
-  console.log('courseId:', courseId)
-  console.log('sectionId:', sectionId)
-  console.log('videoId:', videoId)
   const [text, setText] = useState('')
 
   return (
@@ -22,7 +19,7 @@ const CommentForm = ({ courseId, sectionId, videoId, addComment, user }) => {
       className={s.form}
       onSubmit={(e) => {
         e.preventDefault()
-        addComment(courseId, sectionId, videoId, { text })
+        addComment(courseId, videoId, { text })
         setText('')
       }}
     >

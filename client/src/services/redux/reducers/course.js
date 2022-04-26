@@ -6,10 +6,6 @@ const initialState = {
   mycourses: [],
   course: null,
   loading: true,
-  indexId: {
-    sectionIndex: null,
-    videoIndex: null
-  },
   error: {}
 }
 
@@ -61,7 +57,23 @@ const courseReducer = (state = initialState, action) => {
         course: payload,
         loading: false
       }
-
+    case COURSES.ADD_COMMENT:
+      return {
+        ...state,
+        course: { ...state.course, comments: payload },
+        loading: false
+      }
+    case COURSES.REMOVE_COMMENT:
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          comments: state.course.comments.filter(
+            (comment) => comment._id !== payload
+          )
+        },
+        loading: false
+      }
     case COURSES.COURSE_ERROR:
       return {
         ...state,

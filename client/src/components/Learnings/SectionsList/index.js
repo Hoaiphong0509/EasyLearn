@@ -1,4 +1,5 @@
 import {
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -8,7 +9,6 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 
 import s from './styles.module.scss'
@@ -28,19 +28,16 @@ const SectionsList = ({ course, onChangeVideo, onGetVideo, onGetSection }) => {
       <List className={s.root}>
         {sections.map((section, index) => (
           <ListItem key={section._id} className={s.itemSections}>
-            <ListItem className={s.indexSections}>
-              <ListItemIcon>
-                <ArrowForwardIosIcon sx={{ color: 'var(--white-1)' }} />
-              </ListItemIcon>
+            <Box className={s.indexSections}>
               <ListItemText>
                 <Typography className={s.titleSections} variant="h5">
                   Section {index + 1}: {section.name}
                 </Typography>
               </ListItemText>
-            </ListItem>
-            <List className={s.itemVideos}>
+            </Box>
+            <Box className={s.itemVideos}>
               {section.videos.map((video, i) => (
-                <ListItem
+                <Box
                   key={video._id}
                   className={s.itemVideos}
                   sx={{ width: '100%' }}
@@ -60,9 +57,9 @@ const SectionsList = ({ course, onChangeVideo, onGetVideo, onGetSection }) => {
                     </ListItemIcon>
                     <ListItemText>{video.name}</ListItemText>
                   </ListItemButton>
-                </ListItem>
+                </Box>
               ))}
-            </List>
+            </Box>
           </ListItem>
         ))}
       </List>

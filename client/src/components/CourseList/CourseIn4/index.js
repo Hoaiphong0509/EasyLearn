@@ -78,7 +78,7 @@ const CourseIn4 = ({
   const [checked, setChecked] = useState(true)
 
   useEffect(async () => {
-    await getCurrentProfile()
+    if (user) await getCurrentProfile()
   }, [])
 
   if (profile && students.some((s) => s.user === profile.user)) {

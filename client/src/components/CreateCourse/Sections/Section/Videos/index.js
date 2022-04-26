@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import Video from '../Video'
-import VideoForm from '../VideoForm'
+import Video from './Video'
+import VideoForm from './VideoForm'
 
 function Videos(props) {
   const [videosData, setVideosData] = useState(props.videos ? props.videos : [])

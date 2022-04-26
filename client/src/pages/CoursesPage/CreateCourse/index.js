@@ -1,24 +1,7 @@
-import { AddAlarm } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Chip,
-  Divider,
-  FormControl,
-  Input,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography
-} from '@mui/material'
-import React, { useEffect, useState, useRef } from 'react'
+import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
-import AddIcon from '@mui/icons-material/Add'
 
 import s from './styles.module.scss'
 import Sections from 'components/CreateCourse/Sections'
@@ -29,7 +12,7 @@ import { addCourse } from 'services/redux/actions/course'
 import { connect } from 'react-redux'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 
-const CreateCourse = ({ addCourse, course: { course, loading } }) => {
+const CreateCourse = ({ addCourse }) => {
   const history = useHistory()
   const [courseData, setCourseData] = useState({
     title: '',
@@ -39,7 +22,6 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
     requires: '',
     sections: []
   })
-  
 
   const crs = useSelector((state) => state.course)
 
@@ -50,10 +32,9 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
     return () => {
       console.log('Prev course: ', crs)
     }
-  }, [crs])
+  }, [crs, history])
 
-  const { title, description, punchLike, gains, requires } =
-    courseData
+  const { title, description, punchLike, gains, requires } = courseData
 
   const handleSections = (sections) => {
     setCourseData({ ...courseData, sections: sections })
@@ -66,7 +47,6 @@ const CreateCourse = ({ addCourse, course: { course, loading } }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // console.log('COURSE: ', courseData)
     addCourse(courseData)
   }
 

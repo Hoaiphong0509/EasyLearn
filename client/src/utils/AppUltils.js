@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export const isServer = typeof window === 'undefined'
 
 export const isRequired = (value) => (value ? true : false)
@@ -26,7 +27,8 @@ export const isPhoneNumber = (phone) => {
 export const getCodeYoutube = (value) => {
   const REGEX = /v=(\w+)/
   const res = value.match(REGEX)
-  return res[1]
+  if (res) return res[1]
+  else return null
 }
 
 export const validateSizeFile = (input) => {

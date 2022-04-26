@@ -41,6 +41,7 @@ const Study = ({ course }) => {
         <Box className={s.areaLearn}>
           <section className={s.video}>
             <iframe
+              title="Study"
               src={`${LINK_EMBED_YOUTUBE}${codeLink}?modestbranding=1`}
               width="100%"
               height="100%"

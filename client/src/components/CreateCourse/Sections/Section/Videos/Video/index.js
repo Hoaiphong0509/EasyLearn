@@ -8,7 +8,7 @@ import InsertLinkIcon from '@mui/icons-material/InsertLink'
 import s from './styles.module.scss'
 import VideoForm from '../VideoForm'
 
-const Video = ({ videos, completeVideo, removeVideo, updateVideo }) => {
+const Video = ({ videos, removeVideo, updateVideo }) => {
   const [edit, setEdit] = useState({
     id: null,
     name: '',
