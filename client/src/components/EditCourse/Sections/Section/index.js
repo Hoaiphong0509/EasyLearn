@@ -9,27 +9,45 @@ import s from './styles.module.scss'
 
 const Section = ({ sections, removeSection, updateSection }) => {
   const [edit, setEdit] = useState({
-    id: null,
+    _id: null,
     name: '',
     videos: []
   })
 
   const submitUpdate = (value) => {
-    updateSection(edit.id, value)
+    updateSection(edit._id, value)
     setEdit({
-      id: null,
+      _id: null,
       name: '',
       videos: []
     })
   }
 
-  const handleSetVideo = (index, video) => {
-    setEdit({ ...edit, videos: video })
-    // onSections({...edit, videos:video});
-    updateSection(sections[index].id, { ...sections[index], videos: video })
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    console.log('EDIT:', edit)
+    console.log('EDIT ID:', edit._id)
+    updateSection(edit._id, edit)
+  }
+  const handleChange = (e) => {
+    setEdit({
+      ...edit,
+      name: e.target.value
+    })
   }
 
-  if (edit.id) {
+  const handleSetVideo = (index, video) => {
+    console.log('SET VIDEO ON SECTION:', video)
+    console.log('INDEX:', index)
+    setEdit({ ...edit, videos: video })
+    // onSections({...edit, videos:video});
+    updateSection(sections[index]._id, {
+      ...sections[index],
+      videos: video
+    })
+  }
+
+  if (edit._id) {
     return <SectionForm edit={edit} onSubmit={submitUpdate} />
   }
 
@@ -37,25 +55,26 @@ const Section = ({ sections, removeSection, updateSection }) => {
     return (
       <div className={s.section_row} key={index}>
         <section className={s.section}>
-          <div key={section.id}>{section.name}</div>
+          <div key={section._id}>{section.name}</div>
           <div className={s.icons}>
             <Button
               color="error"
               className={s.btn}
               variant="outlined"
               startIcon={<DeleteOutlineIcon />}
-              onClick={() => removeSection(section.id)}
+              onClick={() => removeSection(section._id)}
             />
             <Button
               className={s.btn}
               variant="outlined"
               startIcon={<EditIcon />}
-              onClick={() =>
+              onClick={() => {
                 setEdit({
-                  id: section.id,
-                  name: section.name
+                  _id: section._id,
+                  name: section.name,
+                  videos: section.videos
                 })
-              }
+              }}
             />
           </div>
         </section>

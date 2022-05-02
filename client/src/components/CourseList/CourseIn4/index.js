@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Avatar,
   Box,
@@ -234,15 +235,19 @@ const CourseIn4 = ({
                   {t('course.intro')}
                 </Typography>
                 <iframe
+                  title="description"
                   src={`${LINK_EMBED_YOUTUBE}${sections[0].videos[0].link}`}
                 />
               </Box>
             </Modal>
           </header>
           <section className={s.containOverview}>
-            <Button onClick={handleAddLearning} className={s.btnGetCourse}>
-              {t('course.getInTouch')}
-            </Button>
+            <Box className={s.boxBtnGetCourse}>
+              <Button onClick={handleAddLearning} className={s.btnGetCourse}>
+                {t('course.getInTouch')}
+              </Button>
+            </Box>
+
             <List className={s.quickIn4}>
               <ListItem>
                 <ListItemIcon>

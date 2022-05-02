@@ -1,5 +1,4 @@
 const express = require('express')
-const logger = require('morgan')
 const connectDB = require('./utils/db')
 const cors = require('cors')
 const bodyParser = require('body-parser')

@@ -30,12 +30,12 @@ function Videos(props) {
     }
 
     setVideosData((prev) =>
-      prev.map((item) => (item.id === videoId ? newValue : item))
+      prev.map((item) => (item._id === videoId ? newValue : item))
     )
   }
 
-  const removeVideo = (id) => {
-    const removedArr = [...props.videos].filter((video) => video.id !== id)
+  const removeVideo = (_id) => {
+    const removedArr = [...props.videos].filter((video) => video._id !== _id)
 
     setVideosData(removedArr)
     props.setVideo(props.index, removedArr)

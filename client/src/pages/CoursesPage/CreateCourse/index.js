@@ -1,34 +1,49 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Prompt, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import s from './styles.module.scss'
-import Sections from 'components/CreateCourse/Sections'
 
 import PropTypes from 'prop-types'
 
 import { addCourse } from 'services/redux/actions/course'
 import { connect } from 'react-redux'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
+import Sections from 'components/CreateCourse/Sections'
 
 const CreateCourse = ({ addCourse }) => {
   const history = useHistory()
-  const [courseData, setCourseData] = useState({
-    title: '',
-    description: '',
-    punchLike: '',
-    gains: '',
-    requires: '',
-    sections: []
-  })
+  const [isChange, setIsChange] = useState(false)
+
+  const courseDraft = JSON.parse(localStorage.getItem('courseDraft'))
+  // console.log(JSON.parse(courseDraft))
+  const [courseData, setCourseData] = useState(
+    courseDraft
+      ? {
+          title: courseDraft.title,
+          description: courseDraft.description,
+          punchLike: courseDraft.punchLike,
+          gains: courseDraft.gains,
+          requires: courseDraft.requires
+        }
+      : {
+          title: '',
+          description: '',
+          punchLike: '',
+          gains: '',
+          requires: '',
+          sections: []
+        }
+  )
 
   const crs = useSelector((state) => state.course)
 
   useEffect(() => {
     console.log('new course: ', crs)
 
-    if (crs && crs.course) history.push(`/courses/add_img/${crs.course._id}`)
+    if (crs && crs.course)
+      history.push(`/courses/add_sections/${crs.course._id}`)
     return () => {
       console.log('Prev course: ', crs)
     }
@@ -36,22 +51,30 @@ const CreateCourse = ({ addCourse }) => {
 
   const { title, description, punchLike, gains, requires } = courseData
 
-  const handleSections = (sections) => {
-    setCourseData({ ...courseData, sections: sections })
-  }
-
   const handleChange = (e) => {
+    setIsChange(true)
     setCourseData({ ...courseData, [e.target.name]: e.target.value })
+    localStorage.setItem(
+      'courseDraft',
+      JSON.stringify({ ...courseData, [e.target.name]: e.target.value })
+    )
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-
-    addCourse(courseData)
+    try {
+      setIsChange(false)
+      e.preventDefault()
+      // localStorage.removeItem('courseDraft')
+      addCourse(courseData)
+    } catch (error) {}
   }
 
   return (
     <React.Fragment>
+      <Prompt
+        when={isChange}
+        message="Are you sure you want to leave the page?"
+      />
       <Box className={s.root}>
         <form className={s.form} onSubmit={handleSubmit}>
           <FormControl className={s.formControlImg}>
@@ -84,6 +107,7 @@ const CreateCourse = ({ addCourse }) => {
             <TextField
               label="Học viên sẽ đạt được gì?"
               placeholder="Học viên sẽ đạt được gì?"
+              multiline
               className={s.textField}
               onChange={handleChange}
               value={gains}
@@ -92,8 +116,8 @@ const CreateCourse = ({ addCourse }) => {
             <TextField
               label="Yêu cầu cần có để học khóa học?"
               placeholder="Yêu cầu cần có để học khóa học?"
-              className={s.textField}
               multiline
+              className={s.textField}
               onChange={handleChange}
               value={requires}
               name="requires"
@@ -108,16 +132,17 @@ const CreateCourse = ({ addCourse }) => {
               name="punchLike"
             />
           </FormControl>
-
           <FormControl className={s.formControl}>
             <div className={s.header}>
               <Typography variant="h3" className={s.title}>
                 Nội dung khóa học
               </Typography>
             </div>
-            <Sections onSections={handleSections} />
+            <Sections
+              onSections={handleSections}
+              sectionsCrs={course.sections}
+            />
           </FormControl>
-
           <FormControl className={s.footer}>
             <Button type="submit" className={s.buttonSubmit}>
               Save

@@ -10,27 +10,27 @@ import VideoForm from '../VideoForm'
 
 const Video = ({ videos, removeVideo, updateVideo }) => {
   const [edit, setEdit] = useState({
-    id: null,
+    _id: null,
     name: '',
     link: ''
   })
 
   const submitUpdate = (name, link) => {
-    updateVideo(edit.id, name, link)
+    updateVideo(edit._id, name, link)
     setEdit({
-      id: null,
+      _id: null,
       name: '',
       link: ''
     })
   }
 
-  if (edit.id) {
+  if (edit._id) {
     return <VideoForm edit={edit} onSubmit={submitUpdate} />
   }
 
   return videos.map((video, index) => (
     <div className={s.video_row} key={index}>
-      <div key={video.id} className={s.videoIn4}>
+      <div key={video._id} className={s.videoIn4}>
         <div className={s.in4}>{video.name}</div>
         <InsertLinkIcon />
         <div className={s.in4}>{video.link}</div>
@@ -41,7 +41,7 @@ const Video = ({ videos, removeVideo, updateVideo }) => {
           color="error"
           variant="outlined"
           startIcon={<DeleteOutlineIcon />}
-          onClick={() => removeVideo(video.id)}
+          onClick={() => removeVideo(video._id)}
         />
         <Button
           className={s.btn}
@@ -49,7 +49,7 @@ const Video = ({ videos, removeVideo, updateVideo }) => {
           startIcon={<EditIcon />}
           onClick={() =>
             setEdit({
-              id: video.id,
+              _id: video._id,
               name: video.name,
               link: video.link
             })

@@ -1,0 +1,14 @@
+.video_form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  & .textField {
+    padding: 5px;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    width: 70%;
+    background: transparent;
+    color: #fff;
+  }
+}

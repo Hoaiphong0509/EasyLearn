@@ -37,10 +37,14 @@ const ChangeImg = ({ changeImgCourse, cleanUpCourse, course }) => {
   }
 
   const handleContinue = async () => {
-    if (!imgForm) return history.replace(`/courses/course_detail/${_id}`)
-    await changeImgCourse(_id, imgForm)
-    cleanUpCourse()
-    return history.replace(`/courses/course_detail/${_id}`)
+    try {
+      if (!imgForm) return history.replace(`/courses/course_detail/${_id}`)
+      await changeImgCourse(_id, imgForm)
+      cleanUpCourse()
+      return history.replace(`/courses/course_detail/${_id}`)
+    } catch (error) {
+      return history.replace(`/`)
+    }
   }
 
   return (

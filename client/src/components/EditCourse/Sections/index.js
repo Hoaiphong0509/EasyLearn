@@ -6,7 +6,6 @@ import SectionForm from './SectionForm'
 function Sections({ sectionsCrs, onSections }) {
   const [sections, setSections] = useState(sectionsCrs || [])
 
-  console.log(sections)
   const addSection = (section) => {
     if (!section.name || /^\s*$/.test(section.name)) {
       return
@@ -24,15 +23,15 @@ function Sections({ sectionsCrs, onSections }) {
     }
 
     const newSections = sections.map((item) =>
-      item.id === sectionId ? newValue : item
+      item._id === sectionId ? newValue : item
     )
-    setSections(newSections)
 
+    setSections(newSections)
     onSections(newSections)
   }
 
-  const removeSection = (id) => {
-    const removedArr = [...sections].filter((section) => section.id !== id)
+  const removeSection = (_id) => {
+    const removedArr = [...sections].filter((section) => section._id !== _id)
 
     setSections(removedArr)
   }

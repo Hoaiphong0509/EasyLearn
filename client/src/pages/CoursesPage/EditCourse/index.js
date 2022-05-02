@@ -1,10 +1,9 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 import s from './styles.module.scss'
-import Sections from 'components/CreateCourse/Sections'
+import Sections from 'components/EditCourse/Sections'
 
 import PropTypes from 'prop-types'
 
@@ -24,8 +23,6 @@ const EditCourse = ({
   useEffect(() => {
     getCourse(match.params.id)
   }, [getCourse, match.params.id])
-
-  console.log('COURSE:', course)
 
   const [courseData, setCourseData] = useState({
     title: course.title,

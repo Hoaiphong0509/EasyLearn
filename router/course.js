@@ -137,15 +137,6 @@ router.post(
           ? gains
           : gains.split(',').map((gain) => ' ' + gain.trim()),
         img: COURSE_IMG_DEFAULT,
-        sections: Array.isArray(sections)
-          ? sections.map((section) => ({
-              name: section.name,
-              videos: section.videos.map((video) => ({
-                name: video.name,
-                link: video.link,
-              })),
-            }))
-          : [sections],
         ...rest,
       })
 
@@ -160,6 +151,57 @@ router.post(
     } catch (error) {
       console.log('error:', error.message)
       res.send('Something went wrong please try again later..')
+    }
+  }
+)
+
+// @route  POST api/course/add_sections/:id
+// @desc   Add sections for course
+// @access Creator
+router.post(
+  '/add_sections/:id',
+  authorize(),
+  checkObjectId('id'),
+  check('sections', 'Sections is required').notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req.body)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const course = await Course.findById(req.params.id)
+    if (!course) {
+      return res.status(404).json({ msg: 'Course not found' })
+    }
+
+    const { requires, gains, sections, ...rest } = req.body
+
+    const coursesFields = {
+      sections: Array.isArray(sections)
+        ? sections.map((section) => ({
+            name: section.name,
+            videos: section.videos.map((video) => ({
+              name: video.name,
+              link: video.link,
+            })),
+          }))
+        : [sections],
+      status: 'approved',
+      ...rest,
+    }
+    try {
+      const result = await Course.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: coursesFields,
+        },
+        { upsert: true }
+      )
+
+      res.send(result)
+    } catch (err) {
+      console.log(err.message)
+      res.status(500).send('Server Error')
     }
   }
 )
@@ -205,7 +247,6 @@ router.put(
   check('description', 'Description is required').notEmpty(),
   check('requires', 'Requires is required').notEmpty(),
   check('gains', 'Gains is required').notEmpty(),
-  check('sections', 'Sections is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req.body)
     if (!errors.isEmpty()) {

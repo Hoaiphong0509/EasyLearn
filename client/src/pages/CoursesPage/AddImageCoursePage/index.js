@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 
 import { getCourse } from 'services/redux/actions/course'
-import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -11,7 +10,7 @@ import ChangeImg from 'components/CreateCourse/ChangeImg'
 const AddImageCoursePage = ({ course: { course, loading }, match }) => {
   useEffect(() => {
     getCourse(match.params.id)
-  }, [getCourse, match.params.id])
+  }, [match.params.id])
 
   return loading || course === null ? (
     <Spinner name="cube-grid" color="aqua" />

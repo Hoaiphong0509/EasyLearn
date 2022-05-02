@@ -48,7 +48,7 @@ const CreateBlog = ({ addBlog }) => {
     return () => {
       console.log('Prev blog: ', blg)
     }
-  }, [blg])
+  }, [blg, history])
 
   const handleChangeTitle = (e) => {
     setFormData({ ...formData, title: e.target.value })

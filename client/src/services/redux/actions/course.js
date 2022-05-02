@@ -124,6 +124,27 @@ export const editCourse = (id, formData) => async (dispatch) => {
   }
 }
 
+export const addSections = (id, formData) => async (dispatch) => {
+  try {
+    const res = await api.post(`/course/add_sections/${id}`, formData)
+
+    dispatch({
+      type: COURSES.EDIT_COURSE,
+      payload: res.data
+    })
+
+    showToast({
+      message: 'Successfully!',
+      type: TOAST_TYPE.SUCCESS
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const deleteCourse = (id) => async (dispatch) => {
   try {
     await api.delete(`/course/${id}`)
