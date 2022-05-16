@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import SectionForm from '../SectionForm'
 import { Button } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import Videos from './Videos'
 
 import s from './styles.module.scss'
+import SectionForm from '../SectionForm'
 
 const Section = ({ sections, removeSection, updateSection }) => {
   const [edit, setEdit] = useState({
@@ -23,22 +23,20 @@ const Section = ({ sections, removeSection, updateSection }) => {
     })
   }
 
-  const handleUpdate = (e) => {
-    e.preventDefault()
-    console.log('EDIT:', edit)
-    console.log('EDIT ID:', edit._id)
-    updateSection(edit._id, edit)
-  }
-  const handleChange = (e) => {
-    setEdit({
-      ...edit,
-      name: e.target.value
-    })
-  }
+  // const handleUpdate = (e) => {
+  //   e.preventDefault()
+  //   console.log('EDIT:', edit)
+  //   console.log('EDIT ID:', edit._id)
+  //   updateSection(edit._id, edit)
+  // }
+  // const handleChange = (e) => {
+  //   setEdit({
+  //     ...edit,
+  //     name: e.target.value
+  //   })
+  // }
 
   const handleSetVideo = (index, video) => {
-    console.log('SET VIDEO ON SECTION:', video)
-    console.log('INDEX:', index)
     setEdit({ ...edit, videos: video })
     // onSections({...edit, videos:video});
     updateSection(sections[index]._id, {

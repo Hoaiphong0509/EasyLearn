@@ -6,7 +6,6 @@ import SectionForm from './SectionForm'
 function Sections({ sectionsCrs, onSections }) {
   const [sections, setSections] = useState(sectionsCrs || [])
 
-  console.log(sections)
   const addSection = (section) => {
     if (!section.name || /^\s*$/.test(section.name)) {
       return

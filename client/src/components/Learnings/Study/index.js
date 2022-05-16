@@ -1,7 +1,9 @@
-import { Box, Tab, Tabs } from '@mui/material'
-import TabPanel from 'components/common/TabPanel/TabPanel'
-import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
 import React, { useState } from 'react'
+import TabPanel from 'components/common/TabPanel/TabPanel'
+import { LINK_EMBED_YOUTUBE, ROLES } from 'constants/AppConstants'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 import Comments from '../Comments'
@@ -10,15 +12,47 @@ import Overview from '../Overview'
 import Requireds from '../Requireds'
 import SectionsList from '../SectionsList'
 
-import s from './styles.module.scss'
+import {
+  Badge,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tab,
+  Tabs,
+  Tooltip
+} from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 
-const Study = ({ course }) => {
+import { deleteCourse } from 'services/redux/actions/course'
+
+import s from './styles.module.scss'
+import ConfirmDialog from 'components/ConfirmDialog'
+
+const Study = ({ auth: { user }, course, deleteCourse }) => {
+  const { _id, user: userCourse } = course
+
+  const [confirmOpen, setConfirmOpen] = useState(false)
+
   const [codeLink, setCodeLink] = useState(course.sections[0].videos[0].link)
-  const [videoforCmt, setVideoforCmt] = useState()
-  const [sectionforCmt, setSectionforCmt] = useState()
+  const [videoforCmt, setVideoforCmt] = useState(course.sections[0].videos[0])
+  const [sectionforCmt, setSectionforCmt] = useState(course.sections[0])
   const [value, setValue] = useState(0)
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const openSetting = Boolean(anchorEl)
+  const handleOpenSetting = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const { t } = useTranslation()
+  const history = useHistory()
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -34,6 +68,54 @@ const Study = ({ course }) => {
   const handleGetSection = (section) => {
     setSectionforCmt(section)
   }
+
+  const owner = (
+    <Box>
+      <Badge className={s.icon} color="primary">
+        <IconButton
+          aria-label="more"
+          id="long-button"
+          aria-controls={openSetting ? 'long-menu' : undefined}
+          aria-expanded={openSetting ? 'true' : undefined}
+          aria-haspopup="true"
+          onClick={handleOpenSetting}
+        >
+          <MoreVertIcon sx={{ fontSize: 50 }} />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            'aria-labelledby': 'long-button'
+          }}
+          anchorEl={anchorEl}
+          open={openSetting}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => history.push(`/courses/edit_course/${_id}`)}>
+            <Tooltip title="Edit" placement="top-start">
+              <IconButton color="primary">
+                <ModeEditIcon />
+              </IconButton>
+            </Tooltip>
+          </MenuItem>
+          <MenuItem onClick={() => setConfirmOpen(true)}>
+            <Tooltip title="Delete" placement="top-start">
+              <IconButton color="primary">
+                <DeleteForeverIcon />
+              </IconButton>
+            </Tooltip>
+          </MenuItem>
+          <MenuItem onClick={() => history.push(`/courses/add_img/${_id}`)}>
+            <Tooltip title="Photo" placement="top-start">
+              <IconButton color="primary">
+                <InsertPhotoIcon />
+              </IconButton>
+            </Tooltip>
+          </MenuItem>
+        </Menu>
+      </Badge>
+    </Box>
+  )
 
   return (
     <React.Fragment>
@@ -61,6 +143,7 @@ const Study = ({ course }) => {
                 <Tab label={t('areaStudy.gains')} />
                 <Tab label={t('areaStudy.requires')} />
                 <Tab label={t('areaStudy.comments')} />
+                {user && user._id === userCourse ? owner : null}
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -97,9 +180,28 @@ const Study = ({ course }) => {
             course={course}
           />
         </Box>
+        <ConfirmDialog
+          title="Delete course?"
+          open={confirmOpen}
+          setOpen={setConfirmOpen}
+          onConfirm={async () => {
+            await deleteCourse(_id)
+            history.replace('/my_stuff')
+          }}
+        >
+          Are you sure you want to delete this course?
+        </ConfirmDialog>
       </Box>
     </React.Fragment>
   )
 }
 
-export default Study
+Study.prototype = {
+  auth: PropTypes.object.isRequired,
+  deleteCourse: PropTypes.func.isRequired
+}
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { deleteCourse })(Study)

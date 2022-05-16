@@ -2,11 +2,12 @@ import { Button, FormControl, TextField } from '@mui/material'
 import React, { useState, useEffect, useRef } from 'react'
 import s from './styles.module.scss'
 
-function SectionForm(props) {
-  const [name, setName] = useState(props.edit ? props.edit.name : '')
-  const [videos, setVideos] = useState(props.edit ? props.edit.videos : [])
-  // const [id, setId] = useState(props.edit ? props.edit.id : '')
+import { useTranslation } from 'react-i18next'
 
+function SectionForm(props) {
+  const { t } = useTranslation()
+  const [name, setName] = useState(props.edit ? props.edit.name : '')
+  const [videos] = useState(props.edit ? props.edit.videos : [])
   const nameRef = useRef(null)
 
   useEffect(() => {
@@ -31,26 +32,30 @@ function SectionForm(props) {
       {props.edit ? (
         <>
           <TextField
-            placeholder="Update your item"
+            placeholder={t('course.createCourse.uptSection')}
             value={name}
             onChange={handleChange}
             name="name"
             ref={nameRef}
             className={s.textField}
           />
-          <Button onClick={handleSubmit}>Update</Button>
+          <Button onClick={handleSubmit}>
+            {t('course.createCourse.uptSection')}
+          </Button>
         </>
       ) : (
         <>
           <TextField
-            placeholder="Add a section"
+            placeholder={t('course.createCourse.addSection')}
             value={name}
             onChange={handleChange}
             name="name"
             className={s.textField}
             ref={nameRef}
           />
-          <Button onClick={handleSubmit}>Add Section</Button>
+          <Button onClick={handleSubmit}>
+            {t('course.createCourse.addSection')}
+          </Button>
         </>
       )}
     </FormControl>

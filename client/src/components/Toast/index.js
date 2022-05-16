@@ -1,7 +1,6 @@
 import React from 'react'
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
-import PropTypes from 'prop-types'
 
 const Toast = (props) => {
   const { message, type, onClose } = props

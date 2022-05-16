@@ -12,7 +12,6 @@ const CourseDetail = ({ getCourse, course: { course, loading }, match }) => {
     await getCourse(match.params.id)
   }, [getCourse, match.params.id])
 
-
   return loading || course === null ? (
     <Spinner name="cube-grid" color="aqua" />
   ) : (

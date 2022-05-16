@@ -1,13 +1,13 @@
 import { Button, FormControl, TextField } from '@mui/material'
 import React, { useState, useEffect, useRef } from 'react'
 import { getCodeYoutube } from 'utils/AppUltils'
-
 import s from './styles.module.scss'
+import { useTranslation } from 'react-i18next'
 
 function VideoForm(props) {
+  const { t } = useTranslation()
   const [name, setName] = useState(props.edit ? props.edit.value : '')
   const [link, setLink] = useState(props.edit ? props.edit.value : '')
-
   const nameRef = useRef(null)
   const linkRef = useRef(null)
 
@@ -39,7 +39,7 @@ function VideoForm(props) {
         <>
           <TextField
             className={s.textField}
-            placeholder="Update your name video"
+            placeholder={t('course.createCourse.uptVideoName')}
             value={name}
             onChange={handleChangeName}
             name="name"
@@ -47,19 +47,19 @@ function VideoForm(props) {
           />
           <TextField
             className={s.textField}
-            placeholder="Update your link video"
+            placeholder={t('course.createCourse.uptLinkVideo')}
             value={link}
             onChange={handleChangeLink}
             name="link"
             ref={linkRef}
           />
-          <Button onClick={handleSubmit}>Update</Button>
+          <Button onClick={handleSubmit}>{t('course.createCourse.uptVideos')}</Button>
         </>
       ) : (
         <>
           <TextField
             className={s.textField}
-            placeholder="Add a name"
+            placeholder={t('course.createCourse.addVideoName')}
             value={name}
             onChange={handleChangeName}
             name="name"
@@ -67,13 +67,13 @@ function VideoForm(props) {
           />
           <TextField
             className={s.textField}
-            placeholder="Add a link"
+            placeholder={t('course.createCourse.addLinkVideo')}
             value={link}
             onChange={handleChangeLink}
             name="link"
             ref={linkRef}
           />
-          <Button onClick={handleSubmit}>Add Videos</Button>
+          <Button onClick={handleSubmit}>{t('course.createCourse.addVideos')}</Button>
         </>
       )}
     </FormControl>

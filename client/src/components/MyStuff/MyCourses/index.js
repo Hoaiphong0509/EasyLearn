@@ -2,8 +2,10 @@ import { Grid, Typography } from '@mui/material'
 
 import CourseItem from 'components/CourseList/CourseItem'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const MyCourses = ({ courses }) => {
+  const { t } = useTranslation()
   return courses.length > 0 ? (
     <Grid container spacing={4}>
       {courses &&
@@ -18,7 +20,7 @@ const MyCourses = ({ courses }) => {
       sx={{ color: 'var(--dark-blue)', fontWeight: 'bold' }}
       variant="h2"
     >
-      Khoong co khoa học
+      {t('myStuff.noCourses')}
     </Typography>
   )
 }

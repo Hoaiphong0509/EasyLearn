@@ -6,9 +6,10 @@ import { connect } from 'react-redux'
 import CourseItem from 'components/CourseList/CourseItem'
 import React, { useEffect } from 'react'
 import { getMyLearnings } from 'services/redux/actions/course'
-import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const MyLearnings = ({ learnings: courses }) => {
+  const { t } = useTranslation()
   return courses.length > 0 ? (
     <Grid container spacing={4}>
       {courses &&
@@ -23,7 +24,7 @@ const MyLearnings = ({ learnings: courses }) => {
       sx={{ color: 'var(--dark-blue)', fontWeight: 'bold' }}
       variant="h2"
     >
-      Bạn chưa theo dõi khóa học nào
+      {t('myStuff.noLearnings')}
     </Typography>
   )
 }

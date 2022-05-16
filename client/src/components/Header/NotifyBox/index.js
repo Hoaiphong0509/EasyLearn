@@ -44,13 +44,11 @@ const NotifyBox = ({
     <Spinner name="cube-grid" color="aqua" />
   ) : (
     <>
-      <Tooltip title={`${t('notify.noti')}`}>
-        <Badge badgeContent={notifies.length}>
-          <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
-            <NotificationsIcon color="primary" sx={{ fontSize: 32 }} />
-          </IconButton>
-        </Badge>
-      </Tooltip>
+      <Badge badgeContent={notifies.length}>
+        <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
+          <NotificationsIcon color="primary" sx={{ fontSize: 32 }} />
+        </IconButton>
+      </Badge>
       <Menu
         anchorEl={anchorEl}
         open={open}

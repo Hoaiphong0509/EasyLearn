@@ -1,8 +1,11 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import BlogItem from './BlogItem'
+import { useTranslation } from 'react-i18next'
 
 const BlogsList = ({ blogs }) => {
+  const { t } = useTranslation()
+
   return blogs && blogs.length > 0 ? (
     <Grid container spacing={4}>
       {blogs &&
@@ -17,7 +20,7 @@ const BlogsList = ({ blogs }) => {
       sx={{ color: 'var(--dark-blue)', fontWeight: 'bold' }}
       variant="h2"
     >
-      Không có bài blogs nào
+      {t('myStuff.noBlogs')}
     </Typography>
   )
 }

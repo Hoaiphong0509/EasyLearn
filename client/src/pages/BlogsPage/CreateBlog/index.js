@@ -14,6 +14,7 @@ import HtmlEditor, {
 
 import { addBlog } from 'services/redux/actions/blog'
 import { connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const sizeValues = ['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']
 const fontValues = [
@@ -29,6 +30,7 @@ const fontValues = [
 const headerValues = [false, 1, 2, 3, 4, 5]
 
 const CreateBlog = ({ addBlog }) => {
+  const { t } = useTranslation()
   const textRef = useRef(null)
   const history = useHistory()
 
@@ -70,8 +72,8 @@ const CreateBlog = ({ addBlog }) => {
             className={s.textField}
             value={title}
             name="title"
-            label="Title"
-            placeholder="Tiêu đề bài blog của bạn"
+            label={t('blog.createBlog.titleBlog')}
+            placeholder={t('blog.createBlog.titleBlog')}
             onChange={handleChangeTitle}
           />
           <HtmlEditor
@@ -130,7 +132,7 @@ const CreateBlog = ({ addBlog }) => {
             disabled={!isRequired(formData.title) || !isRequired(formData.text)}
             type="submit"
           >
-            Save
+           {t('save')}
           </Button>
         </FormControl>
       </form>
