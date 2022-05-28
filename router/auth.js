@@ -30,7 +30,7 @@ router.get('/', authorize(), async (req, res) => {
 router.post('/google', async (req, res) => {
   try {
     const {
-      body: { idToken },
+      body: { idToken }
     } = req
 
     await oAuthClient
@@ -42,15 +42,15 @@ router.post('/google', async (req, res) => {
           name,
           given_name,
           family_name,
-          picture,
-        } = await authRes.getPayload()
+          picture
+        } = authRes.getPayload()
 
         if (!email_verified)
           return res
             .status(401)
             .json({ errors: 'Google Login failed, please try again' })
 
-        await User.findOne({ email }).exec(async (err, user) => {
+        User.findOne({ email }).exec(async (err, user) => {
           if (user) {
             const token = await signJWT(user._id)
             return res.json({ token })
@@ -60,7 +60,7 @@ router.post('/google', async (req, res) => {
             name,
             firstName: given_name,
             lastName: family_name,
-            avatar: picture,
+            avatar: picture
           })
           const profile = new Profile({ user: newUser._id, knowAs: name })
 

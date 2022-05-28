@@ -23,6 +23,12 @@ const notifyReducer = (state = initialsState, action) => {
         notifies: payload,
         loading: false
       }
+    case NOTIFY.REMOVE_NOTIFY:
+      return {
+        ...state,
+        notifies: state.notifies.filter((notify) => notify._id !== payload),
+        loading: false
+      }
     case NOTIFY.NOTIFY_ERROR:
       return {
         ...state,

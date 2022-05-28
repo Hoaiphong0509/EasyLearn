@@ -6,9 +6,9 @@ import {
   FormControlLabel,
   Tooltip,
   Badge,
-  IconButton
+  IconButton,
+  Button
 } from '@mui/material'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
@@ -22,9 +22,9 @@ import PropTypes from 'prop-types'
 import AvatarBox from './AvatarBox'
 import SearchBox from './SearchBox'
 import NotifyBox from './NotifyBox'
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import GoogleLogin from 'react-google-login'
-import { ENV } from 'constants/AppConstants'
+import { ENV, ROLES } from 'constants/AppConstants'
 
 import { googleLogin } from 'services/redux/actions/auth'
 
@@ -67,9 +67,17 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
       console.log(e)
     }
   }
-
   const authLinks = (
     <>
+      {user && user.roles.includes(ROLES.ADMIN || ROLES.MODERATOR) ? (
+        <Link to="/admin">
+          <Tooltip title="Admin Panel">
+            <IconButton>
+              <AdminPanelSettingsIcon color="warning" sx={{ fontSize: 32 }} />
+            </IconButton>
+          </Tooltip>
+        </Link>
+      ) : null}
       <NotifyBox />
       <AvatarBox user={user} />
     </>

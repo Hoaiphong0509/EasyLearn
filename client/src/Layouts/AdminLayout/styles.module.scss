@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  min-height: 100vh;
+  height: auto;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    // align-items: stretch;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+      rgb(209, 213, 219) 0px 0px 0px 1px inset;
+
+    & .nav {
+      flex-grow: 0;
+      display: flex;
+      position: sticky !important;
+      justify-content: flex-end;
+      padding: 15px 50px;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    & .child {
+      flex-grow: 20;
+    }
+  }
+}

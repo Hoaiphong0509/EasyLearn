@@ -28,11 +28,6 @@ router.get('/', authorize(), async (req, res) => {
   }
 })
 
-// @route  GET api/notify/:id
-// @desc   GET my notify
-// @access Private
-router.get('/:id', (req, res) => res.send('creator route'))
-
 // @route  PUT api/notify/:id
 // @desc   PUT mark as read notify
 // @access Private

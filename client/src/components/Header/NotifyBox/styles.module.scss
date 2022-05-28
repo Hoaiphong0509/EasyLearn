@@ -1,0 +1,25 @@
+.menu {
+  .boxNotifies {
+    .menuList {
+      .boxNotify {
+        .menuItem {
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: space-between;
+          .notify {
+            width: 90% !important;
+            font-weight: bold;
+            display: block !important;
+            overflow: hidden;
+          }
+          .btnRemove {
+            width: 10% !important;
+          }
+          .btnRemove:hover {
+            background: none !important;
+          }
+        }
+      }
+    }
+  }
+}

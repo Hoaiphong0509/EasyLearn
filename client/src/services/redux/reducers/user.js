@@ -12,10 +12,16 @@ const userReducer = (state = initialState, action) => {
   const { type, payload } = action
 
   switch (type) {
-    case USERS.CHANGE_AVATAR:
+    case USERS.GET_USERS:
       return {
         ...state,
-        token: payload,
+        users: payload,
+        loading: false
+      }
+    case USERS.GET_USER:
+      return {
+        ...state,
+        user: payload,
         loading: false
       }
     case USERS.SEARCH_KEYWORD:

@@ -11,7 +11,8 @@ import {
   MenuItem,
   Typography
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import { useHistory } from 'react-router-dom'
 import s from './styles.module.scss'
@@ -41,9 +42,10 @@ import CommentItem from 'components/Comments/CommentItem'
 const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
   const history = useHistory()
   const { _id, title, text, author, likes, comments, user: userBlog } = blog
-
   const [numLikes, setNumLikes] = useState(likes.length)
-
+  const [isLiked, setIsLiked] = useState(
+    likes.includes((l) => l.user === user.id)
+  )
   const [state, setState] = useState({
     right: false
   })
@@ -83,14 +85,27 @@ const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
   const interaction = (
     <footer className={s.footer}>
       <Badge className={s.icon} badgeContent={numLikes} color="primary">
-        <IconButton
-          onClick={() => {
-            addLike(_id)
-            setNumLikes(likes.length)
-          }}
-        >
-          <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
-        </IconButton>
+        {!isLiked ? (
+          <IconButton
+            onClick={() => {
+              addLike(_id)
+              setIsLiked(true)
+              setNumLikes(++likes.length)
+            }}
+          >
+            <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
+          </IconButton>
+        ) : (
+          <IconButton
+            onClick={() => {
+              removeLike(_id)
+              setIsLiked(false)
+              setNumLikes(--likes.length)
+            }}
+          >
+            <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
+          </IconButton>
+        )}
       </Badge>
       <Badge className={s.icon} badgeContent={comments.length} color="success">
         <IconButton onClick={toggleDrawer('right', true)}>
@@ -104,16 +119,7 @@ const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
       >
         {areaComment('right')}
       </Drawer>
-      <Badge className={s.icon} color="primary">
-        <IconButton
-          onClick={() => {
-            removeLike(_id)
-            setNumLikes(likes.length)
-          }}
-        >
-          <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
-        </IconButton>
-      </Badge>
+      <Badge className={s.icon} color="primary"></Badge>
       {user && user._id === userBlog ? (
         <Badge className={s.icon} color="primary">
           <IconButton

@@ -34,11 +34,11 @@ export const getNotify = (id) => async (dispatch) => {
 
 export const deleteNotify = (id) => async (dispatch) => {
   try {
-    const res = await api.delete(`/notify/${id}`)
+    await api.delete(`/notify/${id}`)
 
     dispatch({
       type: NOTIFY.REMOVE_NOTIFY,
-      payload: res.data
+      payload: id
     })
   } catch (err) {
     console.log({ err })

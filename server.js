@@ -25,10 +25,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //Define route
+app.use('/api/admin', require('./router/admin'))
 app.use('/api/auth', require('./router/auth'))
 app.use('/api/blog', require('./router/blog'))
 app.use('/api/course', require('./router/course'))
 app.use('/api/creator', require('./router/creator'))
+app.use('/api/moderator', require('./router/moderator'))
 app.use('/api/profile', require('./router/profile'))
 app.use('/api/users', require('./router/users'))
 app.use('/api/notify', require('./router/notify'))

@@ -35,6 +35,7 @@ const NotifyBox = ({
   const handleClose = () => {
     setAnchorEl(null)
   }
+
   const currentLanguageCode =
     (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
   const [anchorEl, setAnchorEl] = useState(null)
@@ -57,32 +58,34 @@ const NotifyBox = ({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         sx={{ marginTop: '15px' }}
+        className={s.menu}
       >
-        <Box className={s.boxList} sx={{ padding: '10px', width: '650px' }}>
-          <MenuList>
+        <Box className={s.boxNotifies} sx={{ padding: '10px', width: '650px' }}>
+          <MenuList className={s.menuList}>
             {notifies && notifies.length > 0 ? (
               notifies.map((notify) => (
-                <Box key={notify._id}>
-                  <MenuItem
-                    sx={{
-                      marginBottom: '20px',
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        color: 'var(--dark-blue)',
-                        fontWeight: 'bold'
-                      }}
-                      variant="h5"
+                <Box key={notify._id} className={s.boxNotify}>
+                  <MenuItem className={s.menuItem}>
+                    <Tooltip
+                      arrow={true}
+                      title={
+                        currentLanguageCode === 'vi'
+                          ? notify.textVi
+                          : notify.textEn
+                      }
                     >
-                      {currentLanguageCode === 'vi'
-                        ? notify.textVi
-                        : notify.textEn}
-                    </Typography>
+                      <Typography className={s.notify} noWrap={false}>
+                        {currentLanguageCode === 'vi'
+                          ? notify.textVi
+                          : notify.textEn}
+                      </Typography>
+                    </Tooltip>
+
                     <Tooltip title="Xóa thông báo này">
-                      <IconButton onClick={() => deleteNotify(notify._id)}>
+                      <IconButton
+                        className={s.btnRemove}
+                        onClick={() => deleteNotify(notify._id)}
+                      >
                         <DeleteForeverIcon
                           color="error"
                           sx={{ fontSize: 32 }}

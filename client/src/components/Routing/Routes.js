@@ -25,6 +25,8 @@ import ServerErrorPage from 'pages/ServerErrorPage'
 import AddImageBlog from 'pages/BlogsPage/AddImageBlog'
 import EditBlog from 'pages/BlogsPage/EditBlog'
 import EditCourse from 'pages/CoursesPage/EditCourse'
+import AdminLayout from 'layouts/AdminLayout'
+import Dashboard from 'pages/Admin/Dashboard'
 
 const Routes = () => {
   return (
@@ -121,6 +123,12 @@ const Routes = () => {
           path="/learning/:id"
           layout={DefaultLayout}
           component={AreaLearning}
+        />
+         <PrivateRoute
+          exact
+          path="/admin"
+          layout={AdminLayout}
+          component={Dashboard}
         />
         <Route exact path="/server_error" component={ServerErrorPage} />
         <Route component={NotFoundPage} />

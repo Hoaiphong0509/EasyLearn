@@ -30,7 +30,6 @@ router.post(
     const { title, text } = req.body
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id })
       const user = await User.findById(req.user.id)
 
       const newBlog = new Blog({
@@ -224,6 +223,7 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
 router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id)
+    const profile = await Profile.findOne({ user: req.user.id })
 
     if (blog.likes.some((like) => like.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: 'Blog already liked' })
@@ -231,6 +231,16 @@ router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     blog.likes.unshift({ user: req.user.id })
 
+    if (blog.user.toString() !== req.user.id) {
+      const notify = new Notify({
+        user: req.user.id,
+        textVi: `${profile.knowAs} đã like bài blog \`${blog.title}\` của bạn.`,
+        textEn: `${profile.knowAs} liked \`${blog.title}\`.`,
+        recipient: [{ user: blog.user }],
+      })
+
+      await notify.save()
+    }
     await blog.save()
 
     return res.json(blog.likes)
@@ -286,17 +296,28 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.user.id).select('-password')
+      const profile = await Profile.findOne({ user: req.user.id })
       const blog = await Blog.findById(req.params.id)
 
       const newComment = {
         text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
+        name: profile.knowAs,
+        avatar: profile.avatar,
         user: req.user.id,
       }
 
       blog.comments.unshift(newComment)
+
+      if (blog.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `${profile.knowAs} đã comment bài blog \`${blog.title}\` của bạn.`,
+          textEn: `${profile.knowAs} commented on \`${blog.title}\`.`,
+          recipient: [{ user: blog.user }],
+        })
+
+        await notify.save()
+      }
 
       await blog.save()
 

@@ -254,7 +254,7 @@ router.put(
   }
 )
 
-// @route    POST api/course/comment/:id_course/:id_section/:id_video
+// @route    POST api/course/comment/:id_course/:id_video
 // @desc     Comment on a course
 // @access   Private
 router.post(
@@ -273,8 +273,16 @@ router.post(
       const idCourse = req.params.id_course
       const idVideo = req.params.id_video
       const user = await User.findById(req.user.id)
+      // const profile = await Profile.findOne({ user: req.user.id })
       const course = await Course.findById(idCourse)
-
+      let videoName
+      const videos = course.sections.filter((s) => {
+        return s.videos.filter((v) => {
+          if (v._id.toString() === idVideo) videoName = v.name
+          return v._id.toString() === idVideo
+        })
+      })
+      videos.filter((v) => v._id === idVideo)
       const newComment = {
         user: req.user.id,
         text: req.body.text,
@@ -286,6 +294,17 @@ router.post(
       }
 
       course.comments.unshift(newComment)
+
+      if (course.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `${user.name} đã comment video \`${videoName}\` của khoá \`${course.title}\`.`,
+          textEn: `${user.name} commented on video \`${videoName}\` of \`${course.title}\`.`,
+          recipient: [{ user: course.user }],
+        })
+
+        await notify.save()
+      }
 
       await course.save()
 

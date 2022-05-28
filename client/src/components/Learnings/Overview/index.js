@@ -4,7 +4,7 @@ import React from 'react'
 import s from './styles.module.scss'
 
 const Overview = ({ course }) => {
-  const { creator, avatar, title, punchLike, description } = course
+  const { author, title, punchLike, description } = course
 
   return (
     <React.Fragment>
@@ -23,11 +23,11 @@ const Overview = ({ course }) => {
         <Box className={s.in4creator}>
           <Avatar
             className={s.avt}
-            src={avatar}
+            src={author.avatar}
             sx={{ width: 80, height: 80 }}
           />
           <Typography className={s.creator} variant="h5">
-            {creator}
+            {author.name}
           </Typography>
         </Box>
       </Box>

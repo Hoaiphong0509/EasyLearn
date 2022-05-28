@@ -57,7 +57,6 @@ const General = ({ user, profile, editProfile }) => {
 
     editProfile(formData)
   }
-
   return (
     <React.Fragment>
       <section className={cn(s.root, c.root)}>
