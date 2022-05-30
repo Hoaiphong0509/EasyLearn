@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Spinner from 'react-spinkit'
-import { getCourses } from 'services/redux/actions/course'
+import { getCoursesApproved } from 'services/redux/actions/course'
 import { getCurrentProfile } from 'services/redux/actions/profile'
 
 const CoursesPage = ({
@@ -21,13 +21,13 @@ const CoursesPage = ({
     profile,
     loading: { ld_pf }
   },
-  getCourses,
+  getCoursesApproved,
   getCurrentProfile
 }) => {
   useEffect(() => {
     getCurrentProfile()
-    getCourses()
-  }, [getCourses, getCurrentProfile])
+    getCoursesApproved()
+  }, [getCoursesApproved, getCurrentProfile])
   const { t } = useTranslation()
 
   return ld_crs || ld_pf || courses === null || profile === null ? (
@@ -49,7 +49,7 @@ const CoursesPage = ({
 CoursesPage.prototype = {
   course: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getCourses: PropTypes.func.isRequired,
+  getCoursesApproved: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired
 }
 
@@ -58,6 +58,7 @@ const mapStateToProps = (state) => ({
   profile: state.profile
 })
 
-export default connect(mapStateToProps, { getCourses, getCurrentProfile })(
-  CoursesPage
-)
+export default connect(mapStateToProps, {
+  getCoursesApproved,
+  getCurrentProfile
+})(CoursesPage)

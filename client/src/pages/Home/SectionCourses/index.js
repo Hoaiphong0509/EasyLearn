@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
 
-import { getCourses } from 'services/redux/actions/course'
+import { getCoursesApproved } from 'services/redux/actions/course'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CourseList from 'components/CourseList'
 import Spinner from 'react-spinkit'
 
-const SectionCourses = ({ getCourses, course: { courses, loading } }) => {
-  useEffect(async () => {
-    getCourses()
-  }, [getCourses])
+const SectionCourses = ({
+  getCoursesApproved,
+  course: { courses, loading }
+}) => {
+  useEffect(() => {
+    getCoursesApproved()
+  }, [getCoursesApproved])
 
   return loading || courses === null ? (
     <Spinner name="cube-grid" color="aqua" />
@@ -21,7 +24,7 @@ const SectionCourses = ({ getCourses, course: { courses, loading } }) => {
 }
 
 SectionCourses.prototype = {
-  getCourses: PropTypes.func.isRequired,
+  getCoursesApproved: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired
 }
 
@@ -29,4 +32,4 @@ const mapStateToProps = (state) => ({
   course: state.course
 })
 
-export default connect(mapStateToProps, { getCourses })(SectionCourses)
+export default connect(mapStateToProps, { getCoursesApproved })(SectionCourses)

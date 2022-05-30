@@ -18,6 +18,22 @@ export const getBlogs = () => async (dispatch) => {
   }
 }
 
+export const getBlogsApproved = () => async (dispatch) => {
+  try {
+    const res = await api.get('/blog/get_blogs_approved')
+
+    dispatch({
+      type: BLOGS.GET_BLOGS,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: BLOGS.BLOG_ERRORS,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const getMyBlogs = () => async (dispatch) => {
   try {
     const res = await api.get('/blog/my_blogs')

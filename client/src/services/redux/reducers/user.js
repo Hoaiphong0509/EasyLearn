@@ -18,6 +18,12 @@ const userReducer = (state = initialState, action) => {
         users: payload,
         loading: false
       }
+    case USERS.EDIT_USER:
+      return {
+        ...state,
+        user: payload,
+        loading: false
+      }
     case USERS.GET_USER:
       return {
         ...state,

@@ -9,10 +9,10 @@ import {
   List,
   Menu,
   MenuItem,
+  Tooltip,
   Typography
 } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 import s from './styles.module.scss'
@@ -25,6 +25,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import BlockIcon from '@mui/icons-material/Block'
 
 import PropTypes from 'prop-types'
 
@@ -35,13 +37,32 @@ import {
   deleteComment,
   deleteBlog
 } from 'services/redux/actions/blog'
+import { approveBlog, unApproveBlog } from 'services/redux/actions/moderator'
 import { connect } from 'react-redux'
 import CommentForm from 'components/Comments/CommentForm'
 import CommentItem from 'components/Comments/CommentItem'
+import { ROLES } from 'constants/AppConstants'
 
-const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
+const BlogIn4 = ({
+  auth: { user },
+  blog,
+  addLike,
+  removeLike,
+  deleteBlog,
+  approveBlog,
+  unApproveBlog
+}) => {
   const history = useHistory()
-  const { _id, title, text, author, likes, comments, user: userBlog } = blog
+  const {
+    _id,
+    title,
+    text,
+    author,
+    likes,
+    comments,
+    status,
+    user: userBlog
+  } = blog
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
     likes.includes((l) => l.user === user.id)
@@ -119,53 +140,89 @@ const BlogIn4 = ({ auth: { user }, blog, addLike, removeLike, deleteBlog }) => {
       >
         {areaComment('right')}
       </Drawer>
-      <Badge className={s.icon} color="primary"></Badge>
-      {user && user._id === userBlog ? (
+      {user &&
+      (user.roles.includes(ROLES.ADMIN) ||
+        user.roles.includes(ROLES.MODERATOR)) ? (
         <Badge className={s.icon} color="primary">
-          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? 'long-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon sx={{ fontSize: 50 }} />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            MenuListProps={{
-              'aria-labelledby': 'long-button'
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={() => history.push(`/blogs/edit_blog/${_id}`)}>
-              Edit
-              <IconButton>
-                <ModeEditIcon color="default" sx={{ fontSize: 20 }} />
+          {status === 'approved' ? (
+            <Tooltip title="Approved">
+              <IconButton onClick={() => unApproveBlog(_id)}>
+                <CheckCircleIcon color="success" sx={{ fontSize: 50 }} />
               </IconButton>
-            </MenuItem>
-            <MenuItem
-              onClick={async () => {
-                await deleteBlog(_id)
-                history.replace('/my_stuff')
-              }}
-            >
-              Delete
-              <IconButton>
-                <DeleteForeverIcon color="default" sx={{ fontSize: 20 }} />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Unapproved">
+              <IconButton onClick={() => approveBlog(_id)}>
+                <BlockIcon color="error" sx={{ fontSize: 50 }} />
               </IconButton>
-            </MenuItem>
-            <MenuItem onClick={() => history.push(`/blogs/add_img/${_id}`)}>
-              Change image
-              <IconButton>
-                <InsertPhotoIcon color="default" sx={{ fontSize: 20 }} />
-              </IconButton>
-            </MenuItem>
-          </Menu>
+            </Tooltip>
+          )}
         </Badge>
+      ) : null}
+      {user && user._id === userBlog ? (
+        <>
+          {' '}
+          <Badge className={s.icon} color="primary">
+            {status === 'approved' ? (
+              <Tooltip title="Approved">
+                <IconButton>
+                  <CheckCircleIcon color="success" sx={{ fontSize: 50 }} />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Unapproved">
+                <IconButton>
+                  <BlockIcon color="error" sx={{ fontSize: 50 }} />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Badge>
+          <Badge className={s.icon} color="primary">
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={open ? 'long-menu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon sx={{ fontSize: 50 }} />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button'
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={() => history.push(`/blogs/edit_blog/${_id}`)}>
+                Edit
+                <IconButton>
+                  <ModeEditIcon color="default" sx={{ fontSize: 20 }} />
+                </IconButton>
+              </MenuItem>
+              <MenuItem
+                onClick={async () => {
+                  await deleteBlog(_id)
+                  history.replace('/my_stuff')
+                }}
+              >
+                Delete
+                <IconButton>
+                  <DeleteForeverIcon color="default" sx={{ fontSize: 20 }} />
+                </IconButton>
+              </MenuItem>
+              <MenuItem onClick={() => history.push(`/blogs/add_img/${_id}`)}>
+                Change image
+                <IconButton>
+                  <InsertPhotoIcon color="default" sx={{ fontSize: 20 }} />
+                </IconButton>
+              </MenuItem>
+            </Menu>
+          </Badge>
+        </>
       ) : null}
     </footer>
   )
@@ -217,7 +274,9 @@ BlogIn4.prototype = {
   removeLike: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
-  deleteBlog: PropTypes.func.isRequired
+  deleteBlog: PropTypes.func.isRequired,
+  approveBlog: PropTypes.func.isRequired,
+  unApproveBlog: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -229,5 +288,7 @@ export default connect(mapStateToProps, {
   removeLike,
   addComment,
   deleteComment,
-  deleteBlog
+  deleteBlog,
+  approveBlog,
+  unApproveBlog
 })(BlogIn4)

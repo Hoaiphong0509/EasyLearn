@@ -1,20 +1,20 @@
 import BlogsList from 'components/BlogsList'
 import React, { useEffect } from 'react'
 
-import { getBlogs } from 'services/redux/actions/blog'
+import { getBlogsApproved } from 'services/redux/actions/blog'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-const SectionBlogs = ({ getBlogs, blog: { blogs } }) => {
+const SectionBlogs = ({ getBlogsApproved, blog: { blogs } }) => {
   useEffect(() => {
-    getBlogs()
-  }, [getBlogs])
+    getBlogsApproved()
+  }, [getBlogsApproved])
 
   return <BlogsList blogs={blogs} />
 }
 
 SectionBlogs.prototype = {
-  getBlogs: PropTypes.func.isRequired,
+  getBlogsApproved: PropTypes.func.isRequired,
   blog: PropTypes.object.isRequired
 }
 
@@ -22,4 +22,4 @@ const mapStateToProps = (state) => ({
   blog: state.blog
 })
 
-export default connect(mapStateToProps, { getBlogs })(SectionBlogs)
+export default connect(mapStateToProps, { getBlogsApproved })(SectionBlogs)

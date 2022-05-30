@@ -19,32 +19,32 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/users',
+    href: '/admin/users',
     icon: <UsersIcon fontSize="small" />,
     title: 'Users'
   },
   {
-    href: '/blogs',
+    href: '/admin/blogs',
     icon: <Create fontSize="small" />,
     title: 'Blogs'
   },
   {
-    href: '/courses',
+    href: '/admin/courses',
     icon: <Class fontSize="small" />,
     title: 'Courses'
   },
   {
-    href: '/admins',
+    href: '/admin/moderator',
     icon: <AdminPanelSettingsIcon fontSize="small" />,
-    title: 'Admins'
+    title: 'Moderator'
   },
   {
-    href: '/feedback',
+    href: '/admin/feedback',
     icon: <FeedbackIcon fontSize="small" />,
     title: 'Feedback'
   },
   {
-    href: '/banner',
+    href: '/admin/banner',
     icon: <ImageIcon fontSize="small" />,
     title: 'Banner'
   }

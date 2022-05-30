@@ -10,6 +10,7 @@ const multerSingle = multer()
 const Blog = require('../models/Blog')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const Notify = require('../models/Notify')
 const checkObjectId = require('../middleware/checkObjectId')
 const { CLOUDINARY_PATH_BLOG, BLOG_IMG_DEFAULT } = require('../config')
 
@@ -36,11 +37,11 @@ router.post(
         user: req.user.id,
         author: {
           name: user.name,
-          avatar: user.avatar,
+          avatar: user.avatar
         },
         title,
         text,
-        img: BLOG_IMG_DEFAULT,
+        img: BLOG_IMG_DEFAULT
       })
 
       await Profile.findOneAndUpdate(
@@ -78,7 +79,7 @@ router.put(
       )
 
       const result = await Blog.findByIdAndUpdate(req.params.id, {
-        $set: { img: secure_url },
+        $set: { img: secure_url }
       })
 
       return res.send(result)
@@ -111,11 +112,11 @@ router.put(
     try {
       const blogField = {
         title: title,
-        text: text,
+        text: text
       }
 
       const blog = await Blog.findByIdAndUpdate(req.params.id, {
-        $set: blogField,
+        $set: blogField
       })
       res.json(blog)
     } catch (err) {
@@ -132,6 +133,20 @@ router.get('/', async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ date: -1 })
     res.json(blogs)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route    GET api/blog/get_blogs_approved
+// @desc     Get all blogs approved
+// @access   PUBLIC
+router.get('/get_blogs_approved', async (req, res) => {
+  try {
+    const blogs = await Blog.find().sort({ date: -1 })
+    const result = blogs.filter((b) => b.status === 'approved')
+    res.send(result)
   } catch (err) {
     console.log(err.message)
     res.status(500).send('Server Error')
@@ -236,7 +251,7 @@ router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
         user: req.user.id,
         textVi: `${profile.knowAs} đã like bài blog \`${blog.title}\` của bạn.`,
         textEn: `${profile.knowAs} liked \`${blog.title}\`.`,
-        recipient: [{ user: blog.user }],
+        recipient: [{ user: blog.user }]
       })
 
       await notify.save()
@@ -303,7 +318,7 @@ router.post(
         text: req.body.text,
         name: profile.knowAs,
         avatar: profile.avatar,
-        user: req.user.id,
+        user: req.user.id
       }
 
       blog.comments.unshift(newComment)
@@ -313,7 +328,7 @@ router.post(
           user: req.user.id,
           textVi: `${profile.knowAs} đã comment bài blog \`${blog.title}\` của bạn.`,
           textEn: `${profile.knowAs} commented on \`${blog.title}\`.`,
-          recipient: [{ user: blog.user }],
+          recipient: [{ user: blog.user }]
         })
 
         await notify.save()

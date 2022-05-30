@@ -1,7 +1,4 @@
-import { Box, List } from '@mui/material'
 import React, { useEffect } from 'react'
-
-import s from './styles.module.scss'
 
 import PropTypes from 'prop-types'
 
@@ -9,28 +6,41 @@ import { getCourse } from 'services/redux/actions/course'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit'
 import Study from 'components/Learnings/Study'
+import NotFoundPage from 'pages/NotFoundPage'
+import { ROLES } from 'constants/AppConstants'
 
-const AreaLearning = ({ getCourse, course: { course, loading }, match }) => {
+const AreaLearning = ({
+  auth: { user },
+  getCourse,
+  course: { course, loading },
+  match
+}) => {
   useEffect(() => {
     getCourse(match.params.id)
   }, [getCourse, match.params.id])
 
   return loading || course === null ? (
     <Spinner name="cube-grid" color="aqua" />
+  ) : course.status === 'approved' ||
+    (user &&
+      (user.roles.includes(ROLES.ADMIN) ||
+        user.roles.includes(ROLES.MODERATOR) ||
+        user._id === course.user)) ? (
+    <Study course={course} />
   ) : (
-    <React.Fragment>
-      <Study course={course} />
-    </React.Fragment>
+    <NotFoundPage title="COURSE ĐÃ BỊ BAN" />
   )
 }
 
 AreaLearning.prototype = {
   getCourse: PropTypes.func.isRequired,
+  auth: PropTypes.object,
   course: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  course: state.course
+  course: state.course,
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, { getCourse })(AreaLearning)

@@ -27,12 +27,19 @@ import EditBlog from 'pages/BlogsPage/EditBlog'
 import EditCourse from 'pages/CoursesPage/EditCourse'
 import AdminLayout from 'layouts/AdminLayout'
 import Dashboard from 'pages/Admin/Dashboard'
+import User from 'pages/Admin/Users'
+import Blogs from 'pages/Admin/Blogs'
+import Courses from 'pages/Admin/Courses'
+import Moderator from 'pages/Admin/Moderator'
+import Banner from 'pages/Admin/Banner'
+import Feedback from 'pages/Admin/Feedback'
+import HomeLayout from 'layouts/HomeLayout'
 
 const Routes = () => {
   return (
     <section className="container">
       <Switch>
-        <Route exact path="/" layout={DefaultLayout} component={Home} />
+        <Route exact path="/" layout={HomeLayout} component={Home} />
         <Route
           exact
           path="/profile/:id"
@@ -130,8 +137,56 @@ const Routes = () => {
           layout={AdminLayout}
           component={Dashboard}
         />
+         <PrivateRoute
+          exact
+          path="/admin/users"
+          layout={AdminLayout}
+          component={User}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/user/:id"
+          layout={AdminLayout}
+          component={ProfilePage}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/blogs"
+          layout={AdminLayout}
+          component={Blogs}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/blog/:id"
+          layout={AdminLayout}
+          component={BlogDetail}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/courses"
+          layout={AdminLayout}
+          component={Courses}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/moderator"
+          layout={AdminLayout}
+          component={Moderator}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/banner"
+          layout={AdminLayout}
+          component={Banner}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/feedback"
+          layout={AdminLayout}
+          component={Feedback}
+        />
         <Route exact path="/server_error" component={ServerErrorPage} />
-        <Route component={NotFoundPage} />
+        <Route component={NotFoundPage} layout={DefaultLayout}/>
       </Switch>
     </section>
   )

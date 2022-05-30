@@ -1,143 +1,63 @@
-import { Box, Button, Typography } from '@mui/material'
-import Banner from 'components/Banner'
+import { Box } from '@mui/material'
 import React from 'react'
 
-import s from './styles.module.scss'
-import cn from 'classnames'
-import useStyles from './useStyles'
+import PropTypes from 'prop-types'
 
 import logoZoo from 'assets/img/Zoologo.png'
 import facebook from 'assets/img/fb.png'
 import youtube from 'assets/img/youtube.png'
-
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css/bundle'
+import { Navigation } from 'swiper'
 import { useTranslation } from 'react-i18next'
+import BannerItem from './BannerItem'
 
-const CarouselBanner = () => {
-  const c = useStyles()
+const CarouselBanner = (props) => {
   const { t } = useTranslation()
-
+  const initialBanner = [
+    {
+      title: t('banner.discord.title'),
+      desc: t('banner.discord.desc'),
+      link: 'https://discord.gg/2sS8Cy4SHD',
+      color1: 'var(--dark-blue)',
+      color2: ' var(--black-0)',
+      img: logoZoo
+    },
+    {
+      title: t('banner.facebook.title'),
+      desc: t('banner.facebook.desc'),
+      link: 'https://www.facebook.com/discordIT',
+      color1: '#369acd',
+      color2: '#07efeb',
+      img: facebook
+    },
+    {
+      title: t('banner.youtube.title'),
+      desc: t('banner.youtube.desc'),
+      link: 'https://www.youtube.com/channel/UCbvO4DT80D8J9GXmEsvvXDw',
+      color1: '#eb4960',
+      color2: '#f4837d',
+      img: youtube
+    }
+  ]
+  const { banners = initialBanner } = props
   return (
     <React.Fragment>
-      <div id="slider">
-        <input type="radio" name="slider" id="slide1" defaultChecked />
-        <input type="radio" name="slider" id="slide2" />
-        <input type="radio" name="slider" id="slide3" />
-        <input type="radio" name="slider" id="slide4" />
-        <div id="slides">
-          <div id="overflow">
-            <div className="inner">
-              <div className="slide slide_1">
-                <Box className={cn(s.root, c.root, s.box1)}>
-                  <div className={s.content}>
-                    <Typography
-                      variant="h2"
-                      component="h2"
-                      fontWeight="bold"
-                      color="var(--white-1)"
-                    >
-                      {t('banner.discord.title')}
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      component="p"
-                      fontSize="20px"
-                      color="var(--white-2)"
-                    >
-                      {t('banner.discord.desc')}
-                    </Typography>
-                    <Button>
-                      <a target="_blank" href="https://discord.gg/2sS8Cy4SHD">
-                        {t('banner.discord.join')}
-                      </a>
-                    </Button>
-                  </div>
-                  <div className={s.image}>
-                    <img src={logoZoo} />
-                  </div>
-                </Box>
-              </div>
-              <div className="slide slide_2">
-                <Box className={cn(s.root, c.root, s.box2)}>
-                  <div className={s.content}>
-                    <Typography
-                      variant="h2"
-                      component="h2"
-                      fontWeight="bold"
-                      color="var(--white-1)"
-                    >
-                      {t('banner.facebook.title')}
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      component="p"
-                      fontSize="20px"
-                      color="var(--white-2)"
-                    >
-                      {t('banner.facebook.desc')}
-                    </Typography>
-                    <Button>
-                      <a
-                        target="_blank"
-                        href="https://www.facebook.com/discordIT"
-                      >
-                        {t('banner.facebook.join')}
-                      </a>
-                    </Button>
-                  </div>
-                  <div className={s.image}>
-                    <img src={facebook} />
-                  </div>
-                </Box>
-              </div>
-              <div className="slide slide_3">
-                <Box className={cn(s.root, c.root, s.box3)}>
-                  <div className={s.content}>
-                    <Typography
-                      variant="h2"
-                      component="h2"
-                      fontWeight="bold"
-                      color="var(--white-1)"
-                    >
-                      {t('banner.youtube.title')}
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      component="p"
-                      fontSize="20px"
-                      color="var(--white-2)"
-                    >
-                      {t('banner.youtube.desc')}
-                    </Typography>
-                    <Button>
-                      <a
-                        target="_blank"
-                        href="https://www.youtube.com/channel/UCbvO4DT80D8J9GXmEsvvXDw"
-                      >
-                        {t('banner.youtube.sub')}
-                      </a>
-                    </Button>
-                  </div>
-                  <div className={s.image}>
-                    <img src={youtube} />
-                  </div>
-                </Box>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="controls">
-          <label htmlFor="slide1" />
-          <label htmlFor="slide2" />
-          <label htmlFor="slide3" />
-        </div>
-        <div id="bullets">
-          <label htmlFor="slide1" />
-          <label htmlFor="slide2" />
-          <label htmlFor="slide3" />
-        </div>
-      </div>
+      <Box >
+        <Swiper navigation={true} modules={[Navigation]} style={{borderRadius: '20px', marginTop:' 20px'}} className="mySwiper">
+          {banners.map((bn, index) => (
+            <SwiperSlide key={index}>
+              <BannerItem banner={bn} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
     </React.Fragment>
   )
+}
+
+CarouselBanner.propTypes = {
+  banners: PropTypes.array
 }
 
 export default CarouselBanner

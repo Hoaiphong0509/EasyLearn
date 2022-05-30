@@ -11,6 +11,7 @@ const Profile = require('../models/Profile')
 const Blog = require('../models/Blog')
 const Course = require('../models/Course')
 const Notify = require('../models/Notify')
+const Feedback = require('../models/Feedback')
 
 // @route  POST api/users/register_creator
 // @desc   Register creator
@@ -68,7 +69,7 @@ router.get('/', authorize(), async (req, res) => {
         user: req.user.id,
         textVi: `Tài khoản \`${user.name}\` đã bị xóa nên khóa học \`${course.title}\` sẽ bị xóa theo.`,
         textEn: `The \'${user.name}\' account has been deleted so the \'${course.title}\' course will be deleted accordingly.`,
-        recipient: course.students,
+        recipient: course.students
       })
 
       await notify.save()
@@ -101,7 +102,7 @@ router.post(
         ),
         blogs: blogs.filter((b) =>
           b.title.toLowerCase().includes(keyword.toLowerCase())
-        ),
+        )
       }
 
       if (result.courses.length == 0 && result.blogs.length == 0)
@@ -115,5 +116,34 @@ router.post(
     }
   }
 )
+
+// @route  POST api/user/send_feedback
+// @desc   Send feedback to admin
+// @access Private
+router.post('/send_feedback', authorize(), async (req, res) => {
+  try {
+    const { title, content, blogId, courseId } = req.body
+    const user = await User.findById(req.user.id)
+    if (!user) return res.status(400).json({ msg: 'Login Exprired!' })
+
+    const fb = new Feedback({
+      user: req.user.id,
+      author: {
+        name: user.name,
+        avatar: user.avatar
+      },
+      title,
+      content,
+      blogId: blogId && blogId.length > 0 ? blogId : '',
+      courseId: courseId && courseId.length > 0 ? courseId : ''
+    })
+
+    await fb.save()
+    return res.send(fb)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 module.exports = router

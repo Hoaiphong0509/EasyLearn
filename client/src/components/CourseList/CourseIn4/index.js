@@ -21,6 +21,13 @@ import { useHistory } from 'react-router-dom'
 
 import s from './styles.module.scss'
 
+import { getInTouche } from 'services/redux/actions/profile'
+import { deleteCourse } from 'services/redux/actions/course'
+import {
+  approveCourse,
+  unApproveCourse
+} from 'services/redux/actions/moderator'
+
 import CheckIcon from '@mui/icons-material/Check'
 import CircleIcon from '@mui/icons-material/Circle'
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
@@ -30,15 +37,14 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
-
-import { getInTouche } from 'services/redux/actions/profile'
-import { deleteCourse } from 'services/redux/actions/course'
 import PropsTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import { LINK_EMBED_YOUTUBE } from 'constants/AppConstants'
+import { LINK_EMBED_YOUTUBE, ROLES } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
 import ConfirmDialog from 'components/ConfirmDialog'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import BlockIcon from '@mui/icons-material/Block'
 
 import {
   cleanUpProfile,
@@ -52,7 +58,9 @@ const CourseIn4 = ({
   profile: { profile, loading },
   cleanUpProfile,
   deleteCourse,
-  getCurrentProfile
+  getCurrentProfile,
+  approveCourse,
+  unApproveCourse
 }) => {
   const [open, setOpen] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -114,6 +122,29 @@ const CourseIn4 = ({
           <InsertPhotoIcon />
         </IconButton>
       </Tooltip>
+    </Box>
+  )
+
+  const moderatorInteraction = (
+    <Box sx={{ marginTop: '20px' }}>
+      <Button
+        variant="contained"
+        color="success"
+        disabled={course && course.status === 'approved'}
+        onClick={() => approveCourse(_id)}
+        startIcon={<CheckCircleIcon />}
+      >
+        Approved
+      </Button>
+      <Button
+        disabled={course && course.status === 'unapproved'}
+        onClick={() => unApproveCourse(_id)}
+        variant="contained"
+        color="error"
+        startIcon={<BlockIcon />}
+      >
+        Unapproved
+      </Button>
     </Box>
   )
 
@@ -276,13 +307,18 @@ const CourseIn4 = ({
                     {sections.reduce(
                       (previous, current) => previous + current.videos.length,
                       0
-                    )}{' '}
+                    )}
                     videos
                   </Typography>
                 </ListItemText>
               </ListItem>
             </List>
             {user && user._id === userCourse ? owner : null}
+            {user &&
+            (user.roles.includes(ROLES.ADMIN) ||
+              user.roles.includes(ROLES.MODERATOR))
+              ? moderatorInteraction
+              : null}
           </section>
         </Box>
         <ConfirmDialog
@@ -306,7 +342,9 @@ CourseIn4.prototype = {
   getInTouche: PropsTypes.func.isRequired,
   cleanUpProfile: PropsTypes.func.isRequired,
   deleteCourse: PropsTypes.func.isRequired,
-  getCurrentProfile: PropsTypes.func.isRequired
+  getCurrentProfile: PropsTypes.func.isRequired,
+  approveCourse: PropsTypes.func.isRequired,
+  unApproveCourse: PropsTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -318,5 +356,7 @@ export default connect(mapStateToProps, {
   getInTouche,
   cleanUpProfile,
   deleteCourse,
-  getCurrentProfile
+  getCurrentProfile,
+  approveCourse,
+  unApproveCourse
 })(CourseIn4)

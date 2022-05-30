@@ -5,7 +5,6 @@ const authorize = require('../middleware/authorize')
 const User = require('../models/User')
 const Blog = require('../models/Blog')
 const Course = require('../models/Course')
-const Profile = require('../models/Profile')
 const checkObjectId = require('../middleware/checkObjectId')
 
 // @route    GET api/moderator/get_users
@@ -25,73 +24,137 @@ router.get(
   }
 )
 
-// @route    GET api/moderator/get_user/:id
-// @desc     View List Users
-// @access   Private
-router.get(
-  '/get_user/:id',
-  checkObjectId('id'),
-  authorize(role.Admin, role.Moderator),
-  async (req, res) => {
-    try {
-      const user = await User.findById(req.params.id)
-      const profile = await Profile.findOne({
-        user: user_id
-      })
-      return res.send({ user, profile })
-    } catch (err) {
-      console.error(err.message)
-      res.status(500).send('Server Error')
-    }
-  }
-)
-
-// @route    GET api/moderator/get_blogs
-// @desc     View List Blogs
-// @access   Private
-router.get(
-  '/get_blogs',
-  authorize(role.Admin, role.Moderator),
-  async (req, res) => {
-    try {
-      const blogs = await Blog.find()
-      return res.send(blogs)
-    } catch (err) {
-      console.error(err.message)
-      res.status(500).send('Server Error')
-    }
-  }
-)
-
-// @route    GET api/moderator/get_courses
-// @desc     View List Courses
-// @access   Private
-router.get(
-  '/get_courses',
-  authorize(role.Admin, role.Moderator),
-  async (req, res) => {
-    try {
-      const courses = await Course.find()
-      return res.send(courses)
-    } catch (err) {
-      console.error(err.message)
-      res.status(500).send('Server Error')
-    }
-  }
-)
-
 // @route    GET api/admin
 // @desc     Send notify
 // @access   Private
 
-// @route    GET api/admin/reject_course/:id_course
-// @desc     Reject a course
+// @route    GET api/moderator/approve/:id_course
+// @desc     Approve a course
 // @access   Private
+router.post(
+  '/approve_course/:id_course',
+  checkObjectId('id_course'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const course = await Course.findById(req.params.id_course)
 
-// @route    GET api/admin/reject_blog/:id_course
-// @desc     Reject a course
+      course.status = 'approved'
+      if (course.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `Quản trị viên đã phê duyệt khoá học \`${course.title}\` của bạn.`,
+          textEn: `Moderator has approved your \`${course.title}\` course.`,
+          recipient: [{ user: course.user }]
+        })
+
+        await notify.save()
+      }
+      await course.save()
+
+      return res.send(course)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/unapprove/:id_course
+// @desc     Unapprove a course
 // @access   Private
+router.post(
+  '/unapprove_course/:id_course',
+  checkObjectId('id_course'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const course = await Course.findById(req.params.id_course)
 
+      course.status = 'unapproved'
+      if (course.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `Quản trị viên không phê duyệt khoá học \`${course.title}\` của bạn.`,
+          textEn: `Moderator has unapproved your \`${course.title}\` course.`,
+          recipient: [{ user: course.user }]
+        })
+
+        await notify.save()
+      }
+      await course.save()
+
+      return res.send(course)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/approve/:id_blog
+// @desc     Approve a blog
+// @access   Private
+router.post(
+  '/approve_blog/:id_blog',
+  checkObjectId('id_blog'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const blog = await Blog.findById(req.params.id_blog)
+
+      blog.status = 'approved'
+      if (blog.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `Quản trị viên đã phê duyệt bài blog \`${blog.title}\` của bạn.`,
+          textEn: `Moderator has approved your \`${blog.title}\` blog.`,
+          recipient: [{ user: blog.user }]
+        })
+
+        await notify.save()
+      }
+      await blog.save()
+
+      return res.send(blog)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/unapprove/:id_course
+// @desc     Unapprove a course
+// @access   Private
+router.post(
+  '/unapprove_blog/:id_blog',
+  checkObjectId('id_blog'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const blog = await Blog.findById(req.params.id_blog)
+
+      blog.status = 'unapproved'
+      if (blog.user.toString() !== req.user.id) {
+        const notify = new Notify({
+          user: req.user.id,
+          textVi: `Quản trị viên không phê duyệt bài blog \`${blog.title}\` của bạn.`,
+          textEn: `Moderator has unapproved your \`${blog.title}\` blog.`,
+          recipient: [{ user: blog.user }]
+        })
+
+        await notify.save()
+      }
+      await blog.save()
+
+      return res.send(blog)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 // @route    GET api/admin
 // @desc     Change Banner
 // @access   Private

@@ -23,13 +23,13 @@ const Dashboard = ({
   getBlogs,
   blog: { blogs, loading: ldBls }
 }) => {
-  useEffect(async () => {
+  useEffect(() => {
     getUsers()
   }, [getUsers])
-  useEffect(async () => {
+  useEffect(() => {
     getCourses()
   }, [getCourses])
-  useEffect(async () => {
+  useEffect(() => {
     getBlogs()
   }, [getBlogs])
 
@@ -68,7 +68,7 @@ const Dashboard = ({
             <Spinner name="cube-grid" color="aqua" />
           ) : (
             <Grid item xl={3} lg={3} sm={6} xs={12}>
-              <CardBlog blogs={blogs}/>
+              <CardBlog blogs={blogs} />
             </Grid>
           )}
           <Grid item lg={4} md={6} xl={3} xs={12}>

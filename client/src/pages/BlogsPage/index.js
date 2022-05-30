@@ -8,12 +8,12 @@ import s from './styles.module.scss'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { getBlogs } from 'services/redux/actions/blog'
+import { getBlogsApproved } from 'services/redux/actions/blog'
 
-const BlogsPage = ({ getBlogs, blog: { blogs } }) => {
+const BlogsPage = ({ getBlogsApproved, blog: { blogs } }) => {
   useEffect(() => {
-    getBlogs()
-  }, [getBlogs])
+    getBlogsApproved()
+  }, [getBlogsApproved])
 
   const { t } = useTranslation()
 
@@ -32,7 +32,7 @@ const BlogsPage = ({ getBlogs, blog: { blogs } }) => {
 }
 
 BlogsPage.prototype = {
-  getBlogs: PropTypes.func.isRequired,
+  getBlogsApproved: PropTypes.func.isRequired,
   blog: PropTypes.object.isRequired
 }
 
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => ({
   blog: state.blog
 })
 
-export default connect(mapStateToProps, { getBlogs })(BlogsPage)
+export default connect(mapStateToProps, { getBlogsApproved })(BlogsPage)

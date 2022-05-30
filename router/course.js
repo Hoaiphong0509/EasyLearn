@@ -29,6 +29,20 @@ router.get('/', async (req, res) => {
   }
 })
 
+// @route    GET api/course/get_courses_approved
+// @desc     Get all courses approved
+// @access   PUBLIC
+router.get('/get_courses_approved', async (req, res) => {
+  try {
+    const courses = await Course.find().sort({ date: -1 })
+    const result = courses.filter((c) => c.status === 'approved')
+    res.send(result)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
 // @route    GET api/course/get_courses/:user_id
 // @desc     Get all courses by user Id
 // @access   PUBLIC
@@ -128,7 +142,7 @@ router.post(
         user: req.user.id,
         author: {
           name: user.name,
-          avatar: user.avatar,
+          avatar: user.avatar
         },
         requires: Array.isArray(requires)
           ? requires
@@ -142,11 +156,11 @@ router.post(
               name: section.name,
               videos: section.videos.map((video) => ({
                 name: video.name,
-                link: video.link,
-              })),
+                link: video.link
+              }))
             }))
           : [sections],
-        ...rest,
+        ...rest
       })
 
       await Profile.findOneAndUpdate(
@@ -184,7 +198,7 @@ router.post(
         480
       )
       const course = await Course.findByIdAndUpdate(req.params.id, {
-        $set: { img: secure_url },
+        $set: { img: secure_url }
       })
       return res.json(course)
     } catch (error) {
@@ -230,18 +244,18 @@ router.put(
             name: section.name,
             videos: section.videos.map((video) => ({
               name: video.name,
-              link: video.link,
-            })),
+              link: video.link
+            }))
           }))
         : [sections],
-      ...rest,
+      ...rest
     }
 
     try {
       const result = await Course.findByIdAndUpdate(
         req.params.id,
         {
-          $set: coursesFields,
+          $set: coursesFields
         },
         { upsert: true }
       )
@@ -288,9 +302,9 @@ router.post(
         text: req.body.text,
         author: {
           name: user.name,
-          avatar: user.avatar,
+          avatar: user.avatar
         },
-        videoId: idVideo,
+        videoId: idVideo
       }
 
       course.comments.unshift(newComment)
@@ -300,7 +314,7 @@ router.post(
           user: req.user.id,
           textVi: `${user.name} đã comment video \`${videoName}\` của khoá \`${course.title}\`.`,
           textEn: `${user.name} commented on video \`${videoName}\` of \`${course.title}\`.`,
-          recipient: [{ user: course.user }],
+          recipient: [{ user: course.user }]
         })
 
         await notify.save()
@@ -381,7 +395,7 @@ router.delete(
         user: req.user.id,
         textVi: `Khóa học ${course.title} đã bị xóa.`,
         textEn: `${course.title} has been deleted.`,
-        recipient: course.students,
+        recipient: course.students
       })
 
       if (course.students.length > 0) await notify.save()

@@ -1,38 +1,67 @@
-import { Box, Button, IconButton, Typography } from '@mui/material'
 import React from 'react'
+import { Box, Button, Container, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import HomeIcon from '@mui/icons-material/Home'
 
-import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import s from './styles.module.scss'
-
-const NotFoundPage = () => {
-  const history = useHistory()
+const NotFoundPage = (props) => {
   const { t } = useTranslation()
+  const { title = t('notFound.title'), content = t('notFound.desc') } = props
 
   return (
-    <Box className={s.root}>
-      <Box className={s.notFound}>
-        <Box className={s.bg_page}>
-          <div className={s.not_found}></div>
-          <div className={s.not_found}></div>
-          <div className={s.not_found}></div>
-        </Box>
-        <Typography className={s.title} variant="h1">
-          {t('notFound.title')}
-        </Typography>
-        <Typography className={s.err} variant="h4">
-          ❌❌❌
-        </Typography>
-        <Typography className={s.desc} variant="h3">
-          {t('notFound.desc')}
-        </Typography>
-        <Button className={s.btn} onClick={() => history.push('/')}>
-          {t('notFound.goHome')}
-        </Button>
+    <>
+      <Box
+        component="main"
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexGrow: 1,
+          minHeight: '100%'
+        }}
+      >
+        <Container maxWidth="md">
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
+            <Typography align="center" color="textPrimary" variant="h1">
+              {title}
+            </Typography>
+            <Typography align="center" color="textPrimary" variant="subtitle2">
+              {content}
+            </Typography>
+            <Box sx={{ textAlign: 'center' }}>
+              <img
+                alt="Under development"
+                src="/assets/img/undraw_page_not_found_su7k.svg"
+                style={{
+                  marginTop: 50,
+                  display: 'inline-block',
+                  maxWidth: '100%',
+                  width: 560
+                }}
+              />
+            </Box>
+            <Link to="/">
+              <Button sx={{ mt: 3 }} variant="contained">
+                <HomeIcon />
+              </Button>
+            </Link>
+          </Box>
+        </Container>
       </Box>
-    </Box>
+    </>
   )
+}
+
+NotFoundPage.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.string
 }
 
 export default NotFoundPage

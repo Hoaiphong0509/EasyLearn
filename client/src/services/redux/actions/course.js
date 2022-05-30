@@ -19,6 +19,22 @@ export const getCourses = () => async (dispatch) => {
   }
 }
 
+export const getCoursesApproved = () => async (dispatch) => {
+  try {
+    const res = await api.get('/course/get_courses_approved')
+
+    dispatch({
+      type: COURSES.GET_COURSES,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: COURSES.COURSE_ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const getMyLearnings = () => async (dispatch) => {
   try {
     const res = await api.get('/course/get_mylearnings')

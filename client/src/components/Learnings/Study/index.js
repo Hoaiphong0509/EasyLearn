@@ -15,6 +15,7 @@ import SectionsList from '../SectionsList'
 import {
   Badge,
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -22,17 +23,29 @@ import {
   Tabs,
   Tooltip
 } from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import SettingsIcon from '@mui/icons-material/Settings'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import BlockIcon from '@mui/icons-material/Block'
 
 import { deleteCourse } from 'services/redux/actions/course'
+import {
+  approveCourse,
+  unApproveCourse
+} from 'services/redux/actions/moderator'
 
 import s from './styles.module.scss'
 import ConfirmDialog from 'components/ConfirmDialog'
 
-const Study = ({ auth: { user }, course, deleteCourse }) => {
+const Study = ({
+  auth: { user },
+  course,
+  deleteCourse,
+  approveCourse,
+  unApproveCourse
+}) => {
   const { _id, user: userCourse } = course
 
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -80,7 +93,7 @@ const Study = ({ auth: { user }, course, deleteCourse }) => {
           aria-haspopup="true"
           onClick={handleOpenSetting}
         >
-          <MoreVertIcon sx={{ fontSize: 50 }} />
+          <SettingsIcon sx={{ fontSize: 40 }} color="primary" />
         </IconButton>
         <Menu
           id="long-menu"
@@ -117,6 +130,29 @@ const Study = ({ auth: { user }, course, deleteCourse }) => {
     </Box>
   )
 
+  const moderatorInteraction = (
+    <Box sx={{ marginTop: '9px' }}>
+      <Button
+        variant="contained"
+        color="success"
+        disabled={course && course.status === 'approved'}
+        onClick={() => approveCourse(_id)}
+        startIcon={<CheckCircleIcon />}
+      >
+        Approved
+      </Button>
+      <Button
+        variant="contained"
+        color="error"
+        disabled={course && course.status === 'unapproved'}
+        onClick={() => unApproveCourse(_id)}
+        startIcon={<BlockIcon />}
+      >
+        Unapproved
+      </Button>
+    </Box>
+  )
+
   return (
     <React.Fragment>
       <Box className={s.root}>
@@ -144,6 +180,11 @@ const Study = ({ auth: { user }, course, deleteCourse }) => {
                 <Tab label={t('areaStudy.requires')} />
                 <Tab label={t('areaStudy.comments')} />
                 {user && user._id === userCourse ? owner : null}
+                {user &&
+                (user.roles.includes(ROLES.ADMIN) ||
+                  user.roles.includes(ROLES.MODERATOR))
+                  ? moderatorInteraction
+                  : null}
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -198,10 +239,16 @@ const Study = ({ auth: { user }, course, deleteCourse }) => {
 
 Study.prototype = {
   auth: PropTypes.object.isRequired,
-  deleteCourse: PropTypes.func.isRequired
+  deleteCourse: PropTypes.func.isRequired,
+  approveCourse: PropTypes.func.isRequired,
+  unApproveCourse: PropTypes.func.isRequired
 }
 const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { deleteCourse })(Study)
+export default connect(mapStateToProps, {
+  deleteCourse,
+  approveCourse,
+  unApproveCourse
+})(Study)

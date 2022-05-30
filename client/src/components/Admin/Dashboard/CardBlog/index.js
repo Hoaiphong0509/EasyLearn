@@ -3,7 +3,6 @@ import Create from '@mui/icons-material/Create'
 
 const CardBlog = (props) => {
   const { blogs } = props
-  console.log("BLOGS", blogs);
   return (
     <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
