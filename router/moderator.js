@@ -6,6 +6,7 @@ const User = require('../models/User')
 const Blog = require('../models/Blog')
 const Course = require('../models/Course')
 const checkObjectId = require('../middleware/checkObjectId')
+const Feedback = require('../models/Feedback')
 
 // @route    GET api/moderator/get_users
 // @desc     View List Users
@@ -23,10 +24,6 @@ router.get(
     }
   }
 )
-
-// @route    GET api/admin
-// @desc     Send notify
-// @access   Private
 
 // @route    GET api/moderator/approve/:id_course
 // @desc     Approve a course
@@ -155,12 +152,59 @@ router.post(
     }
   }
 )
-// @route    GET api/admin
-// @desc     Change Banner
+// @route    GET api/moderator/get_feedback
+// @desc     Get list feedback
 // @access   Private
+router.get(
+  '/get_feedback',
 
-// @route    GET api/admin
-// @desc     Banned account [optional]
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const feedback = await Feedback.find()
+      return res.send(feedback)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/get_feedback/:id
+// @desc     Get  feedback
 // @access   Private
+router.get(
+  '/get_feedback/:id',
+  checkObjectId('id'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const feedback = await Feedback.findById(req.params.id)
+      return res.send(feedback)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/get_feedback/:id
+// @desc     Delete Feedback
+// @access   Private
+router.delete(
+  '/get_feedback/:id',
+  checkObjectId('id'),
+  authorize(role.Admin, role.Moderator),
+  async (req, res) => {
+    try {
+      const feedback = await Feedback.findById(req.params.id)
+      await feedback.remove()
+      es.json({ msg: 'Feedback removed' })
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
 module.exports = router

@@ -120,22 +120,17 @@ router.post(
 // @route  POST api/user/send_feedback
 // @desc   Send feedback to admin
 // @access Private
-router.post('/send_feedback', authorize(), async (req, res) => {
+router.post('/send_feedback', async (req, res) => {
   try {
-    const { title, content, blogId, courseId } = req.body
-    const user = await User.findById(req.user.id)
-    if (!user) return res.status(400).json({ msg: 'Login Exprired!' })
-
+    const { avatar, email, title, content } = req.body
+    console.log('req.body', req.body)
     const fb = new Feedback({
-      user: req.user.id,
       author: {
-        name: user.name,
-        avatar: user.avatar
+        avatar: avatar ? avatar : '',
+        email: email ? email : 'anonymous',
       },
       title,
-      content,
-      blogId: blogId && blogId.length > 0 ? blogId : '',
-      courseId: courseId && courseId.length > 0 ? courseId : ''
+      content
     })
 
     await fb.save()

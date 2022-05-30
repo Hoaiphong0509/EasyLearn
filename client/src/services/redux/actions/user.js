@@ -17,10 +17,11 @@ export const getUsers = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
+
 export const getUser = (id) => async (dispatch) => {
   try {
     const res = await api.get('/admin/get_user')
@@ -38,7 +39,7 @@ export const getUser = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
@@ -60,17 +61,15 @@ export const changeAvatar = (file) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,
-      payload: {msg: err }
+      payload: { msg: err }
     })
   }
 }
 
 export const search = (keyword) => async (dispatch) => {
   try {
-
     const res = await api.post(`/users/search`, keyword)
 
-    console.log('SEARCH RES: ', res.data)
     dispatch({
       type: USERS.SEARCH_KEYWORD,
       payload: res.data
@@ -79,6 +78,21 @@ export const search = (keyword) => async (dispatch) => {
     dispatch({
       type: USERS.USER_ERRORS,
       payload: { msg: err }
+    })
+  }
+}
+
+export const sendFeedback = async (formData)  => {
+  try {
+    await api.post(`/users/send_feedback`, formData)
+    showToast({
+      message: 'Send Feedback successfully!',
+      type: TOAST_TYPE.SUCCESS
+    })
+  } catch (err) {
+    showToast({
+      message: 'Failture!',
+      type: TOAST_TYPE.ERROR  
     })
   }
 }

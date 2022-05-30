@@ -2,17 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const FeedbackSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
   author: {
-    name: {
-      type: String
+    avatar: { type: String },
+    email: {
+      type: String,
+      default: 'anonymous'
     },
-    avatar: {
-      type: String
-    }
   },
   title: {
     type: String,
@@ -21,12 +16,6 @@ const FeedbackSchema = new Schema({
   content: {
     type: String,
     required: true
-  },
-  blogId: {
-    type: String
-  },
-  courseId: {
-    type: String
   },
   date: {
     type: Date,

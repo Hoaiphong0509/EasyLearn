@@ -34,6 +34,8 @@ import Moderator from 'pages/Admin/Moderator'
 import Banner from 'pages/Admin/Banner'
 import Feedback from 'pages/Admin/Feedback'
 import HomeLayout from 'layouts/HomeLayout'
+import FeedbackPage from 'pages/FeedbackPage'
+import FeedbackDetail from 'pages/Admin/Feedback/FeedbackDetail/FeedbackDetail'
 
 const Routes = () => {
   return (
@@ -131,6 +133,12 @@ const Routes = () => {
           layout={DefaultLayout}
           component={AreaLearning}
         />
+         <Route
+          exact
+          path="/feedback"
+          layout={DefaultLayout}
+          component={FeedbackPage}
+        />
          <PrivateRoute
           exact
           path="/admin"
@@ -184,6 +192,12 @@ const Routes = () => {
           path="/admin/feedback"
           layout={AdminLayout}
           component={Feedback}
+        />
+         <PrivateRoute
+          exact
+          path="/admin/feedback/:id"
+          layout={AdminLayout}
+          component={FeedbackDetail}
         />
         <Route exact path="/server_error" component={ServerErrorPage} />
         <Route component={NotFoundPage} layout={DefaultLayout}/>
