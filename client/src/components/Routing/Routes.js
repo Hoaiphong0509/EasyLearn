@@ -36,6 +36,9 @@ import Feedback from 'pages/Admin/Feedback'
 import HomeLayout from 'layouts/HomeLayout'
 import FeedbackPage from 'pages/FeedbackPage'
 import FeedbackDetail from 'pages/Admin/Feedback/FeedbackDetail/FeedbackDetail'
+import About from 'pages/About'
+import Policy from 'pages/Policy'
+import Security from 'pages/Security'
 
 const Routes = () => {
   return (
@@ -133,74 +136,82 @@ const Routes = () => {
           layout={DefaultLayout}
           component={AreaLearning}
         />
-         <Route
+        <Route
           exact
           path="/feedback"
           layout={DefaultLayout}
           component={FeedbackPage}
         />
-         <PrivateRoute
+        <Route exact path="/about" layout={DefaultLayout} component={About} />
+        <Route exact path="/policy" layout={DefaultLayout} component={Policy} />
+        <Route
+          exact
+          path="/security"
+          layout={DefaultLayout}
+          component={Security}
+        />
+        <PrivateRoute
           exact
           path="/admin"
           layout={AdminLayout}
           component={Dashboard}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/users"
           layout={AdminLayout}
           component={User}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/user/:id"
           layout={AdminLayout}
           component={ProfilePage}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/blogs"
           layout={AdminLayout}
           component={Blogs}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/blog/:id"
           layout={AdminLayout}
           component={BlogDetail}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/courses"
           layout={AdminLayout}
           component={Courses}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/moderator"
           layout={AdminLayout}
           component={Moderator}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/banner"
           layout={AdminLayout}
           component={Banner}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/feedback"
           layout={AdminLayout}
           component={Feedback}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/admin/feedback/:id"
           layout={AdminLayout}
           component={FeedbackDetail}
         />
         <Route exact path="/server_error" component={ServerErrorPage} />
-        <Route component={NotFoundPage} layout={DefaultLayout}/>
+        <Route component={NotFoundPage} layout={DefaultLayout} />
       </Switch>
     </section>
   )

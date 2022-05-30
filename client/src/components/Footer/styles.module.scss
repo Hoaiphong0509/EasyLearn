@@ -3,6 +3,37 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  padding: 20px 0;
+  h3 {
+    color: var(--normal-blue);
+    font-weight: bold;
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      img {
+        width: 68px;
+        height: 68px;
+        object-fit: cover;
+      }
+    }
+
+    .link {
+      margin-bottom: 10px;
+      color: var( --black-0);
+    }
+  }
 
   & span {
     color: var(--dark-blue);

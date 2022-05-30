@@ -1,0 +1,54 @@
+.root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  h1 {
+    font-weight: bold;
+    color: var(--normal-blue);
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 20px;
+    color: var(--dark-blue);
+    text-align: justify;
+  }
+  .presentation {
+    background: var(--smooth-blue);
+    padding: 80px;
+    text-align: justify;
+    .overview {
+      display: flex;
+      justify-content: space-around;
+
+      img {
+        width: 35%;
+        height: 55%;
+        object-fit: cover;
+      }
+
+      .descOverview {
+        width: 45%;
+      }
+    }
+  }
+
+  .scope,
+  .gains {
+    padding: 80px 80px 0 80px;
+  }
+
+  .gains {
+    .title {
+      padding: 40px;
+      background-color: var(--smooth-blue);
+      text-align: center;
+    }
+
+    .gainsList {
+      display: flex;
+
+      div {
+        margin: 0 30px;
+      }
+    }
+  }
+}
