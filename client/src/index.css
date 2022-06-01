@@ -22,12 +22,21 @@ body {
 }
 
 a {
-  color: var(--white-0);
+  color: var(--smooth-blue);
   text-decoration: none;
 }
 
 p {
   color: var(--black-0);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark-blue);
 }
 
 code {

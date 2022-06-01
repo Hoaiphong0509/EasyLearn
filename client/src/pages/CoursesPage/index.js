@@ -10,27 +10,21 @@ import { connect } from 'react-redux'
 
 import Spinner from 'react-spinkit'
 import { getCoursesApproved } from 'services/redux/actions/course'
-import { getCurrentProfile } from 'services/redux/actions/profile'
 
 const CoursesPage = ({
   course: {
     courses,
-    loading: { ld_crs }
+    loading
   },
-  profile: {
-    profile,
-    loading: { ld_pf }
-  },
-  getCoursesApproved,
-  getCurrentProfile
+  getCoursesApproved
 }) => {
   useEffect(() => {
-    getCurrentProfile()
     getCoursesApproved()
-  }, [getCoursesApproved, getCurrentProfile])
+  }, [getCoursesApproved])
+
   const { t } = useTranslation()
 
-  return ld_crs || ld_pf || courses === null || profile === null ? (
+  return loading || courses === null ? (
     <Spinner name="cube-grid" color="aqua" />
   ) : (
     <React.Fragment>
@@ -39,7 +33,7 @@ const CoursesPage = ({
           <Typography className={s.index} variant="h2">
             {t('courses')}
           </Typography>
-          <CourseList courses={courses} profile={profile} />
+          <CourseList courses={courses} />
         </div>
       </section>
     </React.Fragment>
@@ -48,17 +42,14 @@ const CoursesPage = ({
 
 CoursesPage.prototype = {
   course: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
   getCoursesApproved: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  course: state.course,
-  profile: state.profile
+  course: state.course
 })
 
 export default connect(mapStateToProps, {
-  getCoursesApproved,
-  getCurrentProfile
+  getCoursesApproved
 })(CoursesPage)

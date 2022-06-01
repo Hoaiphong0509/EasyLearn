@@ -38,7 +38,7 @@ import FeedbackPage from 'pages/FeedbackPage'
 import FeedbackDetail from 'pages/Admin/Feedback/FeedbackDetail/FeedbackDetail'
 import About from 'pages/About'
 import Policy from 'pages/Policy'
-import Security from 'pages/Security'
+import Privacy from 'pages/Privacy'
 
 const Routes = () => {
   return (
@@ -146,9 +146,9 @@ const Routes = () => {
         <Route exact path="/policy" layout={DefaultLayout} component={Policy} />
         <Route
           exact
-          path="/security"
+          path="/privacy"
           layout={DefaultLayout}
-          component={Security}
+          component={Privacy}
         />
         <PrivateRoute
           exact

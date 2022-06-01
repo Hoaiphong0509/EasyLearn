@@ -38,7 +38,7 @@ const Footer = () => {
         <Link onClick={goToTop} className={s.link} to="/feedback">
           Đóng góp/Report
         </Link>
-        <Link onClick={goToTop} className={s.link} to="/security">
+        <Link onClick={goToTop} className={s.link} to="/privacy">
           Bảo mật
         </Link>
       </div>

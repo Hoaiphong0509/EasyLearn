@@ -40,7 +40,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import PropsTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import { LINK_EMBED_YOUTUBE, ROLES } from 'constants/AppConstants'
+import { LINK_EMBED_YOUTUBE, ROLES, TOAST_TYPE } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
 import ConfirmDialog from 'components/ConfirmDialog'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -50,6 +50,7 @@ import {
   cleanUpProfile,
   getCurrentProfile
 } from 'services/redux/actions/profile'
+import { showToast } from 'utils/UIHelper'
 
 const CourseIn4 = ({
   auth: { user },
@@ -95,6 +96,11 @@ const CourseIn4 = ({
   }
 
   const handleAddLearning = async () => {
+    if (!user) {
+      showToast({ message: 'Please Login frist!', type: TOAST_TYPE.WARNING })
+      return
+    }
+
     await getInTouche(_id)
     history.replace(`/learning/${_id}`)
   }
