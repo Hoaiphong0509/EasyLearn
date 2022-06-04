@@ -3,11 +3,9 @@ export const HOME_CONTENT_ROOT_ID = 'home-content-root'
 
 export const LINK_EMBED_YOUTUBE = 'https://www.youtube.com/embed/'
 
-export const COURSE_IMG_DEFAULT =
-  'https://res.cloudinary.com/hoaiphong/image/upload/v1642297083/EasyLearn/Img/Course/course_img_default_ou1mo8.jpg'
+export const COURSE_IMG_DEFAULT = '/assets/course_default_img.png'
 
-export const AVATAR_DEFAULT =
-  'https://res.cloudinary.com/hoaiphong/image/upload/v1639892737/EasyLearn/Img/Avatar/abrr3bvn0t2ogytnvoid.png'
+export const AVATAR_DEFAULT = '/assets/blog_default_img.jpg'
 
 export const ENV = {
   GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,

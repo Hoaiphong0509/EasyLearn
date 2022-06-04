@@ -13,6 +13,9 @@ const Profile = require('../models/Profile')
 const Notify = require('../models/Notify')
 const checkObjectId = require('../middleware/checkObjectId')
 const { CLOUDINARY_PATH_BLOG, BLOG_IMG_DEFAULT } = require('../config')
+const removeImage = require('../utils/removeImage')
+const normalizeFormatImg = require('../utils/normalizeFormatImg')
+const cloudinary = require('cloudinary').v2
 
 // @route    POST api/blog
 // @desc     Create a blog
@@ -41,7 +44,7 @@ router.post(
         },
         title,
         text,
-        img: BLOG_IMG_DEFAULT
+        img: ''
       })
 
       await Profile.findOneAndUpdate(
@@ -77,12 +80,22 @@ router.put(
         848,
         420
       )
+      const blog = await Blog.findById(req.params.id)
+      if (blog && blog.img && blog.img.length > 0) {
+        //https://res.cloudinary.com/hoaiphong/image/upload/v1654316501/EasyLearn/Img/Blog/qjinvaqau12ximlnvltk.jpg
+        const firstTndex = blog.img.lastIndexOf('/EasyLearn')
 
-      const result = await Blog.findByIdAndUpdate(req.params.id, {
-        $set: { img: secure_url }
-      })
+        const format = normalizeFormatImg(blog.img)
+        console.log('format:', format)
+        const lastTndex = blog.img.indexOf(format)
+        const publidId = blog.img.substring(firstTndex + 1, lastTndex)
+        await removeImage(publidId)
+      }
 
-      return res.send(result)
+      blog.img = secure_url
+      await blog.save()
+
+      return res.send(blog)
     } catch (error) {
       console.log('error:', error.message)
       res.send('Something went wrong please try again later..')

@@ -14,6 +14,8 @@ const Profile = require('../models/Profile')
 
 const { CLOUDINARY_PATH_COURSE_IMG, COURSE_IMG_DEFAULT } = require('../config')
 const role = require('../helper/role')
+const removeImage = require('../utils/removeImage')
+const normalizeFormatImg = require('../utils/normalizeFormatImg')
 
 // @route    GET api/course
 // @desc     Get courses
@@ -150,7 +152,7 @@ router.post(
         gains: Array.isArray(gains)
           ? gains
           : gains.split(',').map((gain) => ' ' + gain.trim()),
-        img: COURSE_IMG_DEFAULT,
+        img: '',
         sections: Array.isArray(sections)
           ? sections.map((section) => ({
               name: section.name,
@@ -197,10 +199,21 @@ router.post(
         854,
         480
       )
-      const course = await Course.findByIdAndUpdate(req.params.id, {
-        $set: { img: secure_url }
-      })
-      return res.json(course)
+
+      const course = await Course.findById(req.params.id)
+      if (course && course.img && course.img.length > 0) {
+        const firstTndex = course.img.lastIndexOf('/EasyLearn')
+        const format = normalizeFormatImg(course.img)
+        const lastTndex = course.img.indexOf(format)
+        const publidId = course.img.substring(firstTndex + 1, lastTndex)
+        console.log('publicID', publidId)
+        await removeImage(publidId)
+      }
+
+      course.img = secure_url
+      await course.save()
+
+      return res.send(course)
     } catch (error) {
       console.log('error:', error.message)
       res.send('Something went wrong please try again later..')
