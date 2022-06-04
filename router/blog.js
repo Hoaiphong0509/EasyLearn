@@ -84,9 +84,7 @@ router.put(
       if (blog && blog.img && blog.img.length > 0) {
         //https://res.cloudinary.com/hoaiphong/image/upload/v1654316501/EasyLearn/Img/Blog/qjinvaqau12ximlnvltk.jpg
         const firstTndex = blog.img.lastIndexOf('/EasyLearn')
-
         const format = normalizeFormatImg(blog.img)
-        console.log('format:', format)
         const lastTndex = blog.img.indexOf(format)
         const publidId = blog.img.substring(firstTndex + 1, lastTndex)
         await removeImage(publidId)
