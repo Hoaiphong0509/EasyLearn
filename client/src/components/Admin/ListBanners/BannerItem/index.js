@@ -1,18 +1,10 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import s from './styles.module.scss'
-import cookies from 'js-cookie'
-import { useTranslation } from 'react-i18next'
 
 const BannerItem = (props) => {
   const { banner } = props
-  const { titleVi, titleEn, descVi, descEn, link, color1, color2, img } = banner
-
-  const { t } = useTranslation()
-
-  const currentLanguageCode =
-    (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
-
+  const { _id, titleVi, descVi, link, color1 = '#000', color2 = '#000', img } = banner
   return (
     <Box
       className={s.root}
@@ -27,7 +19,7 @@ const BannerItem = (props) => {
           fontWeight="bold"
           color="var(--white-1)"
         >
-          {currentLanguageCode === 'vi' ? titleVi : titleEn}
+          {titleVi}
         </Typography>
         <Typography
           variant="p"
@@ -35,7 +27,7 @@ const BannerItem = (props) => {
           fontSize="20px"
           color="var(--white-2)"
         >
-          {currentLanguageCode === 'vi' ? descVi : descEn}
+          {descVi}
         </Typography>
         <a
           rel="noreferrer"
@@ -47,11 +39,11 @@ const BannerItem = (props) => {
           <svg>
             <rect x="0" y="0" fill="none" width="100%" height="100%" />
           </svg>
-          {t('view')}
+          Xem
         </a>
       </div>
       <div className={s.image}>
-        <img src={img} alt="discord" />
+        <img src={img} alt={title} />
       </div>
     </Box>
   )

@@ -7,7 +7,6 @@ import s from './styles.module.scss'
 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
 import { getBlogsApproved } from 'services/redux/actions/blog'
 
 const BlogsPage = ({ getBlogsApproved, blog: { blogs } }) => {

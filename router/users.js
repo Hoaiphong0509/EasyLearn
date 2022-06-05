@@ -12,6 +12,7 @@ const Blog = require('../models/Blog')
 const Course = require('../models/Course')
 const Notify = require('../models/Notify')
 const Feedback = require('../models/Feedback')
+const Banner = require('../models/Banner')
 
 // @route  POST api/users/register_creator
 // @desc   Register creator
@@ -127,7 +128,7 @@ router.post('/send_feedback', async (req, res) => {
     const fb = new Feedback({
       author: {
         avatar: avatar ? avatar : '',
-        email: email ? email : 'anonymous',
+        email: email ? email : 'anonymous'
       },
       title,
       content
@@ -135,6 +136,20 @@ router.post('/send_feedback', async (req, res) => {
 
     await fb.save()
     return res.send(fb)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route  POST api/user/get_banners_active
+// @desc   Get all banners active
+// @access Public
+router.get('/get_banners_active', async (req, res) => {
+  try {
+    const banners = await Banner.find()
+    const result = banners.filter((bn) => bn.isActive)
+    return res.send(result)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')

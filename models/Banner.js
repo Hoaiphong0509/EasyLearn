@@ -19,16 +19,22 @@ const BannerSchema = new Schema({
     required: true
   },
   color1: {
-    type: String
+    type: String,
+    required: true
   },
   color2: {
-    type: String
+    type: String,
+    required: true
   },
   img: {
     type: String
   },
   link: {
     type: String,
+    required: true
+  },
+  isActive: {
+    type: Boolean,
     required: true
   },
   date: {

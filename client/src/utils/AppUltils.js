@@ -35,3 +35,7 @@ export const validateSizeFile = (input) => {
   const fileSize = input.files[0].size / 1024 / 1024 // in MiB
   return fileSize > 1 ? true : false
 }
+
+export const validHexColor = (hexColor) => {
+  return /^#([0-9A-F]{3}){1,2}$/i.test(hexColor)
+}

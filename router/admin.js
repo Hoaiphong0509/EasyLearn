@@ -25,9 +25,6 @@ router.post('/add_moderator', authorize(role.Admin), async (req, res) => {
   }
 })
 
-// @route    GET api/admin
-// @desc     Change Banner
-// @access   Private
 
 // @route    GET api/admin
 // @desc     Banned account [optional]

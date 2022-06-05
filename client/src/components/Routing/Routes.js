@@ -39,6 +39,7 @@ import FeedbackDetail from 'pages/Admin/Feedback/FeedbackDetail/FeedbackDetail'
 import About from 'pages/About'
 import Policy from 'pages/Policy'
 import Privacy from 'pages/Privacy'
+import CreateBanner from 'pages/Admin/Banner/CreateBanner'
 
 const Routes = () => {
   return (
@@ -197,6 +198,12 @@ const Routes = () => {
           path="/admin/banner"
           layout={AdminLayout}
           component={Banner}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/banner/create_banner"
+          layout={AdminLayout}
+          component={CreateBanner}
         />
         <PrivateRoute
           exact

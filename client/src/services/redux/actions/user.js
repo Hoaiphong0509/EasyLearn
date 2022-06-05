@@ -1,6 +1,6 @@
 import api from 'utils/api'
 
-import { TOAST_TYPE, USERS } from 'constants/AppConstants'
+import { BANNER, TOAST_TYPE, USERS } from 'constants/AppConstants'
 import { loadUser } from './auth'
 import { showToast } from 'utils/UIHelper'
 
@@ -82,7 +82,7 @@ export const search = (keyword) => async (dispatch) => {
   }
 }
 
-export const sendFeedback = async (formData)  => {
+export const sendFeedback = async (formData) => {
   try {
     await api.post(`/users/send_feedback`, formData)
     showToast({
@@ -92,7 +92,21 @@ export const sendFeedback = async (formData)  => {
   } catch (err) {
     showToast({
       message: 'Failture!',
-      type: TOAST_TYPE.ERROR  
+      type: TOAST_TYPE.ERROR
+    })
+  }
+}
+
+export const getBannersActive = () => async (dispatch) => {
+  try {
+    const res = await api.get(`/users/get_banners_active`)
+    dispatch({
+      type: BANNER.GET_BANNERS,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: BANNER.BANNER_ERROR
     })
   }
 }

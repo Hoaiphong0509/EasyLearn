@@ -82,7 +82,6 @@ router.put(
       )
       const blog = await Blog.findById(req.params.id)
       if (blog && blog.img && blog.img.length > 0) {
-        //https://res.cloudinary.com/hoaiphong/image/upload/v1654316501/EasyLearn/Img/Blog/qjinvaqau12ximlnvltk.jpg
         const firstTndex = blog.img.lastIndexOf('/EasyLearn')
         const format = normalizeFormatImg(blog.img)
         const lastTndex = blog.img.indexOf(format)

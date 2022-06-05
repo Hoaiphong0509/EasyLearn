@@ -6,6 +6,7 @@ import blog from './blog'
 import user from './user'
 import notify from './notify'
 import feedback from './feedback'
+import banner from './banner'
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   blog,
   user,
   notify,
-  feedback
+  feedback,
+  banner
 })

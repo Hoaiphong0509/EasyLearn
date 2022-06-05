@@ -6,6 +6,7 @@
   "blogs": "Blogs",
   "save": "Save",
   "delete": "Delete",
+  "view": "View",
   "modal": {
     "warnTitle": "Warning",
     "unSaved": "Are you sure want to discard changes?",
@@ -32,23 +33,6 @@
     "msgErrPassword": "Please enter a password at least 8 character and contain At least one uppercase, one lower case, one digit.",
     "invalidPassword": "Invalid Password",
     "invalidConfirmPassword": "Confirm Password does not match"
-  },
-  "banner": {
-    "discord": {
-      "title": "Easy Learn in Discord",
-      "desc": "Join the Lonely Zoo discord server to learn & have fun together. Besides, make new friends and exchange, exchange with each other",
-      "join": "Join"
-    },
-    "facebook": {
-      "title": "Easy Learn on Facebook",
-      "desc": "Follow EasyLearn & Lonely Zoo's facebook page for more interesting information about learning & entertainment",
-      "join": "Join"
-    },
-    "youtube": {
-      "title": "Easy Learn with Youtube",
-      "desc": "Subscribe to Easy Learn's Youtube channel to follow the courses posted on it",
-      "sub": "Subscribe"
-    }
   },
   "header": {
     "search": "Search",
@@ -98,7 +82,7 @@
       "phone": "Phone number",
       "location": "Location",
       "invalidPhone": "Invalid phone number",
-      "getInTouch": " Get In Touch",
+      "getInTouch": "Enroll",
       "registerSuccess": "Register success 💝"
     },
     "avatar": {
