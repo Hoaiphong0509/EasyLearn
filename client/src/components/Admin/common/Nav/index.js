@@ -14,7 +14,7 @@ import s from './styles.module.scss'
 
 const items = [
   {
-    href: '/admin',
+    href: '/admin/dashboard',
     icon: <ChartBarIcon fontSize="small" />,
     title: 'Dashboard'
   },
@@ -61,7 +61,7 @@ const Nav = ({ auth: { user } }) => {
       }}
     >
       <div>
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3, textAlign: 'center' }}>
           <Link to="/admin">
             <img src="/logoSymbol.png" />
           </Link>

@@ -70,7 +70,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
   const authLinks = (
     <>
       {user && user.roles.includes(ROLES.ADMIN || ROLES.MODERATOR) ? (
-        <Link to="/admin">
+        <Link to="/admin/dashboard">
           <Tooltip title="Admin Panel">
             <IconButton>
               <AdminPanelSettingsIcon color="warning" sx={{ fontSize: 32 }} />

@@ -153,7 +153,7 @@ const Routes = () => {
         />
         <PrivateRoute
           exact
-          path="/admin"
+          path="/admin/dashboard"
           layout={AdminLayout}
           component={Dashboard}
         />

@@ -6,7 +6,7 @@ import { Box, Button, ListItem } from '@mui/material'
 const NavItem = (props) => {
   const { href, icon, title, ...others } = props
   const location = useLocation()
-  const active = href ? location.pathname === href : false
+  const active = href ? location.pathname.includes(href) : false
 
   return (
     <ListItem
