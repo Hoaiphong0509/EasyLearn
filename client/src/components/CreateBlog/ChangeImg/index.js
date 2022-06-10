@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import { validateSizeFile } from 'utils/AppUltils'
 import { showToast } from 'utils/UIHelper'
-import { TOAST_TYPE } from 'constants/AppConstants'
+import { BLOG_IMG_DEFAULT, TOAST_TYPE } from 'constants/AppConstants'
 
 const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
   const [selectedImage, setSelectedImage] = useState()
@@ -51,7 +51,7 @@ const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
         <form className={s.form}>
           <Box className={s.imgCourse}>
             <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : img}
+              src={selectedImage ? URL.createObjectURL(selectedImage) : (img.length > 0 ? img : BLOG_IMG_DEFAULT)}
               alt="img"
             />
           </Box>

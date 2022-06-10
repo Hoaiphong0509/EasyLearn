@@ -142,7 +142,8 @@ const BlogIn4 = ({
       </Drawer>
       {user &&
       (user.roles.includes(ROLES.ADMIN) ||
-        user.roles.includes(ROLES.MODERATOR)) ? (
+        user.roles.includes(ROLES.MODERATOR)) &&
+      user._id !== userBlog ? (
         <Badge className={s.icon} color="primary">
           {status === 'approved' ? (
             <Tooltip title="Approved">
@@ -161,7 +162,6 @@ const BlogIn4 = ({
       ) : null}
       {user && user._id === userBlog ? (
         <>
-          {' '}
           <Badge className={s.icon} color="primary">
             {status === 'approved' ? (
               <Tooltip title="Approved">

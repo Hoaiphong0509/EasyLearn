@@ -51,7 +51,7 @@ const BannerItem = (props) => {
         </a>
       </div>
       <div className={s.image}>
-        <img src={img} alt="discord" />
+        <img src={img} alt={titleVi} />
       </div>
     </Box>
   )

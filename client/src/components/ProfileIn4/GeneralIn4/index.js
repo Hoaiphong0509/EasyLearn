@@ -62,7 +62,7 @@ const GeneralIn4 = ({
               {t('profile.exp')}
             </Typography>
             {experience.map((exp) => (
-              <Card key={exp._id} className={s.card}>
+              <Card sx={{marginBottom: '10px'}} key={exp._id} className={s.card}>
                 <CardContent className={s.cardContent}>
                   <Typography className={s.title} variant="h5">
                     {exp.title}
@@ -100,7 +100,7 @@ const GeneralIn4 = ({
               {t('profile.edu')}
             </Typography>
             {education.map((edu) => (
-              <Card className={s.card} key={edu._id}>
+              <Card sx={{marginBottom: '10px'}} className={s.card} key={edu._id}>
                 <CardContent className={s.cardContent}>
                   <Typography className={s.school} variant="h5">
                     {edu.school}

@@ -182,7 +182,8 @@ const Study = ({
                 {user && user._id === userCourse ? owner : null}
                 {user &&
                 (user.roles.includes(ROLES.ADMIN) ||
-                  user.roles.includes(ROLES.MODERATOR))
+                  user.roles.includes(ROLES.MODERATOR)) &&
+                user._id !== userCourse
                   ? moderatorInteraction
                   : null}
               </Tabs>

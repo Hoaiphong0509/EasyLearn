@@ -15,7 +15,7 @@ import FormAddModerator from 'components/Admin/Moderator/FormAddModerator'
 import s from './styles.module.scss'
 import { ROLES } from 'constants/AppConstants'
 
-const Moderator = ({ getUsers, user: { users, loading } }) => {
+const Moderator = ({ auth: { user }, getUsers, user: { users, loading } }) => {
   const [columnDefs, setColumnDefs] = useState([])
   const [rowDataModeratorRef, setRowDataModeratorRef] = useState([])
 
@@ -65,9 +65,9 @@ const Moderator = ({ getUsers, user: { users, loading } }) => {
   return (
     <Box className={s.root}>
       <Typography className={s.title} variant="h3">
-        Add Moderator into the system
+        Người kiểm duyệt
       </Typography>
-      <FormAddModerator />
+      {user && user.roles.includes(ROLES.ADMIN) ? <FormAddModerator /> : null}
       {loading || users === null ? (
         <Spinner name="cube-grid" color="aqua" />
       ) : (
@@ -84,11 +84,13 @@ const Moderator = ({ getUsers, user: { users, loading } }) => {
 
 Moderator.prototype = {
   getUsers: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  auth: state.auth,
 })
 
 export default connect(mapStateToProps, { getUsers })(Moderator)

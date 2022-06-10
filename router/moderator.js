@@ -13,13 +13,14 @@ const checkObjectId = require('../middleware/checkObjectId')
 const Feedback = require('../models/Feedback')
 const normalizeFormatImg = require('../utils/normalizeFormatImg')
 const { CLOUDINARY_PATH_BANNER } = require('../config')
+const removeImage = require('../utils/removeImage')
 
 // @route    GET api/moderator/get_users
 // @desc     View List Users
 // @access   Private
 router.get(
   '/get_users',
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const users = await User.find()
@@ -37,7 +38,7 @@ router.get(
 router.post(
   '/approve_course/:id_course',
   checkObjectId('id_course'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const course = await Course.findById(req.params.id_course)
@@ -69,7 +70,7 @@ router.post(
 router.post(
   '/unapprove_course/:id_course',
   checkObjectId('id_course'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const course = await Course.findById(req.params.id_course)
@@ -101,7 +102,7 @@ router.post(
 router.post(
   '/approve_blog/:id_blog',
   checkObjectId('id_blog'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const blog = await Blog.findById(req.params.id_blog)
@@ -133,7 +134,7 @@ router.post(
 router.post(
   '/unapprove_blog/:id_blog',
   checkObjectId('id_blog'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const blog = await Blog.findById(req.params.id_blog)
@@ -163,7 +164,7 @@ router.post(
 // @access   Private
 router.get(
   '/get_feedback',
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const feedback = await Feedback.find()
@@ -181,7 +182,7 @@ router.get(
 router.get(
   '/get_feedback/:id',
   checkObjectId('id'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const feedback = await Feedback.findById(req.params.id)
@@ -199,7 +200,7 @@ router.get(
 router.delete(
   '/get_feedback/:id',
   checkObjectId('id'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const feedback = await Feedback.findById(req.params.id)
@@ -217,7 +218,7 @@ router.delete(
 // @access   Private
 router.get(
   '/banners',
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const banners = await Banner.find()
@@ -234,11 +235,11 @@ router.get(
 // @access   Moderator Admin
 router.post(
   '/banners',
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     const { titleVi, titleEn, descVi, descEn, link, color1, color2 } = req.body
-    console.log("color1", color1);
-    console.log("color2", color2);
+    console.log('color1', color1)
+    console.log('color2', color2)
     try {
       const newBanner = new Banner({
         titleVi,
@@ -265,7 +266,7 @@ router.post(
 // @access Private
 router.put(
   '/change_img_banner/:id',
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   checkObjectId('id'),
   multerSingle.single('img'),
   async (req, res) => {
@@ -281,7 +282,6 @@ router.put(
       const banner = await Banner.findById(req.params.id)
 
       if (banner && banner.img && banner.img.length > 0) {
-        console.log('running here')
         const firstTndex = banner.img.lastIndexOf('/EasyLearn')
         const format = normalizeFormatImg(banner.img)
         const lastTndex = banner.img.indexOf(format)
@@ -306,7 +306,7 @@ router.put(
 router.put(
   '/banners/toggle_active/:id',
   checkObjectId('id'),
-  authorize(role.Admin, role.Moderator),
+  authorize(role.Moderator),
   async (req, res) => {
     try {
       const banner = await Banner.findById(req.params.id)
@@ -330,6 +330,13 @@ router.delete(
   async (req, res) => {
     try {
       const banner = await Banner.findById(req.params.id)
+      if (banner.img && banner.img.length > 0) {
+        const firstTndex = banner.img.lastIndexOf('/EasyLearn')
+        const format = normalizeFormatImg(banner.img)
+        const lastTndex = banner.img.indexOf(format)
+        const publidId = banner.img.substring(firstTndex + 1, lastTndex)
+        await removeImage(publidId)
+      }
       await banner.remove()
       res.json({ msg: 'Banner removed' })
     } catch (error) {

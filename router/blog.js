@@ -231,6 +231,13 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
     if (blog.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' })
     }
+    if (blog.img && blog.img.length > 0) {
+      const firstTndex = blog.img.lastIndexOf('/EasyLearn')
+      const format = normalizeFormatImg(blog.img)
+      const lastTndex = blog.img.indexOf(format)
+      const publidId = blog.img.substring(firstTndex + 1, lastTndex)
+      await removeImage(publidId)
+    }
 
     await blog.remove()
 

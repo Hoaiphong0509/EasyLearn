@@ -5,7 +5,7 @@ export const LINK_EMBED_YOUTUBE = 'https://www.youtube.com/embed/'
 
 export const COURSE_IMG_DEFAULT = '/assets/course_default_img.png'
 
-export const AVATAR_DEFAULT = '/assets/blog_default_img.jpg'
+export const BLOG_IMG_DEFAULT = '/assets/blog_default_img.jpg'
 
 export const ENV = {
   GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,

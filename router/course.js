@@ -206,7 +206,6 @@ router.post(
         const format = normalizeFormatImg(course.img)
         const lastTndex = course.img.indexOf(format)
         const publidId = course.img.substring(firstTndex + 1, lastTndex)
-        console.log('publicID', publidId)
         await removeImage(publidId)
       }
 
@@ -404,6 +403,13 @@ router.delete(
         return res.status(401).json({ msg: 'User not authorized' })
       }
 
+      if (course.img && course.img.length > 0) {
+        const firstTndex = course.img.lastIndexOf('/EasyLearn')
+        const format = normalizeFormatImg(course.img)
+        const lastTndex = course.img.indexOf(format)
+        const publidId = course.img.substring(firstTndex + 1, lastTndex)
+        await removeImage(publidId)
+      }
       const notify = new Notify({
         user: req.user.id,
         textVi: `Khóa học ${course.title} đã bị xóa.`,
