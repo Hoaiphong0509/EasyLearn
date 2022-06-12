@@ -150,6 +150,11 @@ const Study = ({
       >
         Unapproved
       </Button>
+      <IconButton>
+        <CheckCircleIcon
+          color={`${course.status === 'approved' ? 'success' : 'disabled'}`}
+        />
+      </IconButton>
     </Box>
   )
 

@@ -97,7 +97,6 @@ router.post(
   async (req, res) => {
     try {
       const { keyword } = req.body
-      console.log('keyword', keyword)
       const courses = await Course.find()
       const blogs = await Blog.find()
 
@@ -117,7 +116,6 @@ router.post(
       if (result.courses.length == 0 && result.blogs.length == 0)
         return res.status(400).json({ msg: "Couldn't find anything" })
 
-      console.log(result)
       res.send(result)
     } catch (error) {
       console.error(error.message)

@@ -1,5 +1,5 @@
 import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
 
@@ -13,14 +13,18 @@ import { Link } from 'react-router-dom'
 import { BLOG_IMG_DEFAULT } from 'constants/AppConstants'
 
 const BlogItem = ({
+  auth: { user },
   blog,
   addLike,
   removeLike,
   cleanUpBlog,
   cleanUpProfile
 }) => {
-  const { _id, user, title, author, likes, img } = blog
-
+  const { _id, user: userBlog, title, author, likes, img } = blog
+  const [numLikes, setNumLikes] = useState(likes.length)
+  const [isLiked, setIsLiked] = useState(
+    likes.includes((l) => l.user === user.id)
+  )
   const imgBlg = `url("${img && img.length > 0 ? img : BLOG_IMG_DEFAULT}")`
 
   return (
@@ -39,7 +43,7 @@ const BlogItem = ({
           </Box>
         </Link>
         <div className={s.footer}>
-          <Link to={`/profile/${user}`} onClick={cleanUpProfile}>
+          <Link to={`/profile/${userBlog}`} onClick={cleanUpProfile}>
             <div className={s.in4}>
               <Avatar src={author.avatar} alt={author.name} />
               <Typography className={s.creator} variant="p">
@@ -48,22 +52,29 @@ const BlogItem = ({
             </div>
           </Link>
           <div className={s.rate}>
-            <IconButton
-              onClick={() => removeLike(_id)}
-              className={s.btnLike}
-              color="default"
-              component="span"
-            >
-              <HeartBrokenIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => addLike(_id)}
-              className={s.btnLike}
-              color="error"
-              component="span"
-            >
-              <FavoriteIcon />
-            </IconButton>
+            {!isLiked ? (
+              <IconButton
+                disabled={!user}
+                onClick={() => {
+                  addLike(_id)
+                  setIsLiked(true)
+                  setNumLikes(++likes.length)
+                }}
+              >
+                <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
+              </IconButton>
+            ) : (
+              <IconButton
+                disabled={!user}
+                onClick={() => {
+                  removeLike(_id)
+                  setIsLiked(false)
+                  setNumLikes(--likes.length)
+                }}
+              >
+                <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
+              </IconButton>
+            )}
             <Typography className={s.numberLikes} variant="p">
               {likes && likes.length > 0 ? likes.length : '0'}
             </Typography>
@@ -78,10 +89,15 @@ BlogItem.prototype = {
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   cleanUpBlog: PropTypes.func.isRequired,
-  cleanUpProfile: PropTypes.func.isRequired
+  cleanUpProfile: PropTypes.func.isRequired,
+  auth: PropTypes.object
 }
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, {
   addLike,
   removeLike,
   cleanUpBlog,

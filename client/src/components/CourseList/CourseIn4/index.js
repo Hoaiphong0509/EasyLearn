@@ -82,7 +82,8 @@ const CourseIn4 = ({
     sections,
     gains,
     punchLike,
-    students
+    students,
+    status
   } = course
 
   const [checked, setChecked] = useState(true)
@@ -151,6 +152,11 @@ const CourseIn4 = ({
       >
         Unapproved
       </Button>
+      <IconButton>
+        <CheckCircleIcon
+          color={`${status === 'approved' ? 'success' : 'disabled'}`}
+        />
+      </IconButton>
     </Box>
   )
 
