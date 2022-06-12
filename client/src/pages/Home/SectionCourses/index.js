@@ -14,11 +14,21 @@ const SectionCourses = ({
     getCoursesApproved()
   }, [getCoursesApproved])
 
+  const tempCrs =
+    courses &&
+    courses.sort(function (a, b) {
+      const keyA = a.students.length,
+        keyB = b.students.length
+      if (keyA < keyB) return 1
+      if (keyA > keyB) return -1
+      return 0
+    })
+
   return loading || courses === null ? (
     <Spinner name="cube-grid" color="aqua" />
   ) : (
     <React.Fragment>
-      <CourseList courses={courses} />
+      <CourseList courses={tempCrs.slice(0, 3)} />
     </React.Fragment>
   )
 }

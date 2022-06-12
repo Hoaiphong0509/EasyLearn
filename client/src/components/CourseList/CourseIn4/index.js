@@ -306,7 +306,7 @@ const CourseIn4 = ({
                 </ListItemIcon>
                 <ListItemText>
                   <Typography variant="p">
-                    {sections.length} sections
+                    {sections.length} Sections
                   </Typography>
                 </ListItemText>
               </ListItem>
@@ -319,8 +319,8 @@ const CourseIn4 = ({
                     {sections.reduce(
                       (previous, current) => previous + current.videos.length,
                       0
-                    )}
-                    videos
+                    )}{' '}
+                    Videos
                   </Typography>
                 </ListItemText>
               </ListItem>

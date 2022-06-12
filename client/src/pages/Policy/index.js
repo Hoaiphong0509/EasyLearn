@@ -23,7 +23,7 @@ const Policy = () => {
           duyệt.
         </p>
         <p>
-          ✔ Hoạt dộng giao dịch mua khóa học trên EasyLearn được thực hiện dựa
+          ✔ Hoạt dộng đăng tải khóa học hay bài blog trên EasyLearn được thực hiện dựa
           trên nguyên tắc tự do, tự nguyện, bình đẳng, tôn trọng quyền và lợi
           ích hợp pháp của các bên tham gia, không vi phạm với qui định của Pháp
           luật và qui định của EasyLearn.
@@ -36,7 +36,7 @@ const Policy = () => {
         </p>
         <p>
           ✔ Đối tác và người học đăng ký tài khoản và sử dụng dịch vụ trên
-          website của EasyLearn đã đồng ý với các đièu khoản hoạt động, chịu
+          website của EasyLearn đã đồng ý với các điều khoản hoạt động, chịu
           trách nhiệm pháp lý với hành vi của mình và cam kết thực hiện mọi quy
           định liên quan
         </p>

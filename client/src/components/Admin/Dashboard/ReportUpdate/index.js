@@ -39,8 +39,7 @@ const ReportUpdate = (props) => {
 
     fetchData()
   }, [])
-
-  console.log('commits', commits)
+  
   return loading || commits === null ? (
     <Spinner name="cube-grid" color="aqua" />
   ) : (

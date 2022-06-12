@@ -7,7 +7,7 @@ import s from './styles.module.scss'
 
 const ProfileIn4 = ({ profile, courses, blogs }) => {
   const { knowAs, skills, bio, experience, education, social, user } = profile
-console.log("profile:", profile);
+
   return (
     <Box className={s.root}>
       <Box className={s.container}>
