@@ -4,8 +4,10 @@ import logoZoo from 'assets/img/Zoologo.png'
 import facebook from 'assets/img/fb.png'
 import youtube from 'assets/img/youtube.png'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Autoplay } from 'swiper'
 import 'swiper/css/bundle'
-import { Navigation } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/autoplay'
 import { useTranslation } from 'react-i18next'
 
 import PropTypes from 'prop-types'
@@ -70,8 +72,11 @@ const CarouselBanner = ({ banner: { banners }, getBannersActive }) => {
     <React.Fragment>
       <Box>
         <Swiper
+          autoplay={{
+            delay: 5000
+          }}
           navigation={true}
-          modules={[Navigation]}
+          modules={[Autoplay, Navigation]}
           style={{ borderRadius: '20px', marginTop: ' 20px' }}
           className="mySwiper"
         >
