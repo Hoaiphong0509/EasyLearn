@@ -103,12 +103,12 @@ router.post(
       const result = {
         courses: courses.filter(
           (c) =>
-            c.title.toLowerCase().includes(keyword.toLowerCase()) &&
+            c.title.toLowerCase().startsWith(keyword.toLowerCase()) &&
             c.status === 'approved'
         ),
         blogs: blogs.filter(
           (b) =>
-            b.title.toLowerCase().includes(keyword.toLowerCase()) &&
+            b.title.toLowerCase().startsWith(keyword.toLowerCase()) &&
             b.status === 'approved'
         )
       }

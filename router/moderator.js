@@ -300,7 +300,7 @@ router.delete(
     try {
       const feedback = await Feedback.findById(req.params.id)
       await feedback.remove()
-      es.json({ msg: 'Feedback removed' })
+      res.json({ msg: 'Feedback removed' })
     } catch (err) {
       console.error(err.message)
       res.status(500).send('Server Error')

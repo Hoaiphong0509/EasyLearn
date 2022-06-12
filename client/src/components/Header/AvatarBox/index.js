@@ -91,25 +91,35 @@ const AvatarBox = ({ logout, user, cleanUpBlog, cleanUpCourse }) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleProfile}>{t('header.profile')}</MenuItem>
-        <MenuItem onClick={handleStuff}>{t('header.myStuff')}</MenuItem>
-        <Divider />
-        {user && user.roles.includes(ROLES.CREATOR) ? (
-          <MenuItem onClick={handleCourse}>{t('header.createCourse')}</MenuItem>
-        ) : null}
-        <MenuItem onClick={handleCreateBlog}>{t('header.createBlog')}</MenuItem>
-        <Divider />
-        <MenuItem
-          onClick={() => {
-            history.replace('/')
-            logout()
+        <Box
+          sx={{
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
           }}
         >
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          {t('header.logout')}
-        </MenuItem>
+          <MenuItem onClick={handleProfile}>{t('header.profile')}</MenuItem>
+          <MenuItem onClick={handleStuff}>{t('header.myStuff')}</MenuItem>
+          <Divider />
+          {user && user.roles.includes(ROLES.CREATOR) ? (
+            <MenuItem onClick={handleCourse}>
+              {t('header.createCourse')}
+            </MenuItem>
+          ) : null}
+          <MenuItem onClick={handleCreateBlog}>
+            {t('header.createBlog')}
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={() => {
+              history.replace('/')
+              logout()
+            }}
+          >
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            {t('header.logout')}
+          </MenuItem>
+        </Box>
       </Menu>
     </React.Fragment>
   )

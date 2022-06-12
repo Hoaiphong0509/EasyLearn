@@ -42,6 +42,12 @@ const userReducer = (state = initialState, action) => {
         user: null,
         loading: false
       }
+    case USERS.CLEAN_SEARCH_RESULT:
+      return {
+        ...state,
+        searchResult: null,
+        loading: false
+      }
     case USERS.CLEAN:
       return {
         ...state,

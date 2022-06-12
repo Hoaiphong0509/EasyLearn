@@ -74,6 +74,9 @@ export const registerCreator = (t, formData) => async (dispatch) => {
 
 export const search = (keyword) => async (dispatch) => {
   try {
+    dispatch({
+      type: USERS.CLEAN_SEARCH_RESULT
+    })
     const res = await api.post(`/users/search`, keyword)
 
     dispatch({

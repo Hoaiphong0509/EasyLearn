@@ -88,6 +88,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
   const guestLinks = (
     <>
       <GoogleLogin
+        className="btn_google_login"
         clientId={ENV.GOOGLE_CLIENT_ID}
         buttonText={t('auth.googleLogin')}
         redirectUri="postmessage"

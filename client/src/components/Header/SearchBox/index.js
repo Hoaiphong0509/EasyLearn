@@ -81,87 +81,93 @@ const SearchBox = ({ search, searchResult }) => {
           anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
           sx={{ marginTop: '15px' }}
         >
-          <Box className={s.boxList} sx={{ padding: '10px', width: '650px' }}>
-            <MenuList>
-              {searchResult &&
-                searchResult.courses.length > 0 &&
-                searchResult.courses.map((course) => (
-                  <Box key={course._id}>
-                    <Typography
-                      sx={{
-                        color: 'var(--dark-blue)',
-                        fontWeight: 'bold',
-                        marginRight: '10px'
-                      }}
-                      variant="h4"
-                    >
-                      {t('courses')}
-                    </Typography>
-                    <Link to={`/courses/course_detail/${course._id}`}>
-                      <MenuItem sx={{ marginBottom: '20px' }}>
-                        <Avatar
-                          src={course.img}
-                          sx={{
-                            width: 64,
-                            height: 64,
-                            marginRight: '10px'
-                          }}
-                        />
-                        <Typography
-                          sx={{
-                            color: 'var(--dark-blue)',
-                            fontWeight: 'bold'
-                          }}
-                          variant="h5"
-                        >
-                          {course.title}
-                        </Typography>
-                      </MenuItem>
-                    </Link>
-                  </Box>
-                ))}
-            </MenuList>
-            <Divider />
-            <MenuList>
-              {resultSearch &&
-                resultSearch.blogs.length > 0 &&
-                resultSearch.blogs.map((blog) => (
-                  <Box key={blog._id}>
-                    <Typography
-                      sx={{
-                        color: 'var(--dark-blue)',
-                        fontWeight: 'bold',
-                        marginRight: '10px'
-                      }}
-                      variant="h4"
-                    >
-                      {t('blogs')}
-                    </Typography>
-                    <Link to={`/blogs/blog_detail/${blog._id}`}>
-                      <MenuItem sx={{ marginBottom: '20px' }}>
-                        <Avatar
-                          sx={{
-                            width: 64,
-                            height: 64,
-                            marginRight: '10px'
-                          }}
-                          src={blog.author.avatar}
-                        />
-                        <Typography
-                          sx={{
-                            color: 'var(--dark-blue)',
-                            fontWeight: 'bold'
-                          }}
-                          variant="h5"
-                        >
-                          {blog.title}
-                        </Typography>
-                      </MenuItem>
-                    </Link>
-                  </Box>
-                ))}
-            </MenuList>
-          </Box>
+          {searchResult && searchResult.courses.length > 0 ? (
+            <Box className={s.boxList} sx={{ padding: '10px', width: '650px' }}>
+              <Typography
+                sx={{
+                  color: 'var(--dark-blue)',
+                  fontWeight: 'bold',
+                  marginRight: '10px'
+                }}
+                variant="h4"
+              >
+                {t('courses')}
+              </Typography>
+              <MenuList>
+                {searchResult &&
+                  searchResult.courses.length > 0 &&
+                  searchResult.courses.map((course) => (
+                    <Box key={course._id}>
+                      <Link to={`/courses/course_detail/${course._id}`}>
+                        <MenuItem sx={{ marginBottom: '20px' }}>
+                          <Avatar
+                            src={course.img}
+                            sx={{
+                              width: 64,
+                              height: 64,
+                              marginRight: '10px'
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              color: 'var(--dark-blue)',
+                              fontWeight: 'bold'
+                            }}
+                            variant="h5"
+                          >
+                            {course.title}
+                          </Typography>
+                        </MenuItem>
+                      </Link>
+                    </Box>
+                  ))}
+              </MenuList>
+              <Divider />
+              <Typography
+                sx={{
+                  color: 'var(--dark-blue)',
+                  fontWeight: 'bold',
+                  marginRight: '10px'
+                }}
+                variant="h4"
+              >
+                {t('blogs')}
+              </Typography>
+              <MenuList>
+                {resultSearch &&
+                  resultSearch.blogs.length > 0 &&
+                  resultSearch.blogs.map((blog) => (
+                    <Box key={blog._id}>
+                      <Link to={`/blogs/blog_detail/${blog._id}`}>
+                        <MenuItem sx={{ marginBottom: '20px' }}>
+                          <Avatar
+                            sx={{
+                              width: 64,
+                              height: 64,
+                              marginRight: '10px'
+                            }}
+                            src={blog.author.avatar}
+                          />
+                          <Typography
+                            sx={{
+                              color: 'var(--dark-blue)',
+                              fontWeight: 'bold'
+                            }}
+                            variant="h5"
+                          >
+                            {blog.title}
+                          </Typography>
+                        </MenuItem>
+                      </Link>
+                    </Box>
+                  ))}
+              </MenuList>
+            </Box>
+          ) : (
+            <Box className={s.boxList} sx={{ padding: '10px', width: '650px' }}>
+              <Typography>Không tìm thấy thông tin</Typography>
+            </Box>
+          )}
         </Menu>
       </Box>
     </React.Fragment>

@@ -44,6 +44,10 @@ code {
     monospace;
 }
 
+.btn_google_login {
+  width: 250px !important;
+}
+
 .swiper {
   font-size: 22px !important;
   width: 100%;

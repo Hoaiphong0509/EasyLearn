@@ -11,8 +11,6 @@ import {
   Tooltip
 } from '@mui/material'
 
-import { Bell as BellIcon } from 'assets/icons/bell'
-import { UserCircle as UserCircleIcon } from 'assets/icons/user-circle'
 import HomeIcon from '@mui/icons-material/Home'
 
 import s from './styles.module.scss'
@@ -22,6 +20,7 @@ import LanguageSwitch from 'components/Header/LanguageSwitch'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
+import AvatarBox from 'components/Header/AvatarBox'
 
 const languages = [
   {
@@ -41,7 +40,7 @@ const Header = ({ auth: { user } }) => {
     (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode)
   const { t } = useTranslation()
-  
+
   useEffect(() => {
     document.body.dir = currentLanguage.dir || 'ltr'
   }, [currentLanguage, t])
@@ -84,27 +83,7 @@ const Header = ({ auth: { user } }) => {
           </Tooltip>
         </Link>
         <NotifyBox />
-        {user ? (
-          <Avatar
-            sx={{
-              height: 40,
-              width: 40,
-              ml: 1
-            }}
-            src={user.avatar}
-          />
-        ) : (
-          <Avatar
-            sx={{
-              height: 40,
-              width: 40,
-              ml: 1
-            }}
-            src="/static/images/avatars/avatar_1.png"
-          >
-            <UserCircleIcon fontSize="small" />
-          </Avatar>
-        )}
+        {user && <AvatarBox user={user} />}
       </Box>
     </Box>
   )

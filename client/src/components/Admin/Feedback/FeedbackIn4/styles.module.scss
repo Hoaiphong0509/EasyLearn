@@ -3,10 +3,12 @@
   margin-top: 50px;
   justify-content: space-around;
 
+
   & .feedback {
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 40px;
+    width: 50%;
 
     & .title {
       margin-bottom: 15px;
