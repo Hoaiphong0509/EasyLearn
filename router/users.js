@@ -27,7 +27,7 @@ router.post('/register_creator', authorize(), async (req, res) => {
       author: {
         email: user.email,
         name: user.name,
-        avatar: user.avatar,
+        avatar: user.avatar
       },
       content
     })
@@ -97,19 +97,20 @@ router.post(
   async (req, res) => {
     try {
       const { keyword } = req.body
+      console.log('keyword', keyword)
       const courses = await Course.find()
       const blogs = await Blog.find()
 
       const result = {
-        courses: courses.filter((c) =>
-          c.title
-            .toLowerCase()
-            .includes(keyword.toLowerCase() && c.status === 'approved')
+        courses: courses.filter(
+          (c) =>
+            c.title.toLowerCase().includes(keyword.toLowerCase()) &&
+            c.status === 'approved'
         ),
-        blogs: blogs.filter((b) =>
-          b.title
-            .toLowerCase()
-            .includes(keyword.toLowerCase() && b.status === 'approved')
+        blogs: blogs.filter(
+          (b) =>
+            b.title.toLowerCase().includes(keyword.toLowerCase()) &&
+            b.status === 'approved'
         )
       }
 

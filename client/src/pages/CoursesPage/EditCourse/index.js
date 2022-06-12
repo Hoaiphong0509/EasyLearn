@@ -78,7 +78,14 @@ const EditCourse = ({
       <Box className={s.root}>
         <form className={s.form} onSubmit={handleSubmit}>
           <FormControl className={s.formControlImg}>
-            <img src={course ? course.img : COURSE_IMG_DEFAULT} alt="img" />
+            <img
+              src={
+                course && course.img.length > 0
+                  ? course.img
+                  : COURSE_IMG_DEFAULT
+              }
+              alt="img"
+            />
           </FormControl>
 
           <FormControl className={s.formControl}>

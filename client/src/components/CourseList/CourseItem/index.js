@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import s from './styles.module.scss'
 import { cleanUpCourse } from 'services/redux/actions/course'
 import { cleanUpProfile } from 'services/redux/actions/profile'
+import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 
 const CourseItem = ({ cleanUpCourse, cleanUpProfile, course }) => {
   const { _id, user, title, img, author } = course
@@ -15,7 +16,7 @@ const CourseItem = ({ cleanUpCourse, cleanUpProfile, course }) => {
       <Box className={s.root}>
         <Link to={`/courses/course_detail/${_id}`} onClick={cleanUpCourse}>
           <div className={s.content}>
-            <img src={img} alt="course_img" />
+            <img src={img && img.length > 0 ? img : COURSE_IMG_DEFAULT} alt="course_img" />
             <Typography className={s.title} variant="h4">
               {title}
             </Typography>

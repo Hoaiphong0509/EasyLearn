@@ -10,6 +10,7 @@ import { cleanUpProfile } from 'services/redux/actions/profile'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { BLOG_IMG_DEFAULT } from 'constants/AppConstants'
 
 const BlogItem = ({
   blog,
@@ -20,7 +21,7 @@ const BlogItem = ({
 }) => {
   const { _id, user, title, author, likes, img } = blog
 
-  const imgBlg = `url("${img}")`
+  const imgBlg = `url("${img && img.length > 0 ? img : BLOG_IMG_DEFAULT}")`
 
   return (
     <React.Fragment>

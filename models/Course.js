@@ -13,7 +13,6 @@ const CourseSchema = new mongoose.Schema(
     },
     img: {
       type: String,
-      required: true,
     },
     author: {
       name: {
