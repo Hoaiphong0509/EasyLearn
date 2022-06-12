@@ -8,6 +8,7 @@ import Class from '@mui/icons-material/Class'
 import Create from '@mui/icons-material/Create'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import FeedbackIcon from '@mui/icons-material/Feedback'
+import SchoolIcon from '@mui/icons-material/School'
 import ImageIcon from '@mui/icons-material/Image'
 import NavItem from 'components/Admin/common/NavItem'
 import s from './styles.module.scss'
@@ -32,6 +33,11 @@ const items = [
     href: '/admin/courses',
     icon: <Class fontSize="small" />,
     title: 'Courses'
+  },
+  {
+    href: '/admin/creator',
+    icon: <SchoolIcon fontSize="small" />,
+    title: 'Creator'
   },
   {
     href: '/admin/moderator',

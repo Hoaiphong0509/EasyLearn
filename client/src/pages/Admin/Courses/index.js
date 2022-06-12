@@ -61,8 +61,8 @@ const Courses = ({ getCourses, course: { courses, loading } }) => {
   const handleGetKeyWord = (keyword) => {
     const temp = courses.filter(
       (course) =>
-        course.title.toLowerCase().includes(keyword) ||
-        course.author.name.toLowerCase().includes(keyword)
+        course.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        course.author.name.toLowerCase().includes(keyword.toLowerCase())
     )
     setRowDataRef(
       temp.map(({ _id, title, author, status, punchLike, ...rest }) => {

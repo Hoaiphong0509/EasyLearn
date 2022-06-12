@@ -40,6 +40,10 @@ import About from 'pages/About'
 import Policy from 'pages/Policy'
 import Privacy from 'pages/Privacy'
 import CreateBanner from 'pages/Admin/Banner/CreateBanner'
+import Creator from 'pages/Admin/Creator'
+import RequestDetail from 'pages/Admin/Creator/RequestDetail'
+import ReportUpdatePage from 'pages/ReportUpdatePage'
+
 
 const Routes = () => {
   return (
@@ -159,6 +163,12 @@ const Routes = () => {
         />
         <PrivateRoute
           exact
+          path="/admin/dashboard/report_commits"
+          layout={AdminLayout}
+          component={ReportUpdatePage}
+        />
+        <PrivateRoute
+          exact
           path="/admin/users"
           layout={AdminLayout}
           component={User}
@@ -186,6 +196,18 @@ const Routes = () => {
           path="/admin/courses"
           layout={AdminLayout}
           component={Courses}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/creator"
+          layout={AdminLayout}
+          component={Creator}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/creator/request_creator/:id"
+          layout={AdminLayout}
+          component={RequestDetail}
         />
         <PrivateRoute
           exact

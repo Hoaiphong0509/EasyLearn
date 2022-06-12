@@ -42,6 +42,16 @@ const userReducer = (state = initialState, action) => {
         user: null,
         loading: false
       }
+    case USERS.CLEAN:
+      return {
+        ...state,
+        user: null,
+        users: [],
+        token: null,
+        searchResult: null,
+        loading: false
+      }
+    case USERS.REGISTER_CREATOR_SUCCESS:
     default:
       return state
   }

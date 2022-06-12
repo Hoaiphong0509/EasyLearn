@@ -96,8 +96,8 @@ const Users = ({ getUsers, user: { users, loading } }) => {
   const handleGetKeyWord = (keyword) => {
     const temp = users.filter(
       (user) =>
-        user.name.toLowerCase().includes(keyword) ||
-        user.email.toLowerCase().includes(keyword)
+        user.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        user.email.toLowerCase().includes(keyword.toLowerCase())
     )
     setRowDataAllRef(
       temp.map(({ name, email, avatar, roles }) => {

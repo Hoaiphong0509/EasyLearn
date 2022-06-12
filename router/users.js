@@ -13,24 +13,27 @@ const Course = require('../models/Course')
 const Notify = require('../models/Notify')
 const Feedback = require('../models/Feedback')
 const Banner = require('../models/Banner')
+const Request = require('../models/Request')
 
 // @route  POST api/users/register_creator
 // @desc   Register creator
 // @access Student
 router.post('/register_creator', authorize(), async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
   try {
-    await User.findOneAndUpdate(
-      { user: req.user.id },
-      { $push: { roles: role.Creator } }
-    )
+    const { content } = req.body
+    const user = await User.findById(req.user.id)
+    const requestRegistor = new Request({
+      user: req.user.id,
+      author: {
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      },
+      content
+    })
 
-    const token = await signJWT(req.user.id)
-
-    res.json({ token })
+    await requestRegistor.save()
+    return res.send({ msg: 'Success' })
   } catch (err) {
     return res.status(500).send('Server Error')
   }
@@ -99,10 +102,14 @@ router.post(
 
       const result = {
         courses: courses.filter((c) =>
-          c.title.toLowerCase().includes(keyword.toLowerCase())
+          c.title
+            .toLowerCase()
+            .includes(keyword.toLowerCase() && c.status === 'approved')
         ),
         blogs: blogs.filter((b) =>
-          b.title.toLowerCase().includes(keyword.toLowerCase())
+          b.title
+            .toLowerCase()
+            .includes(keyword.toLowerCase() && b.status === 'approved')
         )
       }
 
@@ -124,7 +131,6 @@ router.post(
 router.post('/send_feedback', async (req, res) => {
   try {
     const { avatar, email, title, content } = req.body
-    console.log('req.body', req.body)
     const fb = new Feedback({
       author: {
         avatar: avatar ? avatar : '',

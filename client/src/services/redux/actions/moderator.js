@@ -1,6 +1,12 @@
 import api from 'utils/api'
 
-import { BLOGS, COURSES, FEEDBACK, TOAST_TYPE } from 'constants/AppConstants'
+import {
+  BLOGS,
+  COURSES,
+  FEEDBACK,
+  REQUEST,
+  TOAST_TYPE
+} from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
 
 export const approveCourse = (idCourse) => async (dispatch) => {
@@ -99,6 +105,70 @@ export const unApproveBlog = (idBlog) => async (dispatch) => {
   }
 }
 
+export const getRequestCreator = () => async (dispatch) => {
+  try {
+    const res = await api.get('/moderator/get_request_creator')
+
+    dispatch({
+      type: REQUEST.GET_REQUESTS,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: REQUEST.ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
+export const getRequestCreatorDetail = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/moderator/get_request_creator_detail/${id}`)
+
+    dispatch({
+      type: REQUEST.GET_REQUEST,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: REQUEST.ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
+export const acceptRequestCreator = (id) => async (dispatch) => {
+  try {
+    await api.get(`/moderator/accept_request_creator/${id}`)
+
+    dispatch({
+      type: REQUEST.ACCEPT,
+      payload: id
+    })
+  } catch (err) {
+    dispatch({
+      type: REQUEST.ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
+export const dennyRequestCreator = (id) => async (dispatch) => {
+  try {
+    await api.get(`/moderator/denny_request_creator/${id}`)
+
+    dispatch({
+      type: REQUEST.DENNY,
+      payload: id
+    })
+  } catch (err) {
+    dispatch({
+      type: REQUEST.ERROR,
+      payload: { msg: err }
+    })
+  }
+}
+
 export const getListFeedback = () => async (dispatch) => {
   try {
     const res = await api.get(`/moderator/get_feedback`)
@@ -119,7 +189,7 @@ export const getListFeedback = () => async (dispatch) => {
   }
 }
 
-export const getFeedback= (id) => async (dispatch) => {
+export const getFeedback = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/moderator/get_feedback/${id}`)
 
@@ -139,7 +209,7 @@ export const getFeedback= (id) => async (dispatch) => {
   }
 }
 
-export const deleteFeedback= (id) => async (dispatch) => {
+export const deleteFeedback = (id) => async (dispatch) => {
   try {
     await api.delete(`/moderator/get_feedback/${id}`)
 

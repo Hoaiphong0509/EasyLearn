@@ -4,7 +4,8 @@ import {
   BLOGS,
   COURSES,
   PROFILES,
-  TOAST_TYPE
+  TOAST_TYPE,
+  USERS
 } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
 
@@ -48,37 +49,13 @@ export const googleLogin = (idToken) => async (dispatch) => {
   }
 }
 
-export const registerCreator = (t) => async (dispatch) => {
-  try {
-    const res = await api.post('/users/register_creator')
-    dispatch({
-      type: AUTHS.REGISTER_CREATOR_SUCCESS,
-      payload: res.data
-    })
-    showToast({
-      message: t('editProfile.creator.registerSuccess'),
-      type: TOAST_TYPE.SUCCESS
-    })
-    dispatch(loadUser())
-  } catch (error) {
-    console.log({ error })
-
-    if (error) {
-      showToast({
-        message: 'something wrong!',
-        type: TOAST_TYPE.ERROR
-      })
-    }
-
-    dispatch({
-      type: AUTHS.REGISTER_FAIL
-    })
-  }
-}
-
 export const logout = () => async (dispatch) => {
   dispatch({
     type: AUTHS.LOGOUT,
+    payload: null
+  })
+  dispatch({
+    type: USERS.CLEAN,
     payload: null
   })
   dispatch({

@@ -14,17 +14,116 @@ const Feedback = require('../models/Feedback')
 const normalizeFormatImg = require('../utils/normalizeFormatImg')
 const { CLOUDINARY_PATH_BANNER } = require('../config')
 const removeImage = require('../utils/removeImage')
+const Request = require('../models/Request')
+const Profile = require('../models/Profile')
+const { findByIdAndUpdate, findOneAndUpdate } = require('../models/Request')
 
 // @route    GET api/moderator/get_users
 // @desc     View List Users
-// @access   Private
+// @access   Moderator
+router.get('/get_users', authorize(role.Moderator), async (req, res) => {
+  try {
+    const users = await User.find()
+    return res.send(users)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+// @route    GET api/moderator/get_request_creator
+// @desc     View List Request Register Creator
+// @access   Moderator
 router.get(
-  '/get_users',
+  '/get_request_creator',
   authorize(role.Moderator),
   async (req, res) => {
     try {
-      const users = await User.find()
-      return res.send(users)
+      const requestCreators = await Request.find()
+      return res.send(requestCreators)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/get_request_creator_detail
+// @desc     View Request Detail Register Creator
+// @access   Moderator
+router.get(
+  '/get_request_creator_detail/:id',
+  checkObjectId('id'),
+  authorize(role.Moderator),
+  async (req, res) => {
+    try {
+      const requestCreator = await Request.findById(req.params.id)
+      const userId = requestCreator.user._id.toString()
+      const profile = await Profile.findOne({ user: userId })
+      const blogsTemp = await Blog.find()
+      blogsData = blogsTemp.filter((blg) => blg.user._id.toString() === userId)
+
+      return res.send({
+        request: requestCreator,
+        profile,
+        blogs: blogsData
+      })
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/accept_request_creator/:id
+// @desc     Accept Request Register Creator
+// @access   Moderator
+router.get(
+  '/accept_request_creator/:id',
+  checkObjectId('id'),
+  authorize(role.Moderator),
+  async (req, res) => {
+    try {
+      const requestCreator = await Request.findById(req.params.id)
+      const userId = requestCreator.user._id.toString()
+      const email = requestCreator.author.email
+      await User.findOneAndUpdate({ email }, { $push: { roles: role.Creator } })
+      const notify = new Notify({
+        user: req.user.id,
+        textVi: `Quản trị viên đã chấp nhận bạn trở thành cộng tác viên.`,
+        textEn: `The moderator has accepted you as a creator.`,
+        recipient: [{ user: userId }]
+      })
+      await notify.save()
+      await requestCreator.remove()
+      return res.send({ msg: 'Accept success' })
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
+
+// @route    GET api/moderator/denny_request_creator/:id
+// @desc     Denny Request Register Creator
+// @access   Moderator
+router.get(
+  '/denny_request_creator/:id',
+  checkObjectId('id'),
+  authorize(role.Moderator),
+  async (req, res) => {
+    try {
+      const requestCreator = await Request.findById(req.params.id)
+      const userId = requestCreator.user._id.toString()
+      const notify = new Notify({
+        user: req.user.id,
+        textVi: `Quản trị viên đã từ chối bạn trở thành cộng tác viên.`,
+        textEn: `The moderator has denied you as a creator.`,
+        recipient: [{ user: userId }]
+      })
+      await notify.save()
+      await requestCreator.remove()
+      return res.send({ msg: 'Denny success' })
     } catch (err) {
       console.error(err.message)
       res.status(500).send('Server Error')
@@ -34,7 +133,7 @@ router.get(
 
 // @route    GET api/moderator/approve/:id_course
 // @desc     Approve a course
-// @access   Private
+// @access   Moderator
 router.post(
   '/approve_course/:id_course',
   checkObjectId('id_course'),
@@ -66,7 +165,7 @@ router.post(
 
 // @route    GET api/moderator/unapprove/:id_course
 // @desc     Unapprove a course
-// @access   Private
+// @access   Moderator
 router.post(
   '/unapprove_course/:id_course',
   checkObjectId('id_course'),
@@ -98,7 +197,7 @@ router.post(
 
 // @route    GET api/moderator/approve/:id_blog
 // @desc     Approve a blog
-// @access   Private
+// @access   Moderator
 router.post(
   '/approve_blog/:id_blog',
   checkObjectId('id_blog'),
@@ -130,7 +229,7 @@ router.post(
 
 // @route    GET api/moderator/unapprove/:id_course
 // @desc     Unapprove a course
-// @access   Private
+// @access   Moderator
 router.post(
   '/unapprove_blog/:id_blog',
   checkObjectId('id_blog'),
@@ -161,24 +260,20 @@ router.post(
 )
 // @route    GET api/moderator/get_feedback
 // @desc     Get list feedback
-// @access   Private
-router.get(
-  '/get_feedback',
-  authorize(role.Moderator),
-  async (req, res) => {
-    try {
-      const feedback = await Feedback.find()
-      return res.send(feedback)
-    } catch (err) {
-      console.error(err.message)
-      res.status(500).send('Server Error')
-    }
+// @access   Moderator
+router.get('/get_feedback', authorize(role.Moderator), async (req, res) => {
+  try {
+    const feedback = await Feedback.find()
+    return res.send(feedback)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-)
+})
 
 // @route    GET api/moderator/get_feedback/:id
 // @desc     Get  feedback
-// @access   Private
+// @access   Moderator
 router.get(
   '/get_feedback/:id',
   checkObjectId('id'),
@@ -196,7 +291,7 @@ router.get(
 
 // @route    GET api/moderator/get_feedback/:id
 // @desc     Delete Feedback
-// @access   Private
+// @access   Moderator
 router.delete(
   '/get_feedback/:id',
   checkObjectId('id'),
@@ -215,55 +310,47 @@ router.delete(
 
 // @route    GET api/moderator/banners
 // @desc     Get all banners
-// @access   Private
-router.get(
-  '/banners',
-  authorize(role.Moderator),
-  async (req, res) => {
-    try {
-      const banners = await Banner.find()
-      return res.send(banners)
-    } catch (error) {
-      console.log('error:', error.message)
-      res.send('Something went wrong please try again later..')
-    }
+// @access   Moderator
+router.get('/banners', authorize(role.Moderator), async (req, res) => {
+  try {
+    const banners = await Banner.find()
+    return res.send(banners)
+  } catch (error) {
+    console.log('error:', error.message)
+    res.send('Something went wrong please try again later..')
   }
-)
+})
 
 // @route    POST api/moderator/banners
 // @desc     Add Banner
 // @access   Moderator Admin
-router.post(
-  '/banners',
-  authorize(role.Moderator),
-  async (req, res) => {
-    const { titleVi, titleEn, descVi, descEn, link, color1, color2 } = req.body
-    console.log('color1', color1)
-    console.log('color2', color2)
-    try {
-      const newBanner = new Banner({
-        titleVi,
-        titleEn,
-        descVi,
-        descEn,
-        color1,
-        color2,
-        link,
-        isActive: false,
-        img: ''
-      })
-      const banner = await newBanner.save()
-      res.json(banner)
-    } catch (error) {
-      console.log('error:', error.message)
-      res.send('Something went wrong please try again later..')
-    }
+router.post('/banners', authorize(role.Moderator), async (req, res) => {
+  const { titleVi, titleEn, descVi, descEn, link, color1, color2 } = req.body
+  console.log('color1', color1)
+  console.log('color2', color2)
+  try {
+    const newBanner = new Banner({
+      titleVi,
+      titleEn,
+      descVi,
+      descEn,
+      color1,
+      color2,
+      link,
+      isActive: false,
+      img: ''
+    })
+    const banner = await newBanner.save()
+    res.json(banner)
+  } catch (error) {
+    console.log('error:', error.message)
+    res.send('Something went wrong please try again later..')
   }
-)
+})
 
 // @route  POST api/moderator/change_img_banner/:id
 // @desc   Add image for blog
-// @access Private
+// @access Moderator
 router.put(
   '/change_img_banner/:id',
   authorize(role.Moderator),

@@ -53,8 +53,8 @@ const Feedback = ({ getListFeedback, feedback: { feedbacks, loading } }) => {
   const handleGetKeyWord = (keyword) => {
     const temp = feedbacks.filter(
       (fb) =>
-        fb.title.toLowerCase().includes(keyword) ||
-        fb.author.email.toLowerCase().includes(keyword)
+        fb.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        fb.author.email.toLowerCase().includes(keyword.toLowerCase())
     )
     setRowDataRef(
       temp.map(({ _id, title, author, date, ...rest }) => {

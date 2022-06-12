@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  & .container {
+    width: 60%;
+    margin: 30px;
+    display: flex;
+
+    & .in4 {
+      width: 60%;
+    }
+
+    & .gravatar {
+      width: 40%;
+    }
+  }
+}

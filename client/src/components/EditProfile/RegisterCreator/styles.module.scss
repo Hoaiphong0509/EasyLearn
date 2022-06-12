@@ -20,22 +20,4 @@
       }
     }
   }
-
-  & .formControl {
-    display: flex;
-    flex-direction: column;
-
-    & .textField {
-      width: 450px;
-      margin-bottom: 15px;
-    }
-
-    & .btnGetInTouch {
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-  }
 }

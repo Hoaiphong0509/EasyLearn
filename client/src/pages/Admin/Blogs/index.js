@@ -66,8 +66,8 @@ const Blogs = ({ getBlogs, blog: { blogs, loading } }) => {
   const handleGetKeyWord = (keyword) => {
     const temp = blogs.filter(
       (blog) =>
-        blog.title.toLowerCase().includes(keyword) ||
-        blog.author.name.toLowerCase().includes(keyword)
+        blog.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        blog.author.name.toLowerCase().includes(keyword.toLowerCase())
     )
     setRowDataRef(
       temp.map(({ _id, title, author, status, likes, comments, ...rest }) => {

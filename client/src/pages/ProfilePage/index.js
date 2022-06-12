@@ -16,7 +16,6 @@ const ProfilePage = ({
   profile: { profile },
   course: { courses },
   blog: { blogs, loading },
-  user: { user },
   match
 }) => {
   useEffect(() => {
@@ -33,7 +32,6 @@ const ProfilePage = ({
         profile={profile}
         courses={courses}
         blogs={blogs}
-        user={user}
       />
     </React.Fragment>
   )
@@ -52,7 +50,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
   course: state.course,
   blog: state.blog,
-  user: state.user
 })
 
 export default connect(mapStateToProps, {

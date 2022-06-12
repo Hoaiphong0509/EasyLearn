@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { v4 as uuid } from 'uuid'
 import {
@@ -14,115 +15,90 @@ import {
   Tooltip
 } from '@mui/material'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import axios from 'axios'
+import Spinner from 'react-spinkit'
+import { API_GET_COMMITS } from 'constants/AppConstants'
+import moment from 'moment'
+import { Link } from 'react-router-dom'
 
-const orders = [
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
-    amount: 30.5,
-    content: {
-      name: 'Chỉnh sửa lỗi Comment ỏ khoá học'
-    },
-    createdAt: 1555016400000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
-    content: {
-      name: 'Liked và Unlike Blogs'
-    },
-    createdAt: 1555016400000,
-    status: 'delivered'
-  },
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
+const ReportUpdate = (props) => {
+  const [loading, setLoading] = useState(true)
+  const [commits, setCommits] = useState()
 
-    content: {
-      name: 'Chỉnh sửa lỗi thêm, chỉnh sửa khoá học'
-    },
-    createdAt: 1554930000000,
-    status: 'refunded'
-  },
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const response = await (await axios.get(API_GET_COMMITS)).data
+        setCommits(response)
+      } catch (error) {
+        console.error(error.message)
+      }
+      setLoading(false)
+    }
 
-    content: {
-      name: 'Thêm admin panel'
-    },
-    createdAt: 1554757200000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
+    fetchData()
+  }, [])
 
-    content: {
-      name: 'Test EasyLearn Learning'
-    },
-    createdAt: 1554670800000,
-    status: 'delivered'
-  },
-  {
-    id: uuid(),
-    ref: '#EasyLearn v.0.0.',
-
-    content: {
-      name: 'Coding...'
-    },
-    createdAt: 1554670800000,
-    status: 'delivered'
-  }
-]
-
-const ReportUpdate = (props) => (
-  <Card {...props}>
-    <CardHeader title="Report Update" />
-
-    <Box sx={{ minWidth: 800 }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>No</TableCell>
-            <TableCell>Update</TableCell>
-            <TableCell sortDirection="desc">
-              <Tooltip enterDelay={300} title="Sort">
-                <TableSortLabel direction="desc">Date</TableSortLabel>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders.map((order, index) => (
-            <TableRow hover key={order.id}>
-              <TableCell>{order.ref}{index}</TableCell>
-              <TableCell>{order.content.name}</TableCell>
-              <TableCell>{format(order.createdAt, 'dd/MM/yyyy')}</TableCell>
+  console.log('commits', commits)
+  return loading || commits === null ? (
+    <Spinner name="cube-grid" color="aqua" />
+  ) : (
+    <Card {...props}>
+      <CardHeader title="Các bản cập nhật" />
+      <Box sx={{ minWidth: 800 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Tác giả</TableCell>
+              <TableCell>Nội dung cập nhật</TableCell>
+              <TableCell sortDirection="desc">
+                <Tooltip enterDelay={300} title="Sort">
+                  <TableSortLabel direction="desc">Ngày</TableSortLabel>
+                </Tooltip>
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Box>
+          </TableHead>
+          <TableBody>
+            {commits.map((cmt, index) => {
+              const { commit } = cmt
+              const { committer, message } = commit
+              if (index <= 7) {
+                return (
+                  <TableRow hover key={cmt.sha}>
+                    <TableCell>{committer.name}</TableCell>
+                    <TableCell>{message}</TableCell>
+                    <TableCell>
+                      {moment(committer.date).format('DD-MM-YYYY')}
+                    </TableCell>
+                  </TableRow>
+                )
+              }
+            })}
+          </TableBody>
+        </Table>
+      </Box>
 
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        p: 2
-      }}
-    >
-      <Button
-        color="primary"
-        endIcon={<ArrowRightIcon fontSize="small" />}
-        size="small"
-        variant="text"
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}
       >
-        View all
-      </Button>
-    </Box>
-  </Card>
-)
+        <Link to="/admin/dashboard/report_commits">
+          <Button
+            color="primary"
+            endIcon={<ArrowRightIcon fontSize="small" />}
+            size="small"
+            variant="text"
+          >
+            Xem tất cả
+          </Button>
+        </Link>
+      </Box>
+    </Card>
+  )
+}
 
 export default ReportUpdate

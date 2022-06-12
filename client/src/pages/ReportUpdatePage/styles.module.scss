@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  margin-top: 50px;
+  justify-content: space-around;
+
+  & .table {
+    margin-top: 20px;
+  }
+}

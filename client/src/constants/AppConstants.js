@@ -1,11 +1,11 @@
 export const TOAST = 'toast'
 export const HOME_CONTENT_ROOT_ID = 'home-content-root'
-
 export const LINK_EMBED_YOUTUBE = 'https://www.youtube.com/embed/'
-
-export const COURSE_IMG_DEFAULT = '/assets/course_default_img.png'
-
-export const BLOG_IMG_DEFAULT = '/assets/blog_default_img.jpg'
+export const COURSE_IMG_DEFAULT = '/assets/img/course_default_img.png'
+export const BLOG_IMG_DEFAULT = '/assets/img/blog_default_img.jpg'
+export const API_GET_COMMITS =
+  'https://api.github.com/repos/Hoaiphong0509/EasyLearn/commits'
+export const PAGE_MAIN_COMMITS = 'https://github.com/Hoaiphong0509/EasyLearn/commits/main'
 
 export const ENV = {
   GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
@@ -19,7 +19,6 @@ export const AUTHS = {
   USER_LOADED: 'USER_LOADED',
   AUTH_ERROR: 'AUTH_ERROR',
   REGISTER_SUCCESS: 'REGISTER_SUCCESS',
-  REGISTER_CREATOR_SUCCESS: 'REGISTER_CREATOR_SUCCESS',
   REGISTER_FAIL: 'REGISTER_FAIL',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_FAIL: 'LOGIN_FAIL',
@@ -32,7 +31,9 @@ export const USERS = {
   CHANGE_AVATAR: 'CHANGE_AVATAR',
   EDIT_USER: 'EDIT_USER',
   USER_ERRORS: 'USER_ERRORS',
-  SEARCH_KEYWORD: 'SEARCH_KEYWORD'
+  SEARCH_KEYWORD: 'SEARCH_KEYWORD',
+  REGISTER_CREATOR_SUCCESS: 'REGISTER_CREATOR_SUCCESS',
+  CLEAN: 'CLEAN'
 }
 
 export const PROFILES = {
@@ -90,6 +91,16 @@ export const FEEDBACK = {
   FEEDBACK_ERROR: 'FEEDBACK_ERROR'
 }
 
+export const REQUEST = {
+  GET_REQUESTS: 'GET_REQUESTS',
+  GET_REQUEST: 'GET_REQUEST',
+  ACCEPT: 'ACCEPT',
+  DENNY: 'DENNY',
+  REMOVE: 'REMOVE',
+  ERROR: 'ERROR',
+  CLEAN: 'CLEAN'
+}
+
 export const BANNER = {
   GET_BANNERS: 'GET_BANNERS',
   GET_BANNER: 'GET_BANNER',
@@ -97,7 +108,7 @@ export const BANNER = {
   UPDATE_BANNER: 'UPDATE_BANNER',
   REMOVE_BANNER: 'REMOVE_BANNER',
   BANNER_ERROR: 'BANNER_ERROR',
-  CLEAN: 'CLEAN',
+  CLEAN: 'CLEAN'
 }
 
 export const TOAST_TYPE = {

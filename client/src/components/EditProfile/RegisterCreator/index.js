@@ -1,22 +1,18 @@
 import React from 'react'
-import { Button, Typography } from '@mui/material'
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  TextField,
+  Typography
+} from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
-
 import s from './styles.module.scss'
-import { registerCreator } from 'services/redux/actions/auth'
-import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import FormRegisterCreator from './FormRegisterCreator'
 
-const RegisterCreator = ({ registerCreator }) => {
+const RegisterCreator = () => {
   const { t } = useTranslation()
-  const history = useHistory()
-
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    await registerCreator(t)
-    history.replace('/edit-profile')
-  }
 
   return (
     <React.Fragment>
@@ -32,18 +28,10 @@ const RegisterCreator = ({ registerCreator }) => {
             <li>{t('editProfile.creator.ben4')}</li>
           </ul>
         </div>
-        <form className={s.formControl} onSubmit={onSubmit}>
-          <Button type="submit" className={s.btnGetInTouch} variant="contained">
-            {t('editProfile.creator.getInTouch')}
-          </Button>
-        </form>
+        <FormRegisterCreator />
       </section>
     </React.Fragment>
   )
 }
 
-RegisterCreator.prototype = {
-  registerCreator: PropTypes.func.isRequired
-}
-
-export default connect(null, { registerCreator })(RegisterCreator)
+export default RegisterCreator

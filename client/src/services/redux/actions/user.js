@@ -1,6 +1,6 @@
 import api from 'utils/api'
 
-import { BANNER, TOAST_TYPE, USERS } from 'constants/AppConstants'
+import { AUTHS, BANNER, TOAST_TYPE, USERS } from 'constants/AppConstants'
 import { loadUser } from './auth'
 import { showToast } from 'utils/UIHelper'
 
@@ -44,24 +44,30 @@ export const getUser = (id) => async (dispatch) => {
   }
 }
 
-export const changeAvatar = (file) => async (dispatch) => {
+export const registerCreator = (t, formData) => async (dispatch) => {
   try {
-    const res = await api.post('/users/change_avatar', file)
-
+    await api.post('/users/register_creator', formData)
     dispatch({
-      type: USERS.CHANGE_AVATAR,
-      payload: res.data
+      type: USERS.REGISTER_CREATOR_SUCCESS,
+      payload: null
     })
-
-    dispatch(loadUser())
     showToast({
-      message: 'Successfully!',
+      message: t('editProfile.creator.registerSuccess'),
       type: TOAST_TYPE.SUCCESS
     })
-  } catch (err) {
+    dispatch(loadUser())
+  } catch (error) {
+    console.log({ error })
+
+    if (error) {
+      showToast({
+        message: 'Something wrong!',
+        type: TOAST_TYPE.ERROR
+      })
+    }
+
     dispatch({
-      type: USERS.USER_ERRORS,
-      payload: { msg: err }
+      type: AUTHS.REGISTER_FAIL
     })
   }
 }
