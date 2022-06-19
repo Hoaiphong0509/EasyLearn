@@ -328,13 +328,13 @@ router.post(
     }
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id })
+      const user = await User.findById(req.user.id)
       const blog = await Blog.findById(req.params.id)
 
       const newComment = {
         text: req.body.text,
-        name: profile.knowAs,
-        avatar: profile.avatar,
+        name: user.name,
+        avatar: user.avatar,
         user: req.user.id
       }
 

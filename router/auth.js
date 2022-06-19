@@ -62,7 +62,11 @@ router.post('/google', async (req, res) => {
             lastName: family_name,
             avatar: picture
           })
-          const profile = new Profile({ user: newUser._id, knowAs: name })
+          const profile = new Profile({
+            user: newUser._id,
+            knowAs: name,
+            avatar: picture
+          })
 
           await newUser.save()
           await profile.save()
