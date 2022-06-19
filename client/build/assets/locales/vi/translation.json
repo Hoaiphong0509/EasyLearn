@@ -1,0 +1,194 @@
+{
+  "app_title": "Easy Learn",
+  "language": "Ngôn ngữ",
+  "welcome_message": "Welcome",
+  "courses": "Khóa học",
+  "blogs": "Blogs",
+  "save": "Lưu",
+  "delete": "Xóa",
+  "view": "Xem",
+  "modal": {
+    "warnTitle": "Lưu ý!",
+    "unSaved": "Bạn có chắc chắn muốn hủy các thay đổi không?",
+    "notify": "Thông báo"
+  },
+  "auth": {
+    "learnToKnow": "học để hiểu biết",
+    "password": "Mật khẩu",
+    "name": "Tên hiển thị",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "email": "Email",
+    "login": "Đăng nhập",
+    "googleLogin": "Đăng nhập với Google",
+    "backToHome": "Về trang chủ",
+    "register": "Đăng ký",
+    "notEmty": "Không được trống",
+    "invalidInfor": "Email hoặc mật khẩu không đúng",
+    "msgErrName": "Vui lòng nhập tên hiển thị ",
+    "msgInvalidName": "Tên hiển thị phải gồm ít nhất 1 ký tự hoa, 1 ký tự thường.",
+    "invalidName": "Tên không hợp lệ",
+    "msgErrEmail": "Email đã tồn tại",
+    "msgErrInvalidEmail": "Email không hợp lệ",
+    "msgErrExistEmail": "Email không tồn tại",
+    "msgErrPassword": "Mật khẩu phải gồm ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số",
+    "invalidPassword": "Mật khẩu không hợp lệ",
+    "invalidConfirmPassword": "Mật khẩu xác nhận không khớp"
+  },
+  "banner": {
+    "discord": {
+      "title": "Easy Learn trong Discord",
+      "desc": "Tham gia vào server discord Lonely Zoo để cùng nhau học & tập giải trí. Đồng thời kết bạn mới và giao lưu, trao đổi với nhau",
+      "join": "Tham gia"
+    },
+    "facebook": {
+      "title": "Easy Learn trên Facebook",
+      "desc": "Theo dõi trang facebook của EasyLearn & Lonely Zoo để biết thêm những thông tin thú vị về học tập & giải trí",
+      "join": "Tham gia"
+    },
+    "youtube": {
+      "title": "Easy Learn tại Youtube",
+      "desc": "Đăng ký kênh Youtube của Easy Learn để theo dõi các khóa học được đăng tải trên đó",
+      "sub": "Đăng ký"
+    }
+  },
+  "header": {
+    "search": "Tìm kiếm",
+    "profile": "Hồ sơ",
+    "myCourses": "Khóa học của tôi",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "myStuff": "Nội dung của tôi",
+    "createCourse": "Tạo khóa học",
+    "createBlog": "Viết Blog"
+  },
+  "areaStudy": {
+    "overview": "Tổng quan",
+    "gains": "Bạn sẽ đạt được",
+    "requires": "Yêu cầu",
+    "comments": "Bình luận"
+  },
+  "profile": {
+    "contact": "Liên lạc",
+    "skills": "Kỹ năng",
+    "exp": "Kinh nghiệm",
+    "edu": "Học vấn",
+    "content": "Nội dung",
+    "blogs": "Blogs",
+    "courses": " Khóa học"
+  },
+  "editProfile": {
+    "general": {
+      "title": "Thông tin chung",
+      "desc": "Tổng quan về tài khoản của bạn",
+      "knowAs": "Tên hiển thị",
+      "bio": "Giới thiệu",
+      "skills": "Kỹ năng"
+    },
+    "account": {
+      "title": "Tài khoản",
+      "desc": "Thay đổi thông tin bảo mật của bạn"
+    },
+    "creator": {
+      "title": "Cộng tác viên",
+      "decs": "Trở thành cộng tác viên cùng EasyLearn và chia sẻ kiến thức của bạn đến với mọi người",
+      "benefits": "Bạn sẽ được?",
+      "ben1": "Trở thành người đồng hành cùng Easy Learn",
+      "ben2": "Hưởng role Creator trong server Discord",
+      "ben3": "Được chia sẻ, được học hỏi thêm kiến thức",
+      "ben4": "Kiểm tiền bằng nội dung do chính bạn đăng tải",
+      "phone": "Số điện thoại",
+      "location": "Địa điểm",
+      "bio": "Tiểu sử",
+      "invalidPhone": "Số điện thoại không hợp lệ",
+      "getInTouch": " Đăng ký Cộng Tác Viên",
+      "registerSuccess": "Đăng ký thành công 💝"
+    },
+    "avatar": {
+      "title": "Ảnh đại diện",
+      "desc": "Xem ảnh đại diện của bạn"
+    },
+    "experience": {
+      "title": "Kinh nghiệm",
+      "desc": "Cho mọi người biết kinh nghiệm về lĩnh vực của bạn",
+      "titleExp": "Công việc",
+      "company": "Công ty",
+      "location": "Địa điểm",
+      "from": "Từ ngày",
+      "to": "Đến ngày",
+      "current": "Hiện nay",
+      "descExp": "Mô tả sơ bộ về công việc của bạn.",
+      "notHaveExp": "Bạn chưa có thông tin về công việc và kinh nghiệm của mình"
+    },
+    "education": {
+      "title": "Học vấn",
+      "desc": "Cho mọi người biết nơi bạn học tập & phát triển",
+      "school": "Trường học",
+      "degree": "Chứng chỉ",
+      "fieldofstudy": "Lĩnh vực/ngành nghề",
+      "descEdu": "Mô tả sơ bộ về kiến thức mà bạn đã được học.",
+      "notHaveEdu": "Bạn chưa có thông tin về học vấn của mình."
+    }
+  },
+  "course": {
+    "manageCourse": "Quản lý khoá học",
+    "createCourse": {
+      "title": "Tạo khoá học của bạn",
+      "inforGeneral": "Thông tin chung",
+      "nameCourse": "Tên khoá học",
+      "descCourse": "Mô tả",
+      "archiveCourse": "Học viên sẽ đạt được gì?",
+      "reqCourse": "Yêu cầu cần có để học khoá học",
+      "slogan": "Slogan khoá học",
+      "contentCourse": "Nội dung khoá học",
+      "addSection": "Thêm section",
+      "uptSection": "Chỉnh sửa section",
+      "addVideos": "Thêm video",
+      "uptVideos": "Chỉnh sửa video",
+      "addVideoName": "Thêm tên video",
+      "uptVideoName": "Chỉnh sửa tên video",
+      "addLinkVideo": "Thêm link youtube video khoá học",
+      "uptLinkVideo": "Chỉnh sửa link youtube video khoá học"
+    },
+    "changeImg": {
+      "title": "Thay đổi hình ảnh khóa học",
+      "desc": "Thay đổi hình ảnh khóa học của bạn. Nếu bạn tiếp tục mà không thay đổi, thì hình ảnh hiện tại sẽ làm ảnh đại diện chính cho khóa học của bạn."
+    },
+    "uploadImg": "Tải & Lưu ảnh",
+    "continue": "Tiếp tục",
+    "gains": "Bạn sẽ học được gì?",
+    "required": "Yêu cầu",
+    "content": "Nội dung",
+    "getInTouch": "THEO DÕI",
+    "intro": "Giới thiệu khóa học"
+  },
+  "blog": {
+    "manageBlog": "Quản lý blog",
+    "createBlog": {
+      "titleBlog": "Tiêu đề Blog",
+      "inforGeneral": "Nội dung"
+    }
+  },
+  "notify": {
+    "noti:": "Thông báo",
+    "noneNotify": "Không có thông báo nào"
+  },
+  "myStuff": {
+    "title": "Quản lý nội dung của bạn",
+    "desc": "Xem các nội dung mà bạn đã tạo như là blogs, khóa đang học",
+    "blogs": "Blogs",
+    "noBlogs": "Bạn không có bài blogs nào",
+    "noCourses": "Bạn không có khóa học nào",
+    "noLearnings": "Bạn chưa theo dõi khóa học nào",
+    "learnings": "Khóa đang học",
+    "courses": "Khóa của tôi"
+  },
+  "notFound": {
+    "title": "OOPS!",
+    "desc": "Error 404: Trang không khả dụng",
+    "goHome": "Về Trang Chủ"
+  },
+  "serverErr": {
+    "title": "SERVER ERROR!",
+    "desc": "Error 500: Có gì đó không ổn ở phía server. EasyLearn xin lỗi vì sự bất tiện này."
+  }
+}
