@@ -36,7 +36,7 @@ const App = () => {
     <Provider store={store}>
       <div id="toast"></div>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Router>
+        <Router basename="/">
           <Fragment>
             <Route component={Routes} />
           </Fragment>
