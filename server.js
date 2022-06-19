@@ -3,6 +3,7 @@ const connectDB = require('./utils/db')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const { v2: cloudinary } = require('cloudinary')
+const path = require('path');
 
 const app = express()
 const {
