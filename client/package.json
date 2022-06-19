@@ -1,6 +1,6 @@
 {
-  "homepage": "https://easy-learn.vercel.app/",
-  "name": "easylearn",
+  "homepage": "https://easy-learn.vercel.app",
+  "name": "easy-learn",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
