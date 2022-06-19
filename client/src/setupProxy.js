@@ -8,16 +8,4 @@ module.exports = function (app) {
       changeOrigin: true
     })
   )
-  app.use(
-    createProxyMiddleware('/api', {
-      target: 'https://easy-learn.vercel.app/',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': ''
-      },
-      headers: {
-        Connection: 'keep-alive'
-      }
-    })
-  )
 }
