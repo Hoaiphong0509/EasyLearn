@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0e202399.css",
-    "main.js": "/static/js/main.8f587bf0.js",
+    "main.js": "/static/js/main.e965d8aa.js",
     "static/media/Zoologo.png": "/static/media/Zoologo.09fa959811ef5d7eaee2.png",
     "static/media/roboto-all-500-normal.woff": "/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
@@ -44,10 +44,10 @@
     "index.html": "/index.html",
     "static/media/getFetch.cjs": "/static/media/getFetch.c780682470504fffbd04.cjs",
     "main.0e202399.css.map": "/static/css/main.0e202399.css.map",
-    "main.8f587bf0.js.map": "/static/js/main.8f587bf0.js.map"
+    "main.e965d8aa.js.map": "/static/js/main.e965d8aa.js.map"
   },
   "entrypoints": [
     "static/css/main.0e202399.css",
-    "static/js/main.8f587bf0.js"
+    "static/js/main.e965d8aa.js"
   ]
 }
