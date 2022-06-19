@@ -3,7 +3,6 @@ import store from 'services/store'
 import { AUTHS } from 'constants/AppConstants'
 
 const api = axios.create({
-  // baseURL: 'http://localhost:5000/api',
   baseURL: 'https://easy-learn.vercel.app/api',
   headers: {
     'Content-Type': 'application/json'
