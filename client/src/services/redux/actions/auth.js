@@ -4,7 +4,6 @@ import {
   BLOGS,
   COURSES,
   PROFILES,
-  TOAST_TYPE,
   USERS
 } from 'constants/AppConstants'
 import { showToast } from 'utils/UIHelper'
@@ -34,15 +33,6 @@ export const googleLogin = (idToken) => async (dispatch) => {
     })
     dispatch(loadUser())
   } catch (err) {
-    console.log({ err })
-
-    if (err) {
-      showToast({
-        // message: t('auth.invalidInfor'),
-        type: TOAST_TYPE.ERROR
-      })
-    }
-
     dispatch({
       type: AUTHS.LOGIN_FAIL
     })

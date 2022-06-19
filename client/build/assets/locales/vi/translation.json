@@ -7,6 +7,7 @@
   "save": "Lưu",
   "delete": "Xóa",
   "view": "Xem",
+  "plsLogin": "Vui lòng đăng nhập", 
   "modal": {
     "warnTitle": "Lưu ý!",
     "unSaved": "Bạn có chắc chắn muốn hủy các thay đổi không?",

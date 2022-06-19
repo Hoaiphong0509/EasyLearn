@@ -7,6 +7,7 @@
   "save": "Save",
   "delete": "Delete",
   "view": "View",
+  "plsLogin": "Please login first", 
   "modal": {
     "warnTitle": "Warning",
     "unSaved": "Are you sure want to discard changes?",

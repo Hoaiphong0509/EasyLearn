@@ -32,10 +32,6 @@ export const getUser = (id) => async (dispatch) => {
     })
 
     dispatch(loadUser())
-    showToast({
-      message: 'Successfully!',
-      type: TOAST_TYPE.SUCCESS
-    })
   } catch (err) {
     dispatch({
       type: USERS.USER_ERRORS,

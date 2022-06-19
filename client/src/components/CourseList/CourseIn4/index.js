@@ -98,7 +98,7 @@ const CourseIn4 = ({
 
   const handleAddLearning = async () => {
     if (!user) {
-      showToast({ message: 'Please Login frist!', type: TOAST_TYPE.WARNING })
+      showToast({ message: t('plsLogin'), type: TOAST_TYPE.WARNING })
       return
     }
 
