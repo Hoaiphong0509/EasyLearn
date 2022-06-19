@@ -343,8 +343,8 @@ router.post(
       if (blog.user.toString() !== req.user.id) {
         const notify = new Notify({
           user: req.user.id,
-          textVi: `${profile.knowAs} đã comment bài blog \`${blog.title}\` của bạn.`,
-          textEn: `${profile.knowAs} commented on \`${blog.title}\`.`,
+          textVi: `${user.name} đã comment bài blog \`${blog.title}\` của bạn.`,
+          textEn: `${user.name} commented on \`${blog.title}\`.`,
           recipient: [{ user: blog.user }]
         })
 
