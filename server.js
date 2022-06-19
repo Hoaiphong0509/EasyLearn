@@ -3,13 +3,13 @@ const connectDB = require('./utils/db')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const { v2: cloudinary } = require('cloudinary')
-const path = require('path');
+const path = require('path')
 
 const app = express()
 const {
   CLOUDINARY_NAME,
   CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET,
+  CLOUDINARY_API_SECRET
 } = require('./config')
 
 //Connect DB
@@ -18,7 +18,7 @@ connectDB()
 cloudinary.config({
   cloud_name: CLOUDINARY_NAME,
   api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
+  api_secret: CLOUDINARY_API_SECRET
 })
 app.use(cors())
 // app.use(logger('combined'))
@@ -38,9 +38,10 @@ app.use('/api/notify', require('./router/notify'))
 
 // SET STORAGE
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, './client', 'build')));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, './client', 'build', 'index.html'));
+  const root = require('path').join(__dirname, './client', 'build')
+  app.use(express.static(root))
+  app.get('*', (req, res) => {
+    res.sendFile('index.html', { root })
   })
 }
 
