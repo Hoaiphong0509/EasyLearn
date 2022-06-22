@@ -66,8 +66,9 @@ const BlogIn4 = ({
 
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
-    likes.includes((l) => l.user === user.id)
+    likes?.some((l) => l?.user.toString() === user?._id)
   )
+
   const [state, setState] = useState({
     right: false
   })
@@ -101,7 +102,7 @@ const BlogIn4 = ({
       confirmButtonColor: '#18e06f',
       cancelButtonColor: '#e63c49',
       confirmButtonText: 'Yes, delete it!'
-    }).then( async (result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteBlog(_id)
         history.replace('/my_stuff')

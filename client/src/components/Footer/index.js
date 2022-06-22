@@ -4,15 +4,9 @@ import { Link } from 'react-router-dom'
 import { Facebook, GitHub } from '@mui/icons-material'
 
 import s from './styles.module.scss'
+import { scrollToTop } from 'utils/AppUltils'
 
 const Footer = () => {
-  const goToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-
   return (
     <footer className={s.root}>
       <div className={s.box}>
@@ -26,19 +20,19 @@ const Footer = () => {
       </div>
       <div className={s.box}>
         <h3>Về EasyLearn</h3>
-        <Link onClick={goToTop} className={s.link} to="/about">
+        <Link onClick={scrollToTop} className={s.link} to="/about">
           Giới thiệu
         </Link>
-        <Link onClick={goToTop} className={s.link} to="/policy">
+        <Link onClick={scrollToTop} className={s.link} to="/policy">
           Điều khoản
         </Link>
       </div>
       <div className={s.box}>
         <h3>Hổ trợ</h3>
-        <Link onClick={goToTop} className={s.link} to="/feedback">
+        <Link onClick={scrollToTop} className={s.link} to="/feedback">
           Đóng góp/Report
         </Link>
-        <Link onClick={goToTop} className={s.link} to="/privacy">
+        <Link onClick={scrollToTop} className={s.link} to="/privacy">
           Bảo mật
         </Link>
       </div>

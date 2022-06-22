@@ -42,7 +42,6 @@ import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import { LINK_EMBED_YOUTUBE, ROLES, TOAST_TYPE } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
-import ConfirmDialog from 'components/ConfirmDialog'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import BlockIcon from '@mui/icons-material/Block'
 
@@ -52,12 +51,13 @@ import {
 } from 'services/redux/actions/profile'
 import { showToast } from 'utils/UIHelper'
 import Swal from 'sweetalert2'
+import { scrollToTop } from 'utils/AppUltils'
 
 const CourseIn4 = ({
   auth: { user },
   course,
   getInTouche,
-  profile: { profile, loading },
+  profile: { profile },
   cleanUpProfile,
   deleteCourse,
   getCurrentProfile,
@@ -65,7 +65,6 @@ const CourseIn4 = ({
   unApproveCourse
 }) => {
   const [open, setOpen] = useState(false)
-  const [confirmOpen, setConfirmOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -107,6 +106,7 @@ const CourseIn4 = ({
     }
 
     await getInTouche(_id)
+    scrollToTop()
     history.replace(`/learning/${_id}`)
   }
 

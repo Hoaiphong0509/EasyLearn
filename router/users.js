@@ -114,7 +114,7 @@ router.post(
       }
 
       if (result.courses.length == 0 && result.blogs.length == 0)
-        return res.status(400).json({ msg: "Couldn't find anything" })
+        return res.send({ courses: [], blogs: [] })
 
       res.send(result)
     } catch (error) {

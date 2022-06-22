@@ -4,16 +4,13 @@ import {
   Divider,
   Hidden,
   Input,
-  List,
-  ListItem,
-  ListItemIcon,
   Menu,
   MenuItem,
   MenuList,
   TextField,
   Typography
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { isRequired } from 'utils/AppUltils'
@@ -26,8 +23,9 @@ import PropTypes from 'prop-types'
 import { search } from 'services/redux/actions/user'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import MyLoading from 'components/common/MyLoading'
 
-const SearchBox = ({ search, searchResult }) => {
+const SearchBox = ({ search, searchResult, loading }) => {
   const [resultSearch, setResultSearch] = useState()
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -35,10 +33,6 @@ const SearchBox = ({ search, searchResult }) => {
   const [keyword, setKeyword] = useState('')
   const { t } = useTranslation()
   const c = useStyles()
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
 
   const handleClose = () => {
     setAnchorEl(null)
@@ -48,7 +42,6 @@ const SearchBox = ({ search, searchResult }) => {
     e.preventDefault()
     if (isRequired(keyword)) {
       search({ keyword })
-      console.log(searchResult)
 
       setAnchorEl(e.currentTarget)
 
@@ -81,7 +74,10 @@ const SearchBox = ({ search, searchResult }) => {
           anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
           sx={{ marginTop: '15px' }}
         >
-          {searchResult && searchResult.courses.length > 0 ? (
+          {loading || searchResult === null ? (
+            <MyLoading />
+          ) : (searchResult.courses.length > 0 || searchResult.blogs.length) >
+            0 ? (
             <Box className={s.boxList} sx={{ padding: '10px', width: '650px' }}>
               <Typography
                 sx={{
@@ -176,11 +172,13 @@ const SearchBox = ({ search, searchResult }) => {
 
 SearchBox.prototype = {
   search: PropTypes.func.isRequired,
-  searchResult: PropTypes.object.isRequired
+  searchResult: PropTypes.object.isRequired,
+  loading: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
-  searchResult: state.user.searchResult
+  searchResult: state.user.searchResult,
+  loading: state.user.loading
 })
 
 export default connect(mapStateToProps, { search })(SearchBox)

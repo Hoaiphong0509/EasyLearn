@@ -14,8 +14,8 @@ const SectionBlogs = ({ getBlogsApproved, blog: { blogs, loading } }) => {
   const tempBlogs =
     blogs &&
     blogs.sort(function (a, b) {
-      const keyA = a.likes.length,
-        keyB = b.likes.length
+      const keyA = a?.likes.length,
+        keyB = b?.likes.length
       if (keyA < keyB) return 1
       if (keyA > keyB) return -1
       return 0

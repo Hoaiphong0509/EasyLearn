@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BLOG_IMG_DEFAULT } from 'constants/AppConstants'
+import { scrollToTop } from 'utils/AppUltils'
 
 const BlogItem = ({
   auth: { user },
@@ -23,14 +24,20 @@ const BlogItem = ({
   const { _id, user: userBlog, title, author, likes, img } = blog
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
-    likes.includes((l) => l.user === user.id)
+    likes?.some((l) => l?.user.toString() === user?._id)
   )
   const imgBlg = `url("${img && img.length > 0 ? img : BLOG_IMG_DEFAULT}")`
 
   return (
     <React.Fragment>
       <Box className={s.root}>
-        <Link to={`/blogs/blog_detail/${_id}`} onClick={cleanUpBlog}>
+        <Link
+          to={`/blogs/blog_detail/${_id}`}
+          onClick={() => {
+            cleanUpBlog()
+            scrollToTop()
+          }}
+        >
           <Box
             className={s.content}
             sx={{ background: `${img ? imgBlg : 'red'}` }}
@@ -43,7 +50,10 @@ const BlogItem = ({
           </Box>
         </Link>
         <div className={s.footer}>
-          <Link to={`/profile/${userBlog}`} onClick={cleanUpProfile}>
+          <Link to={`/profile/${userBlog}`} onClick={()=> {
+            cleanUpProfile()
+            scrollToTop()
+          }}>
             <div className={s.in4}>
               <Avatar src={author.avatar} alt={author.name} />
               <Typography className={s.creator} variant="p">

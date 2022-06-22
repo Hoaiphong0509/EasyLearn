@@ -39,3 +39,13 @@ export const validateSizeFile = (input) => {
 export const validHexColor = (hexColor) => {
   return /^#([0-9A-F]{3}){1,2}$/i.test(hexColor)
 }
+
+export const scrollToTop = () => {
+  if (!isServer) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+  return
+}
