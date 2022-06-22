@@ -11,9 +11,11 @@ import { useHistory } from 'react-router-dom'
 import { validateSizeFile } from 'utils/AppUltils'
 import { showToast } from 'utils/UIHelper'
 import { BLOG_IMG_DEFAULT, TOAST_TYPE } from 'constants/AppConstants'
+import MyLoading from 'components/common/MyLoading'
 
 const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
   const [selectedImage, setSelectedImage] = useState()
+  const [loading, setLoading] = useState(false)
   const [imgForm, setImgForm] = useState()
   const { t } = useTranslation()
   const history = useHistory()
@@ -40,10 +42,14 @@ const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
     if (!imgForm) {
       return history.replace(`/blogs/blog_detail/${_id}`)
     }
+    setLoading(true)
     await changeImgBlog(_id, imgForm)
     cleanUpBlog()
+    setLoading(false)
     return history.replace(`/blogs/blog_detail/${_id}`)
   }
+
+  if (loading) return <MyLoading />
 
   return (
     <React.Fragment>
@@ -51,7 +57,13 @@ const ChangeImg = ({ changeImgBlog, cleanUpBlog, blog }) => {
         <form className={s.form}>
           <Box className={s.imgCourse}>
             <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : (img.length > 0 ? img : BLOG_IMG_DEFAULT)}
+              src={
+                selectedImage
+                  ? URL.createObjectURL(selectedImage)
+                  : img.length > 0
+                  ? img
+                  : BLOG_IMG_DEFAULT
+              }
               alt="img"
             />
           </Box>

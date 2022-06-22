@@ -42,7 +42,7 @@ import { connect } from 'react-redux'
 import CommentForm from 'components/Comments/CommentForm'
 import CommentItem from 'components/Comments/CommentItem'
 import { ROLES } from 'constants/AppConstants'
-
+import Swal from 'sweetalert2'
 const BlogIn4 = ({
   auth: { user },
   blog,
@@ -63,6 +63,7 @@ const BlogIn4 = ({
     status,
     user: userBlog
   } = blog
+
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
     likes.includes((l) => l.user === user.id)
@@ -89,6 +90,23 @@ const BlogIn4 = ({
     }
 
     setState({ ...state, [anchor]: open })
+  }
+
+  const handleDeleteBlog = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes, delete it!'
+    }).then( async (result) => {
+      if (result.isConfirmed) {
+        await deleteBlog(_id)
+        history.replace('/my_stuff')
+      }
+    })
   }
 
   const areaComment = () => (
@@ -203,12 +221,7 @@ const BlogIn4 = ({
                   <ModeEditIcon color="default" sx={{ fontSize: 20 }} />
                 </IconButton>
               </MenuItem>
-              <MenuItem
-                onClick={async () => {
-                  await deleteBlog(_id)
-                  history.replace('/my_stuff')
-                }}
-              >
+              <MenuItem onClick={handleDeleteBlog}>
                 Delete
                 <IconButton>
                   <DeleteForeverIcon color="default" sx={{ fontSize: 20 }} />

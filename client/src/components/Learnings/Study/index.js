@@ -37,8 +37,7 @@ import {
 } from 'services/redux/actions/moderator'
 
 import s from './styles.module.scss'
-import ConfirmDialog from 'components/ConfirmDialog'
-
+import Swal from 'sweetalert2'
 const Study = ({
   auth: { user },
   course,
@@ -82,6 +81,23 @@ const Study = ({
     setSectionforCmt(section)
   }
 
+  const handleDeleteCourse = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteCourse(_id)
+        history.replace('/my_stuff')
+      }
+    })
+  }
+
   const owner = (
     <Box>
       <Badge className={s.icon} color="primary">
@@ -111,7 +127,7 @@ const Study = ({
               </IconButton>
             </Tooltip>
           </MenuItem>
-          <MenuItem onClick={() => setConfirmOpen(true)}>
+          <MenuItem onClick={handleDeleteCourse}>
             <Tooltip title="Delete" placement="top-start">
               <IconButton color="primary">
                 <DeleteForeverIcon />
@@ -227,17 +243,6 @@ const Study = ({
             course={course}
           />
         </Box>
-        <ConfirmDialog
-          title="Delete course?"
-          open={confirmOpen}
-          setOpen={setConfirmOpen}
-          onConfirm={async () => {
-            await deleteCourse(_id)
-            history.replace('/my_stuff')
-          }}
-        >
-          Are you sure you want to delete this course?
-        </ConfirmDialog>
       </Box>
     </React.Fragment>
   )

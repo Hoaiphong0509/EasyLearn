@@ -15,6 +15,7 @@ import HtmlEditor, {
 import { addBlog } from 'services/redux/actions/blog'
 import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import MyLoading from 'components/common/MyLoading'
 
 const sizeValues = ['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']
 const fontValues = [
@@ -33,6 +34,7 @@ const CreateBlog = ({ addBlog }) => {
   const { t } = useTranslation()
   const textRef = useRef(null)
   const history = useHistory()
+  const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     title: '',
@@ -59,10 +61,14 @@ const CreateBlog = ({ addBlog }) => {
     setFormData({ ...formData, text: e })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault()
-    addBlog(formData)
+    await addBlog(formData)
+    setLoading(false)
   }
+
+  if (loading) return <MyLoading />
 
   return (
     <Box className={s.root}>
@@ -132,7 +138,7 @@ const CreateBlog = ({ addBlog }) => {
             disabled={!isRequired(formData.title) || !isRequired(formData.text)}
             type="submit"
           >
-           {t('save')}
+            {t('save')}
           </Button>
         </FormControl>
       </form>

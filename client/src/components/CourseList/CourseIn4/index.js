@@ -51,6 +51,7 @@ import {
   getCurrentProfile
 } from 'services/redux/actions/profile'
 import { showToast } from 'utils/UIHelper'
+import Swal from 'sweetalert2'
 
 const CourseIn4 = ({
   auth: { user },
@@ -101,9 +102,29 @@ const CourseIn4 = ({
       showToast({ message: t('plsLogin'), type: TOAST_TYPE.WARNING })
       return
     }
+    if (profile && students.some((s) => s.user === profile.user)) {
+      return
+    }
 
     await getInTouche(_id)
     history.replace(`/learning/${_id}`)
+  }
+
+  const handleDeleteCourse = async () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteCourse(_id)
+        history.replace('/my_stuff')
+      }
+    })
   }
 
   const owner = (
@@ -117,7 +138,7 @@ const CourseIn4 = ({
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete" placement="top-start">
-        <IconButton color="primary" onClick={() => setConfirmOpen(true)}>
+        <IconButton color="primary" onClick={handleDeleteCourse}>
           <DeleteForeverIcon />
         </IconButton>
       </Tooltip>
@@ -334,17 +355,6 @@ const CourseIn4 = ({
               : null}
           </section>
         </Box>
-        <ConfirmDialog
-          title="Delete course?"
-          open={confirmOpen}
-          setOpen={setConfirmOpen}
-          onConfirm={async () => {
-            await deleteCourse(_id)
-            history.replace('/my_stuff')
-          }}
-        >
-          Are you sure you want to delete this course?
-        </ConfirmDialog>
       </Box>
     </React.Fragment>
   )

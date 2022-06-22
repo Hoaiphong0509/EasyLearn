@@ -70,16 +70,10 @@ router.get(
 // @access   Student, Creator
 router.get('/get_mylearnings', authorize(), async (req, res) => {
   try {
-    const learnings = []
     const courses = await Course.find()
-    courses.forEach((c) => {
-      c.students.forEach((s) => {
-        if (s.user._id.toString() === req.user.id) {
-          learnings.push(c)
-        }
-      })
-    })
-
+    const learnings = courses.filter((c) =>
+      c.students.some((s) => s.user.toString() === req.user.id)
+    )
     res.json(learnings)
   } catch (err) {
     console.log(err.message)

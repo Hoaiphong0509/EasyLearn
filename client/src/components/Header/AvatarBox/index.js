@@ -26,7 +26,6 @@ const AvatarBox = ({ logout, user, cleanUpBlog, cleanUpCourse }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const history = useHistory()
   const open = Boolean(anchorEl)
-
   const c = useStyles()
   const { t } = useTranslation()
 
@@ -65,16 +64,7 @@ const AvatarBox = ({ logout, user, cleanUpBlog, cleanUpCourse }) => {
         {user && (
           <Tooltip title={user.knowAs ? user.knowAs : user.name}>
             <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-              {user.avatar ? (
-                <Avatar
-                  src={user.avatar}
-                  sx={{ width: 32, height: 32 }}
-                ></Avatar>
-              ) : (
-                <Avatar sx={{ width: 32, height: 32 }}>
-                  {user.name.slice(0, 1).toUpperCase()}
-                </Avatar>
-              )}
+              <Avatar src={user.avatar} sx={{ width: 32, height: 32 }} />
             </IconButton>
           </Tooltip>
         )}
@@ -93,7 +83,7 @@ const AvatarBox = ({ logout, user, cleanUpBlog, cleanUpCourse }) => {
       >
         <Box
           sx={{
-            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
           }}
         >
           <MenuItem onClick={handleProfile}>{t('header.profile')}</MenuItem>

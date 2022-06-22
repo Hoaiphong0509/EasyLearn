@@ -16,7 +16,6 @@ const CommentItem = ({
   auth,
   deleteComment
 }) => {
-  console.log("avatar", avatar);
   return (
     <Box className={s.root}>
       <section className={s.avt}>
