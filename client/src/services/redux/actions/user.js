@@ -53,8 +53,6 @@ export const registerCreator = (t, formData) => async (dispatch) => {
     })
     dispatch(loadUser())
   } catch (error) {
-    console.log({ error })
-
     if (error) {
       showToast({
         message: 'Something wrong!',

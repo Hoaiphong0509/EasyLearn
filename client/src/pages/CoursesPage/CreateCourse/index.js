@@ -11,10 +11,12 @@ import { connect } from 'react-redux'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 import Sections from 'components/CreateCourse/Sections'
 import { useTranslation } from 'react-i18next'
+import MyLoading from 'components/common/MyLoading'
 
 const CreateCourse = ({ addCourse }) => {
   const history = useHistory()
   const [isChange, setIsChange] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
 
   const courseDraft = JSON.parse(localStorage.getItem('courseDraft'))
@@ -45,12 +47,8 @@ const CreateCourse = ({ addCourse }) => {
   const crs = useSelector((state) => state.course)
 
   useEffect(() => {
-    console.log('new course: ', crs)
-
     if (crs && crs.course) history.push(`/courses/add_img/${crs.course._id}`)
-    return () => {
-      console.log('Prev course: ', crs)
-    }
+    return () => {}
   }, [crs, history])
 
   const { title, description, punchLike, gains, requires } = courseData
@@ -64,14 +62,16 @@ const CreateCourse = ({ addCourse }) => {
     )
   }
 
-  const handleSubmit = (e) => {
-    try {
-      setIsChange(false)
-      e.preventDefault()
-      localStorage.removeItem('courseDraft')
-      addCourse(courseData)
-    } catch (error) {}
+  const handleSubmit = async (e) => {
+    setLoading(true)
+    setIsChange(false)
+    e.preventDefault()
+    localStorage.removeItem('courseDraft')
+    await addCourse(courseData)
+    setLoading(false)
   }
+
+  if (loading) return <MyLoading />
 
   return (
     <React.Fragment>

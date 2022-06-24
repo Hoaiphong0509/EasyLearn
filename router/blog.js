@@ -56,7 +56,6 @@ router.post(
 
       res.json(blog)
     } catch (err) {
-      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -94,7 +93,7 @@ router.put(
 
       return res.send(blog)
     } catch (error) {
-      console.log('error:', error.message)
+     
       res.send('Something went wrong please try again later..')
     }
   }
@@ -114,11 +113,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-
     const { title, text } = req.body
-
-    console.log('ID:', req.params.id)
-
     try {
       const blogField = {
         title: title,
@@ -130,7 +125,6 @@ router.put(
       })
       res.json(blog)
     } catch (err) {
-      console.log(err.message)
       res.status(500).send('Server Error')
     }
   }
@@ -144,7 +138,7 @@ router.get('/', async (req, res) => {
     const blogs = await Blog.find().sort({ date: -1 })
     res.json(blogs)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -158,7 +152,7 @@ router.get('/get_blogs_approved', async (req, res) => {
     const result = blogs.filter((b) => b.status === 'approved')
     res.send(result)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -172,7 +166,7 @@ router.get('/my_blogs', authorize(), async (req, res) => {
     const result = blogs.filter((b) => b.user._id.toString() === req.user.id)
     res.send(result)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -191,7 +185,7 @@ router.get(
       )
       res.send(result)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -210,7 +204,7 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
 
     res.json(blog)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -243,7 +237,7 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     res.json({ msg: 'Blog removed' })
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -277,7 +271,7 @@ router.put('/like/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     return res.json(blog.likes)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -307,7 +301,7 @@ router.put(
 
       return res.json(blog.likes)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -355,7 +349,7 @@ router.post(
 
       res.json(blog.comments)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -389,7 +383,7 @@ router.delete('/comment/:id/:comment_id', authorize(), async (req, res) => {
 
     return res.json(blog.comments)
   } catch (err) {
-    console.log(err.message)
+    
     return res.status(500).send('Server Error')
   }
 })

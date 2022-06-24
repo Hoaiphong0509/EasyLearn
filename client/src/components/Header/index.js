@@ -1,14 +1,13 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {
   Grid,
   Stack,
   FormControl,
   FormControlLabel,
   Tooltip,
-  Badge,
-  IconButton,
-  Button
+  IconButton
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import { useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
@@ -46,6 +45,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
   const currentLanguageCode =
     (cookies.get('i18next') && cookies.get('i18next')) || 'vi'
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode)
+  const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -62,10 +62,10 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
 
   const responseGoogleAuth = async (authResult) => {
     try {
+      setLoading(true)
       await googleLogin(authResult.tokenId)
-    } catch (e) {
-      console.log(e)
-    }
+      setLoading(false)
+    } catch (e) {}
   }
   const authLinks = (
     <>
@@ -125,7 +125,6 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
                 control={
                   <LanguageSwitch
                     sx={{ m: 1 }}
-                    // defaultChecked={currentLanguageCode === 'vi'}
                     value={
                       currentLanguageCode &&
                       (currentLanguageCode === 'vi' ? true : false)
@@ -137,7 +136,11 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
               />
             </Tooltip>
           </FormControl>
-          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+          {loading ? (
+            <LoadingButton />
+          ) : (
+            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+          )}
         </Stack>
       </Grid>
     </Grid>

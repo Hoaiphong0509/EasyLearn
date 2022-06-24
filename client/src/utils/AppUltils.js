@@ -32,7 +32,7 @@ export const getCodeYoutube = (value) => {
 }
 
 export const validateSizeFile = (input) => {
-  const fileSize = input.files[0].size / 1024 / 1024 // in MiB
+  const fileSize = input.files[0].size / 1024 / 1024 
   return fileSize > 1 ? true : false
 }
 
@@ -41,11 +41,9 @@ export const validHexColor = (hexColor) => {
 }
 
 export const scrollToTop = () => {
-  if (!isServer) {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-  return
+  if (isServer) return
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
 }

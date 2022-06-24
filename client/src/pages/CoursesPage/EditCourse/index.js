@@ -12,6 +12,7 @@ import { editCourse, getCourse } from 'services/redux/actions/course'
 import { connect } from 'react-redux'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
+import MyLoading from 'components/common/MyLoading'
 const EditCourse = ({
   getCourse,
   editCourse,
@@ -19,6 +20,7 @@ const EditCourse = ({
   match
 }) => {
   const [isChange, setIsChange] = useState(false)
+  const [loadingEdit, setLoadingEdit] = useState(false)
   const history = useHistory()
   const { t } = useTranslation()
 
@@ -64,14 +66,19 @@ const EditCourse = ({
   }
 
   const handleSubmit = async (e) => {
+    setLoadingEdit(true)
     setIsChange(false)
     e.preventDefault()
     localStorage.removeItem('courseDraft')
     await editCourse(course._id, courseData)
+    setLoadingEdit(false)
     history.replace(`/courses/course_detail/${course._id}`)
   }
+
+  if (loadingEdit) return <MyLoading />
+
   return loading || course === null ? (
-    <Spinner name="cube-grid" color="aqua" />
+    <MyLoading />
   ) : (
     <React.Fragment>
       <Prompt when={isChange} message={t('modal.unSaved')} />

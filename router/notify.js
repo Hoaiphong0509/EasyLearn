@@ -22,7 +22,7 @@ router.get('/', authorize(), async (req, res) => {
 
     res.json(result)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -50,7 +50,7 @@ router.put('/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     res.json(result)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -81,7 +81,7 @@ router.delete('/:id', authorize(), checkObjectId('id'), async (req, res) => {
 
     res.json({ msg: 'Delete notify successfully' })
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }

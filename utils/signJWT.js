@@ -11,7 +11,6 @@ const signJWT = (userId) => {
 
     jwt.sign(payload, SECRET, { expiresIn: TOKEN_EXPRIRES }, (err, token) => {
       if (err) {
-        console.log(`Error in signJWT: ${err.message}`)
         return reject(err)
       }
       resolve(token)

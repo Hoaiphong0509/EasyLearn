@@ -20,6 +20,7 @@ import s from './styles.module.scss'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import Spinner from 'react-spinkit'
+import { LoadingButton } from '@mui/lab'
 
 const NotifyBox = ({
   getMyNotifies,
@@ -42,7 +43,7 @@ const NotifyBox = ({
   const open = Boolean(anchorEl)
 
   return loading || notifies === null ? (
-    <Spinner name="cube-grid" color="aqua" />
+    <LoadingButton />
   ) : (
     <>
       <Badge badgeContent={notifies.length}>

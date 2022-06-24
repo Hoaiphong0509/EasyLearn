@@ -77,7 +77,6 @@ const CreateBanner = ({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("ALO");
     setIsSubmitedDataBanner(true)
     addBanner(formData)
   }

@@ -22,23 +22,8 @@ const Section = ({ sections, removeSection, updateSection }) => {
       videos: []
     })
   }
-
-  // const handleUpdate = (e) => {
-  //   e.preventDefault()
-  //   console.log('EDIT:', edit)
-  //   console.log('EDIT ID:', edit._id)
-  //   updateSection(edit._id, edit)
-  // }
-  // const handleChange = (e) => {
-  //   setEdit({
-  //     ...edit,
-  //     name: e.target.value
-  //   })
-  // }
-
   const handleSetVideo = (index, video) => {
     setEdit({ ...edit, videos: video })
-    // onSections({...edit, videos:video});
     updateSection(sections[index]._id, {
       ...sections[index],
       videos: video

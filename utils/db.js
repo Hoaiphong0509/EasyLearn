@@ -10,7 +10,6 @@ const connectDB = async () => {
     console.log(`MongoDB Connected 📑📑📑`)
   } catch (err) {
     console.log(`Unable to connect with mongoDB 🚫🚫🚫 \n${err}`)
-    // Exit process with failure
     process.exit(1)
   }
 }

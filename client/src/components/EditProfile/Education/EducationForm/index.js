@@ -16,13 +16,12 @@ import { addEducation } from 'services/redux/actions/profile'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { subDays } from 'date-fns'
 
-const EducationForm = ({ addEducation }) => {
+const EducationForm = ({ addEducation, handleSetLoading }) => {
   const { t } = useTranslation()
   const history = useHistory()
   const [formData, setFormData] = useState({
@@ -41,9 +40,11 @@ const EducationForm = ({ addEducation }) => {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    handleSetLoading(true)
     e.preventDefault()
-    addEducation(formData, history)
+    await addEducation(formData, history)
+    handleSetLoading(false)
   }
 
   return (

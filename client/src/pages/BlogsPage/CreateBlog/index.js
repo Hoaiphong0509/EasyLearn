@@ -46,12 +46,8 @@ const CreateBlog = ({ addBlog }) => {
   const blg = useSelector((state) => state.blog)
 
   useEffect(() => {
-    console.log('new blog: ', blg)
-
     if (blg && blg.blog) history.push(`/blogs/add_img/${blg.blog._id}`)
-    return () => {
-      console.log('Prev blog: ', blg)
-    }
+    return () => {}
   }, [blg, history])
 
   const handleChangeTitle = (e) => {
@@ -133,13 +129,17 @@ const CreateBlog = ({ addBlog }) => {
               <Item name="deleteColumn" />
             </Toolbar>
           </HtmlEditor>
-          <Button
-            className={s.btn}
-            disabled={!isRequired(formData.title) || !isRequired(formData.text)}
-            type="submit"
-          >
-            {t('save')}
-          </Button>
+          <FormControl className={s.footer}>
+            <Button
+              className={s.buttonSubmit}
+              disabled={
+                !isRequired(formData.title) || !isRequired(formData.text)
+              }
+              type="submit"
+            >
+              {t('save')}
+            </Button>
+          </FormControl>
         </FormControl>
       </form>
     </Box>

@@ -1,5 +1,4 @@
 import { makeStyles } from '@mui/styles'
-import { hover } from '@testing-library/user-event/dist/hover'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -8,9 +7,6 @@ const useStyles = makeStyles(() => ({
 
     '& .MuiSvgIcon-root': {
       fontSize: '20px'
-    },
-    '& .MuiListItemIcon-root': {
-      // textAlign: 'center',
     },
     '& .MuiListItemButton-root': {
       marginBottom: '5px',

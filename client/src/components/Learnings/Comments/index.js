@@ -8,7 +8,6 @@ import CommentForm from './CommentForm'
 import CommentItem from './CommentItem'
 
 const Comments = ({ auth: { user }, course, section, video }) => {
-  console.log(video && video.comments)
   return (
     <Box className={s.root} sx={{ padding: '20px' }}>
       {video && (

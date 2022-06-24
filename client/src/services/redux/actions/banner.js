@@ -71,8 +71,6 @@ export const toggleActiveBanner = (id) => async (dispatch) => {
       payload: res
     })
   } catch (err) {
-    console.log({ err })
-
     if (err) {
       showToast({
         type: TOAST_TYPE.ERROR
@@ -93,8 +91,6 @@ export const deleteBanner = (id) => async (dispatch) => {
       payload: id
     })
   } catch (err) {
-    console.log({ err })
-
     if (err) {
       showToast({
         type: TOAST_TYPE.ERROR

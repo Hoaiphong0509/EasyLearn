@@ -1,5 +1,5 @@
 import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
 
@@ -24,8 +24,13 @@ const BlogItem = ({
   const { _id, user: userBlog, title, author, likes, img } = blog
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
-    likes?.some((l) => l?.user.toString() === user?._id)
+    user ? likes.some((l) => l.user.toString() === user._id) : false
   )
+
+  useEffect(() => {
+    if (likes.some((l) => l.user.toString() === user?._id)) setIsLiked(true)
+  }, [user, likes])
+
   const imgBlg = `url("${img && img.length > 0 ? img : BLOG_IMG_DEFAULT}")`
 
   return (
@@ -50,10 +55,13 @@ const BlogItem = ({
           </Box>
         </Link>
         <div className={s.footer}>
-          <Link to={`/profile/${userBlog}`} onClick={()=> {
-            cleanUpProfile()
-            scrollToTop()
-          }}>
+          <Link
+            to={`/profile/${userBlog}`}
+            onClick={() => {
+              cleanUpProfile()
+              scrollToTop()
+            }}
+          >
             <div className={s.in4}>
               <Avatar src={author.avatar} alt={author.name} />
               <Typography className={s.creator} variant="p">
@@ -86,7 +94,7 @@ const BlogItem = ({
               </IconButton>
             )}
             <Typography className={s.numberLikes} variant="p">
-              {likes && likes.length > 0 ? likes.length : '0'}
+              {numLikes}
             </Typography>
           </div>
         </div>

@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     const courses = await Course.find().sort({ date: -1 })
     res.json(courses)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -40,7 +40,7 @@ router.get('/get_courses_approved', async (req, res) => {
     const result = courses.filter((c) => c.status === 'approved')
     res.send(result)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -59,7 +59,7 @@ router.get(
       )
       res.send(result)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -76,7 +76,7 @@ router.get('/get_mylearnings', authorize(), async (req, res) => {
     )
     res.json(learnings)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -94,7 +94,7 @@ router.get('/get_mycourses', authorize(), async (req, res) => {
     // const result = blogs.filter((b) => b.user._id.toString() === req.user.id)
     // res.send(result)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -112,7 +112,7 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
 
     res.json(course)
   } catch (err) {
-    console.log(err.message)
+    
 
     res.status(500).send('Server Error')
   }
@@ -168,7 +168,6 @@ router.post(
 
       res.json(course)
     } catch (error) {
-      console.log('error:', error.message)
       res.send('Something went wrong please try again later..')
     }
   }
@@ -208,7 +207,6 @@ router.post(
 
       return res.send(course)
     } catch (error) {
-      console.log('error:', error.message)
       res.send('Something went wrong please try again later..')
     }
   }
@@ -268,7 +266,7 @@ router.put(
 
       res.send(result)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -330,7 +328,7 @@ router.post(
 
       res.json(course.comments)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -370,7 +368,7 @@ router.delete(
 
       res.json(course.comments)
     } catch (err) {
-      console.log(err.message)
+      
       return res.status(500).send('Server Error')
     }
   }
@@ -417,7 +415,7 @@ router.delete(
 
       res.json(profile.course)
     } catch (err) {
-      console.log(err.message)
+      
 
       res.status(500).send('Server Error')
     }

@@ -316,7 +316,6 @@ router.get('/banners', authorize(role.Moderator), async (req, res) => {
     const banners = await Banner.find()
     return res.send(banners)
   } catch (error) {
-    console.log('error:', error.message)
     res.send('Something went wrong please try again later..')
   }
 })
@@ -326,8 +325,6 @@ router.get('/banners', authorize(role.Moderator), async (req, res) => {
 // @access   Moderator Admin
 router.post('/banners', authorize(role.Moderator), async (req, res) => {
   const { titleVi, titleEn, descVi, descEn, link, color1, color2 } = req.body
-  console.log('color1', color1)
-  console.log('color2', color2)
   try {
     const newBanner = new Banner({
       titleVi,
@@ -343,7 +340,7 @@ router.post('/banners', authorize(role.Moderator), async (req, res) => {
     const banner = await newBanner.save()
     res.json(banner)
   } catch (error) {
-    console.log('error:', error.message)
+   
     res.send('Something went wrong please try again later..')
   }
 })
@@ -381,7 +378,7 @@ router.put(
 
       return res.send(banner)
     } catch (error) {
-      console.log('error:', error.message)
+     
       res.send('Something went wrong please try again later..')
     }
   }
@@ -401,7 +398,7 @@ router.put(
       await banner.save()
       res.json(banner)
     } catch (error) {
-      console.log('error:', error.message)
+     
       res.send('Something went wrong please try again later..')
     }
   }
@@ -427,7 +424,7 @@ router.delete(
       await banner.remove()
       res.json({ msg: 'Banner removed' })
     } catch (error) {
-      console.log('error:', error.message)
+     
       res.send('Something went wrong please try again later..')
     }
   }

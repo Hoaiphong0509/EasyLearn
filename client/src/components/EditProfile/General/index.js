@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { editProfile } from 'services/redux/actions/profile'
+import MyLoading from 'components/common/MyLoading'
 
 const initialState = {
   bio: '',
@@ -25,6 +26,7 @@ const initialState = {
 
 const General = ({ user, profile, editProfile }) => {
   const [formData, setFormData] = useState(initialState)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (profile) {
@@ -52,11 +54,15 @@ const General = ({ user, profile, editProfile }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault()
-
-    editProfile(formData)
+    await editProfile(formData)
+    setLoading(false)
   }
+
+  if (loading) return <MyLoading />
+
   return (
     <React.Fragment>
       <section className={cn(s.root, c.root)}>

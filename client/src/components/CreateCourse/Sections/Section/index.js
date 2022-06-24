@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SectionForm from '../SectionForm'
-import { Button } from '@mui/material'
+import { IconButton } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import Videos from './Videos'
@@ -25,7 +25,6 @@ const Section = ({ sections, removeSection, updateSection }) => {
 
   const handleSetVideo = (index, video) => {
     setEdit({ ...edit, videos: video })
-    // onSections({...edit, videos:video});
     updateSection(sections[index].id, { ...sections[index], videos: video })
   }
 
@@ -39,24 +38,25 @@ const Section = ({ sections, removeSection, updateSection }) => {
         <section className={s.section}>
           <div key={section.id}>{section.name}</div>
           <div className={s.icons}>
-            <Button
+            <IconButton
               color="error"
-              className={s.btn}
               variant="outlined"
-              startIcon={<DeleteOutlineIcon />}
               onClick={() => removeSection(section.id)}
-            />
-            <Button
-              className={s.btn}
+            >
+              <DeleteOutlineIcon />
+            </IconButton>
+            <IconButton
+              color="primary"
               variant="outlined"
-              startIcon={<EditIcon />}
               onClick={() =>
                 setEdit({
                   id: section.id,
                   name: section.name
                 })
               }
-            />
+            >
+              <EditIcon />
+            </IconButton>
           </div>
         </section>
         <section className={s.videos}>

@@ -16,13 +16,12 @@ import { addExperience } from 'services/redux/actions/profile'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { subDays } from 'date-fns'
 
-const ExperienceForm = ({ addExperience }) => {
+const ExperienceForm = ({ addExperience, handleSetLoading }) => {
   const { t } = useTranslation()
   const history = useHistory()
   const [formData, setFormData] = useState({
@@ -40,9 +39,11 @@ const ExperienceForm = ({ addExperience }) => {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    handleSetLoading(true)
     e.preventDefault()
-    addExperience(formData, history)
+    await addExperience(formData, history)
+    handleSetLoading(false)
   }
 
   return (
@@ -123,7 +124,6 @@ const ExperienceForm = ({ addExperience }) => {
                   to: moment(newValue).format('L')
                 })
               }}
-              // minDate={moment(from).format('l')}
               maxDate={new Date()}
               disabled={current}
               renderInput={(params) => <TextField {...params} />}

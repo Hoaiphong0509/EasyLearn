@@ -1,12 +1,4 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from '@mui/material'
+import { Box, List, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import EducationForm from './EducationForm'
@@ -15,13 +7,18 @@ import EducationItem from './EducationItem'
 import { useTranslation } from 'react-i18next'
 
 import s from './styles.module.scss'
+import MyLoading from 'components/common/MyLoading'
 
 const Education = ({ profile }) => {
   const { education } = profile
   const { t } = useTranslation()
 
+  const [loading, setLoading] = useState(false)
+
+  const handleSetLoading = (isLoading) => setLoading(isLoading)
   useEffect(() => {}, [profile])
 
+  if (loading) return <MyLoading />
   return (
     <React.Fragment>
       <Box className={s.root}>
@@ -40,7 +37,7 @@ const Education = ({ profile }) => {
           )}
         </Box>
         <Box className={s.formExp}>
-          <EducationForm />
+          <EducationForm handleSetLoading={handleSetLoading}/>
         </Box>
       </Box>
     </React.Fragment>

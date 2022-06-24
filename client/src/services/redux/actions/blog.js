@@ -83,15 +83,9 @@ export const addLike = (id) => async (dispatch) => {
       type: BLOGS.BLOG_ERRORS,
       payload: { msg: err }
     })
-
-    showToast({
-      message: err.response.statusText,
-      type: TOAST_TYPE.ERROR
-    })
   }
 }
 
-// Remove like
 export const removeLike = (id) => async (dispatch) => {
   try {
     const res = await api.put(`/blog/unlike/${id}`)
@@ -109,11 +103,6 @@ export const removeLike = (id) => async (dispatch) => {
     dispatch({
       type: BLOGS.BLOG_ERRORS,
       payload: { msg: err }
-    })
-
-    showToast({
-      message: err.response.statusText,
-      type: TOAST_TYPE.ERROR
     })
   }
 }

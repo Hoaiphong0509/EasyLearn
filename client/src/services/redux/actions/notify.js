@@ -41,11 +41,8 @@ export const deleteNotify = (id) => async (dispatch) => {
       payload: id
     })
   } catch (err) {
-    console.log({ err })
-
     if (err) {
       showToast({
-        // message: t('auth.invalidInfor'),
         type: TOAST_TYPE.ERROR
       })
     }

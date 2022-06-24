@@ -1,13 +1,5 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from '@mui/material'
-import React from 'react'
+import { Box, List, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import ExperienceForm from './ExperienceForm'
 import ExperienceItem from './ExperienceItem'
@@ -15,12 +7,18 @@ import ExperienceItem from './ExperienceItem'
 import { useTranslation } from 'react-i18next'
 
 import s from './styles.module.scss'
+import MyLoading from 'components/common/MyLoading'
 
 const Experience = ({ profile }) => {
   const { t } = useTranslation()
   const { experience } = profile
 
+  const [loading, setLoading] = useState(false)
+
+  const handleSetLoading = (isLoading) => setLoading(isLoading)
   useEffect(() => {}, [profile])
+
+  if (loading) return <MyLoading />
 
   return (
     <React.Fragment>
@@ -40,7 +38,7 @@ const Experience = ({ profile }) => {
           )}
         </Box>
         <Box className={s.formExp}>
-          <ExperienceForm />
+          <ExperienceForm handleSetLoading={handleSetLoading} />
         </Box>
       </Box>
     </React.Fragment>

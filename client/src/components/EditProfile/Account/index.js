@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Chip,
-  Divider,
   FormControl,
   TextField
 } from '@mui/material'
@@ -25,8 +23,6 @@ const Account = ({ user }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log(formData)
   }
 
   return (

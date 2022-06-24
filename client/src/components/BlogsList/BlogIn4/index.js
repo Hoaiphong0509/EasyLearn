@@ -12,7 +12,7 @@ import {
   Tooltip,
   Typography
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 import s from './styles.module.scss'
@@ -66,8 +66,12 @@ const BlogIn4 = ({
 
   const [numLikes, setNumLikes] = useState(likes.length)
   const [isLiked, setIsLiked] = useState(
-    likes?.some((l) => l?.user.toString() === user?._id)
+    user !== null && likes?.some((l) => l?.user.toString() === user?._id)
   )
+
+  useEffect(() => {
+    if (likes.some((l) => l.user.toString() === user?._id)) setIsLiked(true)
+  }, [user, likes])
 
   const [state, setState] = useState({
     right: false

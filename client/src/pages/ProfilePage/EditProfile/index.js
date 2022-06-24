@@ -23,10 +23,7 @@ const EditProfile = ({
 }) => {
   useEffect(() => {
     getCurrentProfile()
-  }, [])
-  // useEffect(() => {
-  //   getCurrentProfile()
-  // }, [getCurrentProfile, profile, user])
+  }, [getCurrentProfile])
 
   const [value, setValue] = useState(0)
 

@@ -17,10 +17,6 @@ const useUnsaved = (
 
   const routerPrompt = <Prompt when={isDirty} message={message} />
 
-  // const routerPrompt = isDirty ? (
-  //   <MyModal setOpenModal={setDirty} title={title} message={message} />
-  // ) : null
-
   return [routerPrompt, () => setDirty(true), () => setDirty(false)]
 }
 

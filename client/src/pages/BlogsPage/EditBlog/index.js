@@ -13,6 +13,7 @@ import HtmlEditor, {
 import Spinner from 'react-spinkit'
 import { editBlog, getBlog } from 'services/redux/actions/blog'
 import { connect } from 'react-redux'
+import MyLoading from 'components/common/MyLoading'
 
 const sizeValues = ['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']
 const fontValues = [
@@ -30,6 +31,7 @@ const headerValues = [false, 1, 2, 3, 4, 5]
 const EditBlog = ({ getBlog, blog: { blog, loading }, match, editBlog }) => {
   const textRef = useRef(null)
   const history = useHistory()
+  const [loadingEdit, setLoadingEdit] = useState(false)
 
   useEffect(() => {
     getBlog(match.params.id)
@@ -50,12 +52,17 @@ const EditBlog = ({ getBlog, blog: { blog, loading }, match, editBlog }) => {
   }
 
   const handleSubmit = async (e) => {
+    setLoadingEdit(true)
     e.preventDefault()
     await editBlog(blog._id, formData)
+    setLoadingEdit(false)
     history.replace(`/blogs/blog_detail/${blog._id}`)
   }
+
+  if (loadingEdit) return <MyLoading />
+  
   return loading || blog === null ? (
-    <Spinner name="cube-grid" color="aqua" />
+    <MyLoading />
   ) : (
     <Box className={s.root}>
       <form onSubmit={handleSubmit} className={s.form}>

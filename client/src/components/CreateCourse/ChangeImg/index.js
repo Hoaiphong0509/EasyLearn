@@ -11,10 +11,12 @@ import { useHistory } from 'react-router-dom'
 import { validateSizeFile } from 'utils/AppUltils'
 import { showToast } from 'utils/UIHelper'
 import { COURSE_IMG_DEFAULT, TOAST_TYPE } from 'constants/AppConstants'
+import MyLoading from 'components/common/MyLoading'
 
 const ChangeImg = ({ changeImgCourse, cleanUpCourse, course }) => {
   const [selectedImage, setSelectedImage] = useState()
   const [imgForm, setImgForm] = useState()
+  const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
   const history = useHistory()
 
@@ -38,14 +40,19 @@ const ChangeImg = ({ changeImgCourse, cleanUpCourse, course }) => {
 
   const handleContinue = async () => {
     try {
+      setLoading(true)
       if (!imgForm) return history.replace(`/courses/course_detail/${_id}`)
       await changeImgCourse(_id, imgForm)
       cleanUpCourse()
+      setLoading(false)
       return history.replace(`/courses/course_detail/${_id}`)
     } catch (error) {
+      setLoading(false)
       return history.replace(`/`)
     }
   }
+
+  if (loading) return <MyLoading />
 
   return (
     <React.Fragment>
@@ -53,7 +60,13 @@ const ChangeImg = ({ changeImgCourse, cleanUpCourse, course }) => {
         <form className={s.form}>
           <Box className={s.imgCourse}>
             <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : (img.length > 0 ? img : COURSE_IMG_DEFAULT)}
+              src={
+                selectedImage
+                  ? URL.createObjectURL(selectedImage)
+                  : img.length > 0
+                  ? img
+                  : COURSE_IMG_DEFAULT
+              }
               alt="img"
             />
           </Box>

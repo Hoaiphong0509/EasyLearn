@@ -22,7 +22,7 @@ router.get('/me', authorize(), async (req, res) => {
 
     res.json(profile)
   } catch (err) {
-    console.log(err.message)
+    
     res.status(500).send('Server Error')
   }
 })
@@ -33,7 +33,6 @@ router.get('/me', authorize(), async (req, res) => {
 router.post('/me', authorize(), async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    console.log({ errors: errors.array() })
     return res.status(400).json({ errors: errors.array() })
   }
 
@@ -66,7 +65,6 @@ router.post('/me', authorize(), async (req, res) => {
     )
     return res.json(profile)
   } catch (err) {
-    console.log({ errors: errors.array() })
     return res.status(500).send('Server Error')
   }
 })
@@ -87,7 +85,7 @@ router.get(
 
       return res.json(profile)
     } catch (err) {
-      console.log(err.message)
+      
       return res.status(500).json({ msg: 'Server error' })
     }
   }
@@ -145,7 +143,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -165,7 +163,7 @@ router.delete('/experience/:exp_id', authorize(), async (req, res) => {
     await foundProfile.save()
     return res.status(200).json(foundProfile)
   } catch (error) {
-    console.log(err.message)
+    
     return res.status(500).json({ msg: 'Server error' })
   }
 })
@@ -187,7 +185,6 @@ router.put(
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      console.log(errors)
       return res.status(400).json({ errors: errors.array() })
     }
 
@@ -200,7 +197,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      console.log(err.message)
+      
       res.status(500).send('Server Error')
     }
   }
@@ -219,7 +216,7 @@ router.delete('/education/:edu_id', authorize(), async (req, res) => {
     await foundProfile.save()
     return res.status(200).json(foundProfile)
   } catch (error) {
-    console.log(err.message)
+    
     return res.status(500).json({ msg: 'Server error' })
   }
 })

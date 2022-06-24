@@ -12,8 +12,6 @@ const authorize = (roles = []) => {
         if (error) {
           return res.status(401).json({ msg: 'Token is not valid' })
         } else {
-          // req.user = decoded || decoded.user
-          // const user = await User.findById(req.user.id)
           req.user = decoded.user
           const user = await User.findById(req.user.id)
           if (roles.length && !user.roles.includes(roles)) {
