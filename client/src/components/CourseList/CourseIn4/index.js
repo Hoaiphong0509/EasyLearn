@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Avatar,
   Box,
@@ -88,9 +87,10 @@ const CourseIn4 = ({
 
   const [checked, setChecked] = useState(true)
 
-  useEffect(async () => {
-    if (user) await getCurrentProfile()
-  }, [])
+  useEffect(() => {
+    const fetchProfile = async () => await getCurrentProfile()
+    if (user) fetchProfile()
+  }, [getCurrentProfile, user])
 
   if (profile && students.some((s) => s.user === profile.user)) {
     return <Redirect to={`/learning/${_id}`} />
@@ -130,7 +130,7 @@ const CourseIn4 = ({
   const handleUnapprovedCourse = async () => {
     Swal.fire({
       title: 'Xác nhận thông tin',
-      text: "Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?",
+      text: 'Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#18e06f',
@@ -146,7 +146,7 @@ const CourseIn4 = ({
   const handleApprovedCourse = async () => {
     Swal.fire({
       title: 'Xác nhận thông tin',
-      text: "Bạn có cho phép thị bài khoá học ở trên EasyLearn không?",
+      text: 'Bạn có cho phép thị bài khoá học ở trên EasyLearn không?',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#18e06f',

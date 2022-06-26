@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
@@ -15,8 +14,9 @@ const CourseDetail = ({
   course: { course, loading },
   match
 }) => {
-  useEffect(async () => {
-    await getCourse(match.params.id)
+  useEffect(() => {
+    const fetchCourse = async () => await getCourse(match.params.id)
+    fetchCourse()
   }, [getCourse, match.params.id])
 
   return loading || course === null ? (

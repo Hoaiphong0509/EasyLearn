@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 export const isServer = typeof window === 'undefined'
 
 export const isRequired = (value) => (value ? true : false)
@@ -32,7 +31,7 @@ export const getCodeYoutube = (value) => {
 }
 
 export const validateSizeFile = (input) => {
-  const fileSize = input.files[0].size / 1024 / 1024 
+  const fileSize = input.files[0].size / 1024 / 1024
   return fileSize > 1 ? true : false
 }
 

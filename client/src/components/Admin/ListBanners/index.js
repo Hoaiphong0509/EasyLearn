@@ -58,10 +58,6 @@ ListBanners.prototype = {
   toggleActiveBanner: PropTypes.func.isRequired,
   deleteBanner: PropTypes.func.isRequired
 }
-// const mapStateToProps = (state) => ({
-//   banner: state.banner
-// })
-
 export default connect(null, {
   toggleActiveBanner,
   deleteBanner
