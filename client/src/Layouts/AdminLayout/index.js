@@ -1,15 +1,12 @@
-import { Box, Container, Grid } from '@mui/material'
-import React from 'react'
-import useStyles from './useStyles'
-import s from './styles.module.scss'
+import { Box } from '@mui/material'
 import Header from 'components/Admin/common/Header'
 import Nav from 'components/Admin/common/Nav'
 import Footer from 'components/Footer'
+import s from './styles.module.scss'
 
 const AdminLayout = (props) => {
   const { children } = props
 
-  const c = useStyles()
   return (
     <Box className={s.root}>
       <Nav />

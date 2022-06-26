@@ -8,7 +8,7 @@ import s from './styles.module.scss'
 import { cleanUpCourse } from 'services/redux/actions/course'
 
 const CourseItemSmall = ({ cleanUpCourse, course }) => {
-  const { _id, title, img, creator, avatar, user } = course
+  const { _id, title, img } = course
   return (
     <React.Fragment>
       <Box className={s.root}>

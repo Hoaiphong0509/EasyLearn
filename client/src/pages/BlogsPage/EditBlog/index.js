@@ -1,19 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react'
 import { Box, Button, FormControl, TextField } from '@mui/material'
-import { useHistory } from 'react-router-dom'
-import s from './styles.module.scss'
-import { isRequired } from 'utils/AppUltils'
 import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { isRequired } from 'utils/AppUltils'
+import s from './styles.module.scss'
 
-import HtmlEditor, {
-  Toolbar,
-  MediaResizing,
-  Item
-} from 'devextreme-react/html-editor'
-import Spinner from 'react-spinkit'
-import { editBlog, getBlog } from 'services/redux/actions/blog'
-import { connect } from 'react-redux'
 import MyLoading from 'components/common/MyLoading'
+import HtmlEditor, {
+  Item, MediaResizing, Toolbar
+} from 'devextreme-react/html-editor'
+import { connect } from 'react-redux'
+import { editBlog, getBlog } from 'services/redux/actions/blog'
 
 const sizeValues = ['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']
 const fontValues = [

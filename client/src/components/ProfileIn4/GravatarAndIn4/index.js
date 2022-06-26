@@ -40,35 +40,35 @@ const GravatarAndIn4 = ({ numberCourses, numberBlogs, social, avatar }) => {
           <List className={s.list}>
             {social.youtube && (
               <ListItem className={s.listItem}>
-                <a target="_blank" href={social.youtube}>
+                <a target="_blank" rel="noreferrer" href={social.youtube}>
                   <Chip className={s.chip} label="Youtube"></Chip>
                 </a>
               </ListItem>
             )}
             {social.twitter && (
               <ListItem className={s.listItem}>
-                <a target="_blank" href={social.twitter}>
+                <a target="_blank" rel="noreferrer" href={social.twitter}>
                   <Chip className={s.chip} label="Twitter"></Chip>
                 </a>
               </ListItem>
             )}
             {social.facebook && (
               <ListItem className={s.listItem}>
-                <a target="_blank" href={social.facebook}>
+                <a target="_blank" rel="noreferrer" href={social.facebook}>
                   <Chip className={s.chip} label="Facebook"></Chip>
                 </a>
               </ListItem>
             )}
             {social.linkedin && (
               <ListItem className={s.listItem}>
-                <a target="_blank" href={social.linkedin}>
+                <a target="_blank" rel="noreferrer" href={social.linkedin}>
                   <Chip className={s.chip} label="Linkedin"></Chip>
                 </a>
               </ListItem>
             )}
             {social.instagram && (
               <ListItem className={s.listItem}>
-                <a target="_blank" href={social.instagram}>
+                <a target="_blank" rel="noreferrer" href={social.instagram}>
                   <Chip className={s.chip} label="Instagram"></Chip>
                 </a>
               </ListItem>

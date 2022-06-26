@@ -1,13 +1,11 @@
-import { Box, Container, Grid } from '@mui/material'
-import Nav from 'components/Nav'
-import React from 'react'
-import useStyles from './useStyles'
-import s from './styles.module.scss'
-import Header from 'components/Header'
+import { Box } from '@mui/material'
 import Footer from 'components/Footer'
+import Header from 'components/Header'
+import Nav from 'components/Nav'
+import s from './styles.module.scss'
 
 const EditProfileLayout = (props) => {
-  const c = useStyles()
+
   return (
     <Box>
       <Header />

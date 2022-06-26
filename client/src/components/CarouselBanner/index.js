@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
 import { Box } from '@mui/material'
-import logoZoo from 'assets/img/Zoologo.png'
 import facebook from 'assets/img/fb.png'
 import youtube from 'assets/img/youtube.png'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Autoplay } from 'swiper'
-import 'swiper/css/bundle'
+import logoZoo from 'assets/img/Zoologo.png'
+import React, { useEffect } from 'react'
+import { Autoplay, Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/autoplay'
-import { useTranslation } from 'react-i18next'
+import 'swiper/css/bundle'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -58,7 +57,6 @@ const CarouselBanner = ({ banner: { banners }, getBannersActive }) => {
   useEffect(() => {
     getBannersActive()
   }, [getBannersActive])
-  const { t } = useTranslation()
 
   const carrouselBanner = banners
     ? banners.length > 0

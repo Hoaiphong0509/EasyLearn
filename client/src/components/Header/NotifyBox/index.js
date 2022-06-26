@@ -8,28 +8,30 @@ import {
   Tooltip,
   Typography
 } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { connect } from 'react-redux'
 
-import cookies from 'js-cookie'
-import { getMyNotifies, deleteNotify } from 'services/redux/actions/notify'
-import s from './styles.module.scss'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import Spinner from 'react-spinkit'
 import { LoadingButton } from '@mui/lab'
+import cookies from 'js-cookie'
+import { deleteNotify, getMyNotifies } from 'services/redux/actions/notify'
+import s from './styles.module.scss'
 
 const NotifyBox = ({
   getMyNotifies,
   deleteNotify,
   notify: { notifies, loading }
 }) => {
-  useEffect(async () => {
-    await getMyNotifies()
-  }, [])
+  useEffect(() => {
+    const fetchNotify = async () => {
+      await getMyNotifies()
+    }
+    fetchNotify()
+  }, [getMyNotifies])
 
   const { t } = useTranslation()
 

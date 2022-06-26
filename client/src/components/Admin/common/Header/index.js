@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import {
-  Avatar,
-  Badge,
   Box,
   FormControl,
   FormControlLabel,
   IconButton,
   Tooltip
 } from '@mui/material'
+import PropTypes from 'prop-types'
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
 
 import HomeIcon from '@mui/icons-material/Home'
 
-import s from './styles.module.scss'
-import NotifyBox from 'components/Header/NotifyBox'
-import { Link } from 'react-router-dom'
+import AvatarBox from 'components/Header/AvatarBox'
 import LanguageSwitch from 'components/Header/LanguageSwitch'
-import { useTranslation } from 'react-i18next'
+import NotifyBox from 'components/Header/NotifyBox'
 import i18next from 'i18next'
 import cookies from 'js-cookie'
-import AvatarBox from 'components/Header/AvatarBox'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import s from './styles.module.scss'
 
 const languages = [
   {

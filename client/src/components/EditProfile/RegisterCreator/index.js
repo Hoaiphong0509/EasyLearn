@@ -1,15 +1,10 @@
-import React from 'react'
 import {
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  TextField,
   Typography
 } from '@mui/material'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import s from './styles.module.scss'
 import FormRegisterCreator from './FormRegisterCreator'
+import s from './styles.module.scss'
 
 const RegisterCreator = () => {
   const { t } = useTranslation()

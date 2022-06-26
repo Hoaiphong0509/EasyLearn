@@ -69,7 +69,7 @@ const Nav = ({ auth: { user } }) => {
       <div>
         <Box sx={{ p: 3, textAlign: 'center' }}>
           <Link to="/admin/dashboard">
-            <img src="/logoSymbol.png" />
+            <img src="/logoSymbol.png" alt='logo'/>
           </Link>
         </Box>
         <Box sx={{ px: 2 }}>

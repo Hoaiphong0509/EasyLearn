@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 
-import { getBlogs, getMyBlogs } from 'services/redux/actions/blog'
-import { getCurrentProfile } from 'services/redux/actions/profile'
-import { getMyLearnings, getMyCourses } from 'services/redux/actions/course'
+import MyStuff from 'components/MyStuff'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import MyStuff from 'components/MyStuff'
 import Spinner from 'react-spinkit'
+import { getMyBlogs } from 'services/redux/actions/blog'
+import { getMyCourses, getMyLearnings } from 'services/redux/actions/course'
+import { getCurrentProfile } from 'services/redux/actions/profile'
 
 const MyStuffPage = ({
   auth: {
@@ -33,10 +33,16 @@ const MyStuffPage = ({
 }) => {
   useEffect(() => {
     getCurrentProfile()
+  }, [getCurrentProfile])
+  useEffect(() => {
     getMyCourses()
+  }, [getMyCourses])
+  useEffect(() => {
     getMyLearnings()
+  }, [getMyLearnings])
+  useEffect(() => {
     getMyBlogs()
-  }, [])
+  }, [getMyBlogs])
 
   return ld_pr ||
     ld_us ||

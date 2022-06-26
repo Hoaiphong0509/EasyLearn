@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid'
 import {
   Card,
   CardHeader,
@@ -8,11 +7,11 @@ import {
   ListItemAvatar,
   ListItemText
 } from '@mui/material'
-import { Link } from 'react-router-dom'
+import Cloud from 'assets/img/admin/cloud.png'
 import GitHub from 'assets/img/admin/github.png'
 import MongoDB from 'assets/img/admin/mongo.png'
-import Cloud from 'assets/img/admin/cloud.png'
 import OurProduct from 'assets/img/admin/product.png'
+import { v4 as uuid } from 'uuid'
 
 const products = [
   {
@@ -54,7 +53,7 @@ const Products = (props) => (
     <Divider />
     <List>
       {products.map((product, i) => (
-        <a target='_blank' href={product.url} key={i}>
+        <a target="_blank" rel="noreferrer" href={product.url} key={i}>
           <ListItem
             divider={i < products.length - 1}
             style={{ cursor: 'pointer' }}

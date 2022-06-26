@@ -4,9 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import CourseItem from 'components/CourseList/CourseItem'
-import React, { useEffect } from 'react'
-import { getMyLearnings } from 'services/redux/actions/course'
 import { useTranslation } from 'react-i18next'
+import { getMyLearnings } from 'services/redux/actions/course'
 
 const MyLearnings = ({ learnings: courses }) => {
   const { t } = useTranslation()

@@ -1,6 +1,5 @@
-import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
+import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import { ROLES } from 'constants/AppConstants'
 
 const CardStudent = (props) => {

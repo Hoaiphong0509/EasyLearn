@@ -1,13 +1,12 @@
-import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
-import React from 'react'
-import s from './styles.module.scss'
-import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
+import { Avatar, Box, Button, Typography } from '@mui/material'
+import s from './styles.module.scss'
 
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { deleteFeedback } from 'services/redux/actions/moderator'
 import { useHistory } from 'react-router-dom'
+import { deleteFeedback } from 'services/redux/actions/moderator'
 
 import moment from 'moment'
 

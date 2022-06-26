@@ -1,4 +1,3 @@
-import api from 'utils/api'
 import {
   AUTHS,
   BLOGS,
@@ -6,7 +5,7 @@ import {
   PROFILES,
   USERS
 } from 'constants/AppConstants'
-import { showToast } from 'utils/UIHelper'
+import api from 'utils/api'
 
 export const loadUser = () => async (dispatch) => {
   try {

@@ -1,15 +1,9 @@
-import { ArrowForwardIos, Email } from '@mui/icons-material'
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Chip,
   Divider,
-  Grid,
   Stack,
-  Tab,
-  Tabs,
   Typography
 } from '@mui/material'
 import React from 'react'
@@ -22,10 +16,10 @@ import {
   dennyRequestCreator
 } from 'services/redux/actions/moderator'
 
-import { useTranslation } from 'react-i18next'
-import BlogItemSmall from 'components/ProfileIn4/GeneralIn4/BlogItemSmall'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt'
+import BlogItemSmall from 'components/ProfileIn4/GeneralIn4/BlogItemSmall'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
 const ContentRequest = ({

@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { AUTHS } from 'constants/AppConstants'
+import { Fragment, useEffect } from 'react'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { loadUser } from 'services/redux/actions/auth'
 import store from 'services/store'
 import setAuthToken from 'utils/setAuthToken'
-import { loadUser } from 'services/redux/actions/auth'
-import { AUTHS } from 'constants/AppConstants'
 
 import Route from 'components/Routing/Route'
 

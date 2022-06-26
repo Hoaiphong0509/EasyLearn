@@ -2,17 +2,16 @@ import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Prompt, useHistory } from 'react-router-dom'
 
-import s from './styles.module.scss'
 import Sections from 'components/EditCourse/Sections'
+import s from './styles.module.scss'
 
 import PropTypes from 'prop-types'
 
-import Spinner from 'react-spinkit'
-import { editCourse, getCourse } from 'services/redux/actions/course'
-import { connect } from 'react-redux'
+import MyLoading from 'components/common/MyLoading'
 import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 import { useTranslation } from 'react-i18next'
-import MyLoading from 'components/common/MyLoading'
+import { connect } from 'react-redux'
+import { editCourse, getCourse } from 'services/redux/actions/course'
 const EditCourse = ({
   getCourse,
   editCourse,

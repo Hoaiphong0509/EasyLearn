@@ -1,17 +1,16 @@
-import React, { Fragment } from 'react'
+import { Class, Create, Home } from '@mui/icons-material'
 import {
-  Box,
   Container,
   List,
   ListItemButton,
   ListItemIcon,
   Tooltip
 } from '@mui/material'
-import { Home, Class, Create } from '@mui/icons-material'
-import useStyles from './useStyles'
-import s from './styles.module.scss'
 import cn from 'classnames'
+import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import s from './styles.module.scss'
+import useStyles from './useStyles'
 
 const Nav = () => {
   const c = useStyles()

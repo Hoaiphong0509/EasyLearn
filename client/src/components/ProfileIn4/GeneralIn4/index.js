@@ -1,4 +1,4 @@
-import { ArrowForwardIos, Email } from '@mui/icons-material'
+import { ArrowForwardIos } from '@mui/icons-material'
 import {
   Box,
   Card,
@@ -11,15 +11,15 @@ import {
   Tabs,
   Typography
 } from '@mui/material'
+import moment from 'moment'
 import React from 'react'
 import s from './styles.module.scss'
-import moment from 'moment'
 
-import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
 import TabPanel from 'components/common/TabPanel/TabPanel'
-import CourseItemSmall from './CourseItemSmall'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import BlogItemSmall from './BlogItemSmall'
+import CourseItemSmall from './CourseItemSmall'
 
 const GeneralIn4 = ({
   name,

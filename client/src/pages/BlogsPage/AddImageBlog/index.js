@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
 
-import { getBlog } from 'services/redux/actions/blog'
-import { useTranslation } from 'react-i18next'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getBlog } from 'services/redux/actions/blog'
 
-import Spinner from 'react-spinkit'
 import ChangeImg from 'components/CreateBlog/ChangeImg'
+import Spinner from 'react-spinkit'
 
 const AddImageBlog = ({ blog: { blog, loading }, match }) => {
   useEffect(() => {
     getBlog(match.params.id)
-  }, [getBlog, match.params.id])
+  }, [match.params.id])
 
   return loading || blog === null ? (
     <Spinner name="cube-grid" color="aqua" />

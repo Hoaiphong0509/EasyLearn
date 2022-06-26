@@ -1,5 +1,3 @@
-import React from 'react'
-import Spinner from 'react-spinkit'
 import s from './styles.module.scss'
 
 const MyLoading = () => {

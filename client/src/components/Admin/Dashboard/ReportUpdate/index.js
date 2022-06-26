@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-import { format } from 'date-fns'
-import { v4 as uuid } from 'uuid'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import {
   Box,
   Button,
@@ -14,12 +12,12 @@ import {
   TableSortLabel,
   Tooltip
 } from '@mui/material'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import axios from 'axios'
-import Spinner from 'react-spinkit'
 import { API_GET_COMMITS } from 'constants/AppConstants'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Spinner from 'react-spinkit'
 
 const ReportUpdate = (props) => {
   const [loading, setLoading] = useState(true)
@@ -39,7 +37,9 @@ const ReportUpdate = (props) => {
 
     fetchData()
   }, [])
-  
+
+  const tempCommits = commits && commits.filter((cmt, idx) => idx <= 7)
+
   return loading || commits === null ? (
     <Spinner name="cube-grid" color="aqua" />
   ) : (
@@ -59,20 +59,18 @@ const ReportUpdate = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {commits.map((cmt, index) => {
+            {tempCommits && tempCommits.map((cmt, index) => {
               const { commit } = cmt
               const { committer, message } = commit
-              if (index <= 7) {
-                return (
-                  <TableRow hover key={cmt.sha}>
-                    <TableCell>{committer.name}</TableCell>
-                    <TableCell>{message}</TableCell>
-                    <TableCell>
-                      {moment(committer.date).format('DD-MM-YYYY')}
-                    </TableCell>
-                  </TableRow>
-                )
-              }
+              return (
+                <TableRow hover key={cmt.sha}>
+                  <TableCell>{committer.name}</TableCell>
+                  <TableCell>{message}</TableCell>
+                  <TableCell>
+                    {moment(committer.date).format('DD-MM-YYYY')}
+                  </TableCell>
+                </TableRow>
+              )
             })}
           </TableBody>
         </Table>

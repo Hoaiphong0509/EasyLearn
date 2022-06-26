@@ -1,8 +1,7 @@
-import { Box, Button, IconButton, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Button, Typography } from '@mui/material'
 
-import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import s from './styles.module.scss'
 

@@ -1,21 +1,19 @@
-import { Badge, Box, IconButton, Tooltip, Typography } from '@mui/material'
+import { Badge, Box, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 
 import s from './styles.module.scss'
 
-import { addLike, removeLike } from 'services/redux/actions/blog'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import cn from 'classnames'
 
-import { cleanUpBlog } from 'services/redux/actions/blog'
 import { Link } from 'react-router-dom'
+import { cleanUpBlog } from 'services/redux/actions/blog'
 
 import CommentIcon from '@mui/icons-material/Comment'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 
 const BlogItemSmall = ({ cleanUpBlog, blog }) => {
-  const { _id, title, img, name, avatar, likes, comments } = blog
+  const { _id, title, likes, comments } = blog
 
   return (
     <React.Fragment>
@@ -23,7 +21,7 @@ const BlogItemSmall = ({ cleanUpBlog, blog }) => {
         <Box className={s.container}>
           <Link
             className={s.link}
-            to={`/blogs/blog_detail/${blog._id}`}
+            to={`/blogs/blog_detail/${_id}`}
             onClick={cleanUpBlog}
           >
             <div className={s.content}>
