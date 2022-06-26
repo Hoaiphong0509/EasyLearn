@@ -15,7 +15,8 @@
       width: 70%;
 
       & img {
-        width: 827px;
+        min-width: 100%;
+        max-width: 100%;
         height: 540px;
         object-fit: cover;
       }

@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Grid,
   Stack,
-  FormControl,
   FormControlLabel,
   Tooltip,
-  IconButton
+  IconButton,
+  Box
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { useTranslation } from 'react-i18next'
@@ -68,7 +68,7 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
     } catch (e) {}
   }
   const authLinks = (
-    <>
+    <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
       {user &&
       (user.roles.includes(ROLES.ADMIN) ||
         user.roles.includes(ROLES.MODERATOR)) ? (
@@ -82,21 +82,19 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
       ) : null}
       <NotifyBox />
       <AvatarBox user={user} />
-    </>
+    </Box>
   )
 
   const guestLinks = (
-    <>
-      <GoogleLogin
-        className="btn_google_login"
-        clientId={ENV.GOOGLE_CLIENT_ID}
-        buttonText={t('auth.googleLogin')}
-        redirectUri="postmessage"
-        onSuccess={responseGoogleAuth}
-        onFailure={responseGoogleAuth}
-        cookiePolicy={'single_host_origin'}
-      />
-    </>
+    <GoogleLogin
+      className="btn_google_login"
+      clientId={ENV.GOOGLE_CLIENT_ID}
+      buttonText={t('auth.googleLogin')}
+      redirectUri="postmessage"
+      onSuccess={responseGoogleAuth}
+      onFailure={responseGoogleAuth}
+      cookiePolicy={'single_host_origin'}
+    />
   )
 
   return (
@@ -108,17 +106,17 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
       justifyContent="space-between"
       alignItems="center"
     >
-      <Grid item xs={2} className={s.logo}>
+      <Grid item xs={1} className={s.logo}>
         <Link to="/">
           <img src="/logo.png" alt="logo" />
         </Link>
       </Grid>
-      <Grid item xs={8} sx={{ textAlign: 'center' }}>
+      <Grid item xs={7} sx={{ textAlign: 'center' }}>
         <SearchBox />
       </Grid>
-      <Grid item xs={2}>
-        <Stack direction="row" spacing={2}>
-          <FormControl>
+      <Grid item xs={4}>
+        <Stack direction="row" spacing={2} justifyContent='flex-end'>
+          <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Tooltip title={currentLanguage.name} placement="top">
               <FormControlLabel
                 label=""
@@ -135,11 +133,13 @@ const Header = ({ googleLogin, auth: { isAuthenticated, user } }) => {
                 onChange={switchLanguageHandle}
               />
             </Tooltip>
-          </FormControl>
+          </Box>
           {loading ? (
             <LoadingButton />
           ) : (
-            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+            <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              {isAuthenticated ? authLinks : guestLinks}
+            </Box>
           )}
         </Stack>
       </Grid>

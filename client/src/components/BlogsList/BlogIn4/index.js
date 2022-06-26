@@ -21,12 +21,12 @@ import Interweave from 'interweave'
 import CommentIcon from '@mui/icons-material/Comment'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import BlockIcon from '@mui/icons-material/Block'
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import PropTypes from 'prop-types'
 
@@ -137,7 +137,7 @@ const BlogIn4 = ({
               setNumLikes(++likes.length)
             }}
           >
-            <HeartBrokenIcon color="default" sx={{ fontSize: 50 }} />
+            <HeartBrokenIcon color="default" sx={{ fontSize: '25px' }} />
           </IconButton>
         ) : (
           <IconButton
@@ -147,13 +147,13 @@ const BlogIn4 = ({
               setNumLikes(--likes.length)
             }}
           >
-            <FavoriteIcon color="error" sx={{ fontSize: 50 }} />
+            <FavoriteIcon color="error" sx={{ fontSize: '25px' }} />
           </IconButton>
         )}
       </Badge>
       <Badge className={s.icon} badgeContent={comments.length} color="success">
         <IconButton onClick={toggleDrawer('right', true)}>
-          <CommentIcon color="primary" sx={{ fontSize: 50 }} />
+          <CommentIcon color="primary" sx={{ fontSize: '25px' }} />
         </IconButton>
       </Badge>
       <Drawer
@@ -171,13 +171,13 @@ const BlogIn4 = ({
           {status === 'approved' ? (
             <Tooltip title="Approved">
               <IconButton onClick={() => unApproveBlog(_id)}>
-                <CheckCircleIcon color="success" sx={{ fontSize: 50 }} />
+                <CheckCircleIcon color="success" sx={{ fontSize: '25px' }} />
               </IconButton>
             </Tooltip>
           ) : (
             <Tooltip title="Unapproved">
               <IconButton onClick={() => approveBlog(_id)}>
-                <BlockIcon color="error" sx={{ fontSize: 50 }} />
+                <BlockIcon color="error" sx={{ fontSize: '25px' }} />
               </IconButton>
             </Tooltip>
           )}
@@ -189,13 +189,13 @@ const BlogIn4 = ({
             {status === 'approved' ? (
               <Tooltip title="Approved">
                 <IconButton>
-                  <CheckCircleIcon color="success" sx={{ fontSize: 50 }} />
+                  <CheckCircleIcon color="success" sx={{ fontSize: '25px' }} />
                 </IconButton>
               </Tooltip>
             ) : (
               <Tooltip title="Unapproved">
                 <IconButton>
-                  <BlockIcon color="error" sx={{ fontSize: 50 }} />
+                  <BlockIcon color="error" sx={{ fontSize: '25px' }} />
                 </IconButton>
               </Tooltip>
             )}
@@ -209,7 +209,7 @@ const BlogIn4 = ({
               aria-haspopup="true"
               onClick={handleClick}
             >
-              <MoreVertIcon sx={{ fontSize: 50 }} />
+              <SettingsIcon sx={{ fontSize: '25px' }} />
             </IconButton>
             <Menu
               id="long-menu"
@@ -246,7 +246,7 @@ const BlogIn4 = ({
   )
 
   return (
-    <React.Fragment>
+    <>
       <Box className={s.root}>
         {user && interaction}
         <Container className={s.container}>
@@ -282,7 +282,7 @@ const BlogIn4 = ({
           </section>
         </Container>
       </Box>
-    </React.Fragment>
+    </>
   )
 }
 

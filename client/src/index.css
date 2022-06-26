@@ -77,3 +77,9 @@ code {
   display: flex !important;
   align-items: center !important;
 }
+
+.btn_google_login {
+  min-width: 220px;
+  max-width: 220px;
+  text-align: center !important;
+}
