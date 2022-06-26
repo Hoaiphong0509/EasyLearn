@@ -127,6 +127,38 @@ const CourseIn4 = ({
     })
   }
 
+  const handleUnapprovedCourse = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: "Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await unApproveCourse(_id)
+      }
+    })
+  }
+
+  const handleApprovedCourse = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: "Bạn có cho phép thị bài khoá học ở trên EasyLearn không?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await approveCourse(_id)
+      }
+    })
+  }
+
   const owner = (
     <Box>
       <Tooltip title="Edit" placement="top-start">
@@ -159,14 +191,14 @@ const CourseIn4 = ({
         variant="contained"
         color="success"
         disabled={course && course.status === 'approved'}
-        onClick={() => approveCourse(_id)}
+        onClick={() => handleApprovedCourse()}
         startIcon={<CheckCircleIcon />}
       >
         Approved
       </Button>
       <Button
         disabled={course && course.status === 'unapproved'}
-        onClick={() => unApproveCourse(_id)}
+        onClick={() => handleUnapprovedCourse()}
         variant="contained"
         color="error"
         startIcon={<BlockIcon />}

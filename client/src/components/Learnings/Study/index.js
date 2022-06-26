@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
 import TabPanel from 'components/common/TabPanel/TabPanel'
 import { LINK_EMBED_YOUTUBE, ROLES } from 'constants/AppConstants'
-import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { useTranslation } from 'react-i18next'
 import Comments from '../Comments'
@@ -12,6 +12,12 @@ import Overview from '../Overview'
 import Requireds from '../Requireds'
 import SectionsList from '../SectionsList'
 
+import BlockIcon from '@mui/icons-material/Block'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import SettingsIcon from '@mui/icons-material/Settings'
 import {
   Badge,
   Box,
@@ -23,12 +29,6 @@ import {
   Tabs,
   Tooltip
 } from '@mui/material'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
-import SettingsIcon from '@mui/icons-material/Settings'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import BlockIcon from '@mui/icons-material/Block'
 
 import { deleteCourse } from 'services/redux/actions/course'
 import {
@@ -36,8 +36,8 @@ import {
   unApproveCourse
 } from 'services/redux/actions/moderator'
 
-import s from './styles.module.scss'
 import Swal from 'sweetalert2'
+import s from './styles.module.scss'
 const Study = ({
   auth: { user },
   course,
@@ -46,8 +46,6 @@ const Study = ({
   unApproveCourse
 }) => {
   const { _id, user: userCourse } = course
-
-  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const [codeLink, setCodeLink] = useState(course.sections[0].videos[0].link)
   const [videoforCmt, setVideoforCmt] = useState(course.sections[0].videos[0])
@@ -94,6 +92,38 @@ const Study = ({
       if (result.isConfirmed) {
         await deleteCourse(_id)
         history.replace('/my_stuff')
+      }
+    })
+  }
+
+  const handleUnapprovedCourse = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: 'Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await unApproveCourse(_id)
+      }
+    })
+  }
+
+  const handleApprovedCourse = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: 'Bạn có cho phép thị bài khoá học ở trên EasyLearn không?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await approveCourse(_id)
       }
     })
   }
@@ -152,7 +182,7 @@ const Study = ({
         variant="contained"
         color="success"
         disabled={course && course.status === 'approved'}
-        onClick={() => approveCourse(_id)}
+        onClick={() => handleApprovedCourse()}
         startIcon={<CheckCircleIcon />}
       >
         Approved
@@ -161,7 +191,7 @@ const Study = ({
         variant="contained"
         color="error"
         disabled={course && course.status === 'unapproved'}
-        onClick={() => unApproveCourse(_id)}
+        onClick={() => handleUnapprovedCourse()}
         startIcon={<BlockIcon />}
       >
         Unapproved

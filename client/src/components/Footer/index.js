@@ -15,7 +15,7 @@ const Footer = () => {
           <h3>EasyLearn - Học để hiểu biết</h3>
         </div>
         <span>Điện thoại: 0865932614</span>
-        <span>Email: hoaiphong0050@gmail.com</span>
+        <span>Email: hoaiphong00509@gmail.com</span>
         <span>Địa chỉ: Việt Nam, TP Hồ Chí Minh</span>
       </div>
       <div className={s.box}>

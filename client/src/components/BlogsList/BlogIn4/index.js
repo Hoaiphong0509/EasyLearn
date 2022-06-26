@@ -26,7 +26,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import BlockIcon from '@mui/icons-material/Block'
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from '@mui/icons-material/Settings'
 
 import PropTypes from 'prop-types'
 
@@ -114,6 +114,38 @@ const BlogIn4 = ({
     })
   }
 
+  const handleUnapprovedBlog = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: "Bạn có muốn chặn hiện thị bài blog này ở trên EasyLearn không?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await unApproveBlog(_id)
+      }
+    })
+  }
+
+  const handleApprovedBlog = async () => {
+    Swal.fire({
+      title: 'Xác nhận thông tin',
+      text: "Bạn có cho phép thị bài blog này ở trên EasyLearn không?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#18e06f',
+      cancelButtonColor: '#e63c49',
+      confirmButtonText: 'Yes!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await approveBlog(_id)
+      }
+    })
+  }
+
   const areaComment = () => (
     <Box sx={{ width: 969 }}>
       <CommentForm blogId={_id} user={user} />
@@ -170,13 +202,13 @@ const BlogIn4 = ({
         <Badge className={s.icon} color="primary">
           {status === 'approved' ? (
             <Tooltip title="Approved">
-              <IconButton onClick={() => unApproveBlog(_id)}>
+              <IconButton onClick={() => handleUnapprovedBlog()}>
                 <CheckCircleIcon color="success" sx={{ fontSize: '25px' }} />
               </IconButton>
             </Tooltip>
           ) : (
             <Tooltip title="Unapproved">
-              <IconButton onClick={() => approveBlog(_id)}>
+              <IconButton onClick={() => handleApprovedBlog()}>
                 <BlockIcon color="error" sx={{ fontSize: '25px' }} />
               </IconButton>
             </Tooltip>
