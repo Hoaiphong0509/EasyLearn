@@ -7,12 +7,17 @@
   "save": "Lưu",
   "delete": "Xóa",
   "view": "Xem",
-  "plsLogin": "Vui lòng đăng nhập", 
+  "plsLogin": "Vui lòng đăng nhập",
   "modal": {
     "warnTitle": "Lưu ý!",
     "unSaved": "Bạn có chắc chắn muốn hủy các thay đổi không?",
-    "notify": "Thông báo"
+    "notify": "Thông báo",
+    "deleteBlg": "Bạn có muốn xoá bài blog này, thao thác này không thể hoàn tác.",
+    "deleteCrs": "Bạn có muốn xoá bài blog này, thao thác này không thể hoàn tác."
   },
+  "btnYes": "Có",
+  "btnNo": "Không",
+  "btnCancle": "Huỷ",
   "auth": {
     "learnToKnow": "học để hiểu biết",
     "password": "Mật khẩu",
@@ -191,5 +196,12 @@
   "serverErr": {
     "title": "SERVER ERROR!",
     "desc": "Error 500: Có gì đó không ổn ở phía server. EasyLearn xin lỗi vì sự bất tiện này."
+  },
+  "dialogModal": {
+    "confirmIn4": "Xác nhận thông tin",
+    "approvedBlg": "Bạn có muốn cho phép hiển thi bài blog này ở trên EasyLearn không?",
+    "approvedCrs": "Bạn có muốn cho phép hiển thi khoá học này ở trên EasyLearn không?",
+    "unApprovedBlg": "Bạn có muốn chặn hiển thi bài blog này ở trên EasyLearn không?",
+    "unApprovedCrs": "Bạn có muốn chặn hiển thi khoá học này ở trên EasyLearn không?"
   }
 }

@@ -26,7 +26,6 @@ function Sections({ sectionsCrs, onSections }) {
       item.id === sectionId ? newValue : item
     )
     setSections(newSections)
-
     onSections(newSections)
   }
 

@@ -14,35 +14,36 @@ import {
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
+import Interweave from 'interweave'
 import { useHistory } from 'react-router-dom'
 import s from './styles.module.scss'
-import Interweave from 'interweave'
 
+import BlockIcon from '@mui/icons-material/Block'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CommentIcon from '@mui/icons-material/Comment'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import BlockIcon from '@mui/icons-material/Block'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import SettingsIcon from '@mui/icons-material/Settings'
 
 import PropTypes from 'prop-types'
 
-import {
-  addLike,
-  removeLike,
-  addComment,
-  deleteComment,
-  deleteBlog
-} from 'services/redux/actions/blog'
-import { approveBlog, unApproveBlog } from 'services/redux/actions/moderator'
-import { connect } from 'react-redux'
 import CommentForm from 'components/Comments/CommentForm'
 import CommentItem from 'components/Comments/CommentItem'
 import { ROLES } from 'constants/AppConstants'
+import { connect } from 'react-redux'
+import {
+  addComment,
+  addLike,
+  deleteBlog,
+  deleteComment,
+  removeLike
+} from 'services/redux/actions/blog'
+import { approveBlog, unApproveBlog } from 'services/redux/actions/moderator'
 import Swal from 'sweetalert2'
+import { useTranslation } from 'react-i18next'
 const BlogIn4 = ({
   auth: { user },
   blog,
@@ -68,6 +69,8 @@ const BlogIn4 = ({
   const [isLiked, setIsLiked] = useState(
     user !== null && likes?.some((l) => l?.user.toString() === user?._id)
   )
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (likes.some((l) => l.user.toString() === user?._id)) setIsLiked(true)
@@ -99,13 +102,14 @@ const BlogIn4 = ({
 
   const handleDeleteBlog = async () => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: t('modal.warnTitle'),
+      text: t('modal.deleteBlg'),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteBlog(_id)
@@ -116,13 +120,14 @@ const BlogIn4 = ({
 
   const handleUnapprovedBlog = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: "Bạn có muốn chặn hiện thị bài blog này ở trên EasyLearn không?",
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.unApprovedBlg'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await unApproveBlog(_id)
@@ -132,13 +137,14 @@ const BlogIn4 = ({
 
   const handleApprovedBlog = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: "Bạn có cho phép thị bài blog này ở trên EasyLearn không?",
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.approvedBlg'),
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#18e06f',
       cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await approveBlog(_id)
