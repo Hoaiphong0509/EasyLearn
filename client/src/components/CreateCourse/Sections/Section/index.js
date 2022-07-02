@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import SectionForm from '../SectionForm'
-import { IconButton } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
+import { IconButton } from '@mui/material'
+import { useState } from 'react'
+import SectionForm from '../SectionForm'
 import Videos from './Videos'
 
 import s from './styles.module.scss'
@@ -51,7 +51,8 @@ const Section = ({ sections, removeSection, updateSection }) => {
               onClick={() =>
                 setEdit({
                   id: section.id,
-                  name: section.name
+                  name: section.name,
+                  videos: section.videos
                 })
               }
             >

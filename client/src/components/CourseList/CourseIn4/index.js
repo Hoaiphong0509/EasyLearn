@@ -14,43 +14,43 @@ import {
   Tooltip,
   Typography
 } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 
 import s from './styles.module.scss'
 
-import { getInTouche } from 'services/redux/actions/profile'
 import { deleteCourse } from 'services/redux/actions/course'
 import {
   approveCourse,
   unApproveCourse
 } from 'services/redux/actions/moderator'
+import { getInTouche } from 'services/redux/actions/profile'
 
+import BlockIcon from '@mui/icons-material/Block'
 import CheckIcon from '@mui/icons-material/Check'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CircleIcon from '@mui/icons-material/Circle'
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
-import ListIcon from '@mui/icons-material/List'
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
-import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import ListIcon from '@mui/icons-material/List'
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite'
+import { LINK_EMBED_YOUTUBE, ROLES, TOAST_TYPE } from 'constants/AppConstants'
 import PropsTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import { LINK_EMBED_YOUTUBE, ROLES, TOAST_TYPE } from 'constants/AppConstants'
-import { useTranslation } from 'react-i18next'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import BlockIcon from '@mui/icons-material/Block'
 
 import {
   cleanUpProfile,
   getCurrentProfile
 } from 'services/redux/actions/profile'
-import { showToast } from 'utils/UIHelper'
 import Swal from 'sweetalert2'
 import { scrollToTop } from 'utils/AppUltils'
+import { showToast } from 'utils/UIHelper'
 
 const CourseIn4 = ({
   auth: { user },
@@ -112,13 +112,14 @@ const CourseIn4 = ({
 
   const handleDeleteCourse = async () => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: t('modal.warnTitle'),
+      text: t('modal.deleteCrs'),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteCourse(_id)
@@ -129,13 +130,14 @@ const CourseIn4 = ({
 
   const handleUnapprovedCourse = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: 'Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?',
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.unApprovedCrs'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await unApproveCourse(_id)
@@ -145,13 +147,14 @@ const CourseIn4 = ({
 
   const handleApprovedCourse = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: 'Bạn có cho phép thị bài khoá học ở trên EasyLearn không?',
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.unApprapprovedCrsovedCrs'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await approveCourse(_id)

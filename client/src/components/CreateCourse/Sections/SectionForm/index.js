@@ -5,8 +5,12 @@ import { useTranslation } from 'react-i18next'
 
 function SectionForm(props) {
   const { t } = useTranslation()
-  const [name, setName] = useState(props.edit ? props.edit.value : '')
-
+  console.log('props.edit', props.edit)
+  const [name, setName] = useState(props.edit ? props.edit.name : '')
+  const [id] = useState(
+    props.edit ? props.edit.id : Math.floor(Math.random() * 10000)
+  )
+  const [videos] = useState(props.edit ? props.edit.videos : [])
   const nameRef = useRef(null)
 
   useEffect(() => {
@@ -19,9 +23,9 @@ function SectionForm(props) {
 
   const handleSubmit = (e) => {
     props.onSubmit({
-      id: Math.floor(Math.random() * 10000),
-      name: name,
-      videos: []
+      id,
+      name,
+      videos
     })
     setName('')
   }
@@ -38,7 +42,9 @@ function SectionForm(props) {
             ref={nameRef}
             className={s.textField}
           />
-          <Button onClick={handleSubmit}>{t('course.createCourse.uptSection')}</Button>
+          <Button onClick={handleSubmit}>
+            {t('course.createCourse.uptSection')}
+          </Button>
         </>
       ) : (
         <>
@@ -50,7 +56,9 @@ function SectionForm(props) {
             className={s.textField}
             ref={nameRef}
           />
-          <Button onClick={handleSubmit}>{t('course.createCourse.addSection')}</Button>
+          <Button onClick={handleSubmit}>
+            {t('course.createCourse.addSection')}
+          </Button>
         </>
       )}
     </FormControl>

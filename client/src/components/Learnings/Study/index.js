@@ -81,13 +81,14 @@ const Study = ({
 
   const handleDeleteCourse = async () => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: t('modal.warnTitle'),
+      text: t('modal.deleteCrs'),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteCourse(_id)
@@ -98,13 +99,14 @@ const Study = ({
 
   const handleUnapprovedCourse = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: 'Bạn có muốn chặn hiện thị khoá học này ở trên EasyLearn không?',
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.unApprovedCrs'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await unApproveCourse(_id)
@@ -114,13 +116,14 @@ const Study = ({
 
   const handleApprovedCourse = async () => {
     Swal.fire({
-      title: 'Xác nhận thông tin',
-      text: 'Bạn có cho phép thị bài khoá học ở trên EasyLearn không?',
+      title: t('dialogModal.confirmIn4'),
+      text: t('dialogModal.unApprapprovedCrsovedCrs'),
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#18e06f',
-      cancelButtonColor: '#e63c49',
-      confirmButtonText: 'Yes!'
+      confirmButtonColor: '#e63c49',
+      cancelButtonColor: '#ccc',
+      confirmButtonText: t('btnYes'),
+      cancelButtonText: t('btnCancle')
     }).then(async (result) => {
       if (result.isConfirmed) {
         await approveCourse(_id)
