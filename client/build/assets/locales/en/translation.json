@@ -7,12 +7,17 @@
   "save": "Save",
   "delete": "Delete",
   "view": "View",
-  "plsLogin": "Please login first", 
+  "plsLogin": "Please login first",
   "modal": {
     "warnTitle": "Warning",
     "unSaved": "Are you sure want to discard changes?",
-    "notify": "Notifications"
+    "notify": "Notifications",
+    "deleteBlg": "Do you want to delete this blog post, this action cannot be redo.",
+    "deleteCrs": "Do you want to delete this course, this action cannot be redo"
   },
+  "btnYes": "Yes",
+  "btnNo": "No",
+  "btnCancle": "Cancel",
   "auth": {
     "learnToKnow": "learn to know",
     "password": "Password",
@@ -173,5 +178,12 @@
   "serverErr": {
     "title": "SERVER ERROR!",
     "desc": "Error 500: Something is wrong on the server. EasyLearn apologize for this inconvenience"
+  },
+  "dialogModal": {
+    "confirmIn4": "Confirm information",
+    "approvedBlg": "Would you like to allow this blog post to appear on EasyLearn?",
+    "approvedCrs": "Would you like to allow this course to be displayed on EasyLearn?",
+    "unApprovedBlg": "Do you want to block the display of this blog post on EasyLearn?",
+    "unApprovedCrs": "Do you want to block the display of this course on EasyLearn?"
   }
 }
