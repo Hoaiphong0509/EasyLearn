@@ -301,16 +301,18 @@ const CourseIn4 = ({
                 <Box>
                   <Collapse in={checked}>
                     <List>
-                      {section.videos.map((video) => (
-                        <ListItem key={video._id}>
-                          <ListItemIcon>
-                            <PlayCircleFilledWhiteIcon />
-                          </ListItemIcon>
-                          <ListItemText>
-                            <Typography>{video.name}</Typography>
-                          </ListItemText>
-                        </ListItem>
-                      ))}
+                      {section.videos &&
+                        section.videos.length > 0 &&
+                        section.videos.map((video) => (
+                          <ListItem key={video._id}>
+                            <ListItemIcon>
+                              <PlayCircleFilledWhiteIcon />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <Typography>{video.name}</Typography>
+                            </ListItemText>
+                          </ListItem>
+                        ))}
                     </List>
                   </Collapse>
                 </Box>
@@ -333,10 +335,15 @@ const CourseIn4 = ({
                 >
                   {t('course.intro')}
                 </Typography>
-                <iframe
-                  title="description"
-                  src={`${LINK_EMBED_YOUTUBE}${sections[0].videos[0].link}`}
-                />
+                {sections &&
+                  sections.length > 0 &&
+                  sections[0].videos &&
+                  sections[0].videos.length > 0 && (
+                    <iframe
+                      title="description"
+                      src={`${LINK_EMBED_YOUTUBE}${sections[0].videos[0].link}`}
+                    />
+                  )}
               </Box>
             </Modal>
           </header>

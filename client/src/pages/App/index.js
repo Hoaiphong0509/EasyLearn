@@ -27,9 +27,10 @@ const App = () => {
 
     store.dispatch(loadUser())
 
-    window.addEventListener('storage', () => {
-      if (!localStorage.token) store.dispatch({ type: AUTHS.LOGOUT })
-    })
+    if (typeof window !== 'undefined')
+      window.addEventListener('storage', () => {
+        if (!localStorage.token) store.dispatch({ type: AUTHS.LOGOUT })
+      })
   }, [])
 
   return (

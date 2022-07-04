@@ -12,6 +12,7 @@ import { COURSE_IMG_DEFAULT } from 'constants/AppConstants'
 import Sections from 'components/CreateCourse/Sections'
 import { useTranslation } from 'react-i18next'
 import MyLoading from 'components/common/MyLoading'
+import { isRequired } from 'utils/AppUltils'
 
 const CreateCourse = ({ addCourse }) => {
   const history = useHistory()
@@ -145,7 +146,18 @@ const CreateCourse = ({ addCourse }) => {
             />
           </FormControl>
           <FormControl className={s.footer}>
-            <Button type="submit" className={s.buttonSubmit}>
+            <Button
+              disabled={
+                !(
+                  isRequired(courseData.title) &&
+                  isRequired(courseData.description) &&
+                  isRequired(courseData.gains) &&
+                  isRequired(courseData.punchLike)
+                )
+              }
+              type="submit"
+              className={s.buttonSubmit}
+            >
               {t('save')}
             </Button>
           </FormControl>
